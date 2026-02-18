@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .cro-section {
+    @apply py-16 px-4 sm:px-6 lg:px-8;
+  }
+
+  .cro-button-primary {
+    @apply px-6 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition-colors;
+  }
+
+  .cro-button-secondary {
+    @apply px-6 py-3 bg-white text-teal-600 border-2 border-teal-600 rounded-lg font-semibold hover:bg-teal-50 transition-colors;
+  }
+
+  .cro-stat {
+    @apply text-center;
+  }
+
+  .cro-stat-number {
+    @apply text-4xl font-bold text-teal-600;
+  }
+
+  .cro-stat-label {
+    @apply text-gray-600 text-sm mt-2;
+  }
+
+  .trust-badge {
+    @apply inline-flex items-center gap-2 px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold;
+  }
+
+  .glass-card {
+    @apply bg-white/40 backdrop-blur-md border border-white/20 rounded-xl p-6;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
