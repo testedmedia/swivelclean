@@ -44,3 +44,4 @@ yarn-error.log*
 # deploy
 .deploy-summary.txt
 .fix-chain/
+tsconfig.tsbuildinfo
