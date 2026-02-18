@@ -3,7 +3,7 @@
 **Project Name:** SwivelClean LA (formerly SwivelClean LA)
 **Version:** v1.0
 **Live URL:** https://swivelclean.la (pending domain setup)
-**Repo:** ~/spotlessla/
+**Repo:** ~/swivelclean/
 
 ## Project Goals
 
