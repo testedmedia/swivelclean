@@ -10,10 +10,17 @@ function CopyBox({ label, content, note }: { label: string; content: string; not
     setTimeout(() => setCopied(false), 2000)
   }
   return (
-    <div className="mb-6">
-      <div className="flex items-center justify-between mb-2">
-        <h4 className="text-sm font-bold text-gray-700 uppercase tracking-wider">{label}</h4>
-        <button onClick={copy} className="flex items-center gap-1.5 text-xs text-teal-600 hover:text-teal-700 font-semibold bg-teal-50 hover:bg-teal-100 px-3 py-1.5 rounded-lg transition-all">
+    <div className="mb-6 rounded-2xl overflow-hidden shadow-lg border border-gray-700/60">
+      <div className="flex items-center justify-between px-4 py-3 bg-gray-800">
+        <div className="flex items-center gap-3">
+          <div className="flex gap-1.5">
+            <div className="w-3 h-3 rounded-full bg-red-400/90" />
+            <div className="w-3 h-3 rounded-full bg-yellow-400/90" />
+            <div className="w-3 h-3 rounded-full bg-green-400/90" />
+          </div>
+          <span className="text-xs font-semibold text-gray-300 tracking-widest uppercase">{label}</span>
+        </div>
+        <button onClick={copy} className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-all bg-teal-500/20 hover:bg-teal-500/30 text-teal-400 border border-teal-500/30">
           {copied ? (
             <><svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>Copied!</>
           ) : (
@@ -21,10 +28,48 @@ function CopyBox({ label, content, note }: { label: string; content: string; not
           )}
         </button>
       </div>
-      {note && <p className="text-xs text-gray-500 mb-2 italic">{note}</p>}
-      <pre className="bg-gray-950 text-gray-200 rounded-xl p-5 text-sm leading-relaxed whitespace-pre-wrap font-mono border border-gray-800 overflow-x-auto">
+      {note && <div className="px-5 py-2.5 bg-amber-950/60 border-b border-amber-900/40 text-xs text-amber-400 italic">{note}</div>}
+      <pre className="bg-gray-900 text-gray-300 px-5 py-4 text-sm leading-relaxed whitespace-pre-wrap font-mono overflow-x-auto">
         {content}
       </pre>
+    </div>
+  )
+}
+
+function EmailPreview({ subject, preview, tag, children }: { subject: string; preview: string; tag: string; children: React.ReactNode }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <div className="mb-4 rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
+      <button onClick={() => setOpen(!open)} className="w-full text-left hover:bg-gray-50 transition-colors">
+        <div className="flex items-center gap-4 px-5 py-4 bg-white">
+          <div className="w-10 h-10 rounded-full bg-teal-600 flex items-center justify-center text-white font-extrabold text-sm flex-shrink-0">S</div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center justify-between mb-0.5">
+              <span className="text-sm font-bold text-gray-900">SwivelClean</span>
+              <div className="flex items-center gap-2">
+                <span className="text-xs bg-teal-50 text-teal-700 border border-teal-200 px-2 py-0.5 rounded-full font-semibold">{tag}</span>
+                <span className="text-xs text-gray-400">auto-sends</span>
+              </div>
+            </div>
+            <p className="text-sm font-semibold text-gray-800 truncate">{subject}</p>
+            <p className="text-xs text-gray-400 truncate">{preview}</p>
+          </div>
+          <svg className={`w-4 h-4 text-gray-400 flex-shrink-0 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+        </div>
+      </button>
+      {open && (
+        <div className="border-t border-gray-100">
+          <div className="bg-teal-600 px-8 py-5 text-center">
+            <p className="text-white font-extrabold text-xl tracking-widest">SWIVELCLEAN</p>
+            <p className="text-teal-200 text-xs mt-0.5">Airbnb Turnover Specialists · Los Angeles, CA</p>
+          </div>
+          <div className="bg-white px-8 py-7">{children}</div>
+          <div className="bg-gray-50 px-6 py-4 text-center border-t border-gray-100">
+            <p className="text-xs text-gray-500 font-medium">SwivelClean LA · hello@swivelclean.com · (323) 555-0100</p>
+            <p className="text-xs text-gray-400 mt-1">You&apos;re receiving this because you booked at swivelclean.com · Unsubscribe</p>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
@@ -734,13 +779,31 @@ Happy to book you in — swivelclean.com or feel free to message me directly.`} 
 
               {/* EMAIL TEMPLATES */}
               <div>
-                <h3 className="heading-md mb-3">Email Templates — All 5 Automated Emails</h3>
-                <p className="text-sm text-gray-500 mb-2">These fire automatically when someone books through your website. They are already coded into the booking system — you don&apos;t have to do anything manually.</p>
+                <h3 className="heading-md mb-3">Company Emails — All 5 Live & Auto-Sending</h3>
+                <p className="text-sm text-gray-500 mb-2">These are your real emails. They send automatically from <strong>hello@swivelclean.com</strong> the moment each event happens. Click any email to preview the full design.</p>
                 <div className="bg-teal-50 border border-teal-200 rounded-xl p-4 text-sm text-teal-800 mb-6">
-                  All emails send from <strong>hello@swivelclean.com</strong> via Resend. They&apos;re already wired — booking email fires instantly, reminder fires 24h before, completion fires when you mark the job done in admin.
+                  <strong>Already wired:</strong> Booking confirmation fires instantly on booking. 24h reminder fires the day before. Completion email fires when you mark a job done in your admin dashboard. All powered by Resend.
                 </div>
 
-                <CopyBox label="Email 1 — Booking Confirmation (fires automatically when someone books)" content={`Subject: Your SwivelClean booking is confirmed — [Property Address], [Date]
+                {/* Email 1 — Booking Confirmation */}
+                <EmailPreview tag="Sends on booking" subject="Your SwivelClean booking is confirmed — [Address], [Date]" preview="Great news — your cleaning is confirmed. Here are the details...">
+                  <p className="text-gray-800 text-sm mb-5">Hi <strong>[Name]</strong>,</p>
+                  <p className="text-gray-700 text-sm mb-5">Great news — your cleaning is confirmed. Here are your details:</p>
+                  <div className="bg-gray-50 rounded-xl p-5 mb-5 space-y-2">
+                    {[['Service', '[Service Type]'], ['Property', '[Address]'], ['Date', '[Date]'], ['Time', '[Time]'], ['Cleaner', 'Assigned 24h before your cleaning']].map(([k, v]) => (
+                      <div key={k} className="flex justify-between text-sm">
+                        <span className="text-gray-500 font-medium">{k}</span>
+                        <span className="text-gray-900 font-semibold">{v}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-gray-600 text-sm mb-5">You&apos;ll receive a reminder tomorrow with your cleaner&apos;s name and contact info. After the cleaning, we&apos;ll send you before/after photos and your invoice.</p>
+                  <div className="text-center mb-5">
+                    <span className="inline-block bg-teal-600 text-white text-sm font-bold px-8 py-3 rounded-xl">View Booking Details</span>
+                  </div>
+                  <p className="text-gray-500 text-xs">Questions? Reply to this email or text <strong>(323) 555-0100</strong> anytime.</p>
+                </EmailPreview>
+                <CopyBox label="Email 1 — plain text to copy" content={`Subject: Your SwivelClean booking is confirmed — [Property Address], [Date]
 
 Hi [Name],
 
@@ -761,7 +824,26 @@ Questions? Reply to this email or text us at (323) 555-0100.
 – The SwivelClean Team
 hello@swivelclean.com | swivelclean.com`} />
 
-                <CopyBox label="Email 2 — 24h Reminder (fires automatically day before)" content={`Subject: Reminder: Your SwivelClean cleaning is tomorrow at [Time]
+                {/* Email 2 — 24h Reminder */}
+                <EmailPreview tag="Sends day before" subject="Reminder: Your SwivelClean cleaning is tomorrow at [Time]" preview="Just a reminder — your cleaning is tomorrow. Cleaner name and contact inside...">
+                  <p className="text-gray-800 text-sm mb-5">Hi <strong>[Name]</strong>,</p>
+                  <p className="text-gray-700 text-sm mb-5">Just a quick reminder — your SwivelClean cleaning is <strong>tomorrow</strong>.</p>
+                  <div className="bg-gray-50 rounded-xl p-5 mb-5 space-y-2">
+                    {[['Date', '[Date]'], ['Time', '[Time]'], ['Address', '[Address]'], ['Your Cleaner', '[Cleaner Name]'], ['Cleaner Cell', '(323) 555-0101']].map(([k, v]) => (
+                      <div key={k} className="flex justify-between text-sm">
+                        <span className="text-gray-500 font-medium">{k}</span>
+                        <span className="text-gray-900 font-semibold">{v}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-5">
+                    <p className="text-xs font-bold text-amber-800 mb-1">Access Notes</p>
+                    <p className="text-sm text-amber-700">[Notes from booking — lockbox code, entry instructions, etc.]</p>
+                  </div>
+                  <p className="text-gray-600 text-sm mb-1">Your cleaner will text you when they arrive. Need to make changes?</p>
+                  <p className="text-gray-500 text-xs">Reply to this email or call <strong>(323) 555-0100</strong> immediately.</p>
+                </EmailPreview>
+                <CopyBox label="Email 2 — plain text to copy" content={`Subject: Reminder: Your SwivelClean cleaning is tomorrow at [Time]
 
 Hi [Name],
 
@@ -780,7 +862,35 @@ See you tomorrow!
 
 – SwivelClean`} />
 
-                <CopyBox label="Email 3 — Job Complete with Photos (send from admin after marking complete)" content={`Subject: [Address] is clean and guest-ready — photos inside
+                {/* Email 3 — Job Complete */}
+                <EmailPreview tag="Sends after job done" subject="[Address] is clean and guest-ready — photos inside" preview="Your property is spotless. Before/after photos attached. Invoice enclosed...">
+                  <p className="text-gray-800 text-sm mb-5">Hi <strong>[Name]</strong>,</p>
+                  <p className="text-gray-700 text-sm mb-5">Your property is <strong>spotless and guest-ready</strong>. Cleaning completed at <strong>[Time]</strong>.</p>
+                  <div className="grid grid-cols-2 gap-3 mb-5">
+                    <div className="relative rounded-xl overflow-hidden">
+                      <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=300&h=200&fit=crop" alt="Before" className="w-full h-28 object-cover" />
+                      <span className="absolute top-1.5 left-1.5 bg-red-600 text-white text-xs font-bold px-1.5 py-0.5 rounded">BEFORE</span>
+                    </div>
+                    <div className="relative rounded-xl overflow-hidden">
+                      <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=300&h=200&fit=crop" alt="After" className="w-full h-28 object-cover" />
+                      <span className="absolute top-1.5 left-1.5 bg-teal-600 text-white text-xs font-bold px-1.5 py-0.5 rounded">AFTER</span>
+                    </div>
+                  </div>
+                  <div className="bg-gray-50 rounded-xl p-4 mb-5">
+                    <p className="text-xs font-bold text-gray-700 mb-2">Checklist Completed</p>
+                    {['All linens changed, beds made hotel-style', 'Bathrooms deep cleaned & restocked', 'Kitchen wiped down, appliances cleaned', 'Floors vacuumed and mopped', 'Trash removed, liners replaced', 'Essentials restocked'].map((item) => (
+                      <div key={item} className="flex items-center gap-2 text-xs text-gray-600 py-0.5">
+                        <svg className="w-3.5 h-3.5 text-teal-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="text-center mb-5">
+                    <span className="inline-block bg-teal-600 text-white text-sm font-bold px-8 py-3 rounded-xl">View Invoice — $[Amount]</span>
+                  </div>
+                  <p className="text-gray-500 text-xs text-center">Thank you for trusting SwivelClean. See you next time.</p>
+                </EmailPreview>
+                <CopyBox label="Email 3 — plain text to copy" content={`Subject: [Address] is clean and guest-ready — photos inside
 
 Hi [Name],
 
@@ -801,7 +911,21 @@ Thank you for trusting SwivelClean. We'll see you next time.
 
 – The SwivelClean Team`} />
 
-                <CopyBox label="Email 4 — Review Request (send 2 hours after job is complete)" content={`Subject: How was your cleaning? Quick favor to ask
+                {/* Email 4 — Review Request */}
+                <EmailPreview tag="Sends 2h after completion" subject="How was your cleaning? Quick favor to ask" preview="Would you take 30 seconds to leave us a Google review? It means the world...">
+                  <p className="text-gray-800 text-sm mb-4">Hi <strong>[Name]</strong>,</p>
+                  <p className="text-gray-700 text-sm mb-4">Your SwivelClean cleaning at <strong>[Address]</strong> was completed a couple hours ago. We hope your property looks perfect for your next guest!</p>
+                  <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-5 text-center">
+                    <div className="flex justify-center gap-1 mb-2">
+                      {[1,2,3,4,5].map(s => <svg key={s} className="w-6 h-6 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}
+                    </div>
+                    <p className="text-sm font-semibold text-amber-800 mb-3">Would you take 30 seconds to review us?</p>
+                    <span className="inline-block bg-amber-500 text-white text-sm font-bold px-6 py-2.5 rounded-xl">Leave a Google Review</span>
+                  </div>
+                  <p className="text-gray-600 text-sm mb-2">It genuinely helps other LA hosts find us and means the world to our small team.</p>
+                  <p className="text-gray-500 text-xs">If anything wasn&apos;t right, reply here — we&apos;ll make it right, guaranteed. 100% satisfaction or we re-clean for free.</p>
+                </EmailPreview>
+                <CopyBox label="Email 4 — plain text to copy" content={`Subject: How was your cleaning? Quick favor to ask
 
 Hi [Name],
 
@@ -819,7 +943,31 @@ Thank you!
 
 – [Cleaner Name] & The SwivelClean Team`} />
 
-                <CopyBox label="Email 5 — Cleaner Assignment (send when you assign a job to a cleaner)" content={`Subject: New job assigned — [Property Address], [Date] at [Time]
+                {/* Email 5 — Cleaner Assignment */}
+                <EmailPreview tag="Sends to cleaner on assignment" subject="New job assigned — [Property Address], [Date] at [Time]" preview="You have a new job. Details, access instructions, and pay amount inside...">
+                  <p className="text-gray-800 text-sm mb-4">Hi <strong>[Cleaner Name]</strong>,</p>
+                  <p className="text-gray-700 text-sm mb-4">You have a new job assigned. Please confirm by replying <strong>&quot;Confirmed&quot;</strong> to this email.</p>
+                  <div className="bg-gray-50 rounded-xl p-5 mb-5 space-y-2">
+                    {[['Client', '[Client Name]'], ['Property', '[Address]'], ['Service', '[Service Type]'], ['Date', '[Date]'], ['Time', '[Time]'], ['Your Pay', '$[Amount]']].map(([k, v]) => (
+                      <div key={k} className="flex justify-between text-sm">
+                        <span className="text-gray-500 font-medium">{k}</span>
+                        <span className={`font-bold ${k === 'Your Pay' ? 'text-teal-700 text-base' : 'text-gray-900'}`}>{v}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-4">
+                    <p className="text-xs font-bold text-blue-800 mb-1">Access Instructions</p>
+                    <p className="text-sm text-blue-700">[Notes — lockbox code, gate code, parking, special instructions]</p>
+                  </div>
+                  <div className="bg-gray-50 rounded-xl p-4 mb-4">
+                    <p className="text-xs font-bold text-gray-700 mb-2">What to bring</p>
+                    {['All cleaning supplies', 'Phone for before/after photos', 'Linen set (if linen change included)'].map(item => (
+                      <p key={item} className="text-xs text-gray-600 flex items-center gap-1.5 py-0.5"><span className="w-1 h-1 bg-teal-500 rounded-full flex-shrink-0" />{item}</p>
+                    ))}
+                  </div>
+                  <p className="text-red-600 text-xs font-semibold">Can&apos;t make it? Call (323) 555-0100 IMMEDIATELY.</p>
+                </EmailPreview>
+                <CopyBox label="Email 5 — plain text to copy" content={`Subject: New job assigned — [Property Address], [Date] at [Time]
 
 Hi [Cleaner Name],
 
@@ -846,6 +994,47 @@ What to bring:
 
 See you there!
 – SwivelClean Operations`} />
+              </div>
+
+              {/* BEFORE / AFTER GALLERY */}
+              <div>
+                <h3 className="heading-md mb-2">Before & After — Example Photos</h3>
+                <p className="text-sm text-gray-500 mb-6">This is what your posts should look like. Before/after gets 3–5x more engagement than any other image type. Take these with your phone — no fancy camera needed.</p>
+                <div className="grid md:grid-cols-3 gap-6 mb-4">
+                  {[
+                    {
+                      room: 'Bedroom',
+                      before: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=380&fit=crop',
+                      after: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&h=380&fit=crop',
+                    },
+                    {
+                      room: 'Kitchen',
+                      before: 'https://images.unsplash.com/photo-1556909190-eccf4a8bf97a?w=600&h=380&fit=crop',
+                      after: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&h=380&fit=crop',
+                    },
+                    {
+                      room: 'Bathroom',
+                      before: 'https://images.unsplash.com/photo-1552168324-d612d77725e3?w=600&h=380&fit=crop',
+                      after: 'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=600&h=380&fit=crop',
+                    },
+                  ].map((pair, i) => (
+                    <div key={i}>
+                      <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">{pair.room}</p>
+                      <div className="grid grid-cols-2 gap-2">
+                        <div className="relative rounded-2xl overflow-hidden shadow-md">
+                          <img src={pair.before} alt={`${pair.room} before cleaning`} className="w-full h-44 object-cover" />
+                          <div className="absolute inset-0 bg-red-900/20" />
+                          <span className="absolute top-2.5 left-2.5 bg-red-600 text-white text-xs font-extrabold px-2.5 py-1 rounded-lg tracking-wide shadow">BEFORE</span>
+                        </div>
+                        <div className="relative rounded-2xl overflow-hidden shadow-md">
+                          <img src={pair.after} alt={`${pair.room} after cleaning`} className="w-full h-44 object-cover" />
+                          <span className="absolute top-2.5 left-2.5 bg-teal-600 text-white text-xs font-extrabold px-2.5 py-1 rounded-lg tracking-wide shadow">AFTER</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs text-gray-400 italic text-center">Placeholder images — replace with real before/after photos from your first jobs</p>
               </div>
 
               {/* GRAPHICS GUIDE */}
