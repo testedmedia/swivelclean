@@ -81,7 +81,7 @@ export default function Marketing() {
 
   const emailTemplates = [
     {
-      subject: 'Your SwivelClean booking is confirmed — [Property Address], [Date]',
+      subject: 'Your Ready Rental Cleaning booking is confirmed — [Property Address], [Date]',
       preview: 'Hi [Name], your cleaning is scheduled and everything is set.',
       body: `Hi [Name],
 
@@ -99,11 +99,11 @@ After the cleaning, we'll send you before/after photos and your invoice.
 
 Questions? Reply to this email or text us at (323) 555-0100.
 
-– The SwivelClean Team
-hello@swivelclean.com | swivelclean.com`,
+– The Ready Rental Cleaning Team
+hello@readyrentalcleaning.com | readyrentalcleaning.com`,
     },
     {
-      subject: 'Reminder: Your SwivelClean cleaning is tomorrow at [Time]',
+      subject: 'Reminder: Your Ready Rental Cleaning cleaning is tomorrow at [Time]',
       preview: "Just a heads up — we'll be there at [Time] tomorrow.",
       body: `Hi [Name],
 
@@ -120,8 +120,8 @@ Your cleaner will text you when they arrive. If anything changes, reply to this 
 
 See you tomorrow!
 
-– SwivelClean
-hello@swivelclean.com`,
+– Ready Rental Cleaning
+hello@readyrentalcleaning.com`,
     },
     {
       subject: '[Address] is clean and guest-ready — photos inside',
@@ -145,16 +145,16 @@ Invoice: [Invoice Link] — $[Amount] — paid
 Leave us a review? It takes 30 seconds and means the world to us:
 → Google: [Google Review Link]
 
-Thank you for choosing SwivelClean. We'll see you next time.
+Thank you for choosing Ready Rental Cleaning. We'll see you next time.
 
-– The SwivelClean Team`,
+– The Ready Rental Cleaning Team`,
     },
     {
       subject: 'How was your cleaning? Leave us a quick review',
       preview: '30 seconds. Helps us grow. Means everything.',
       body: `Hi [Name],
 
-Your SwivelClean cleaning was completed [X hours] ago. We hope [Address] is looking perfect for your next guest.
+Your Ready Rental Cleaning cleaning was completed [X hours] ago. We hope [Address] is looking perfect for your next guest.
 
 Would you take 30 seconds to leave us a review? It helps other hosts find us and helps our business grow.
 
@@ -166,7 +166,7 @@ If anything wasn't right with your cleaning, please reply to this email. We will
 
 Thank you!
 
-– [Cleaner Name] & The SwivelClean Team`,
+– [Cleaner Name] & The Ready Rental Cleaning Team`,
     },
     {
       subject: "You've been assigned a job — [Property Address], [Date] at [Time]",
@@ -195,7 +195,7 @@ Bring:
 
 See you there!
 
-– SwivelClean Operations`,
+– Ready Rental Cleaning Operations`,
     },
   ]
 
@@ -204,7 +204,7 @@ See you there!
       label: 'Launch Post (Casual)',
       content: `Hey West Hollywood / Airbnb host community 👋
 
-Launched a professional Airbnb turnover cleaning service right here in LA — SwivelClean.
+Launched a professional Airbnb turnover cleaning service right here in LA — Ready Rental Cleaning.
 
 We handle everything: linens, bathrooms, kitchen, floors, restocking. Before/after photos after every clean. $180 for standard turnovers, same-day available.
 
@@ -212,7 +212,7 @@ Fully insured, background-checked cleaners only.
 
 If you're tired of unreliable cleaners or doing it yourself between guests, we've got you.
 
-Link to book in 60 seconds: swivelclean.com
+Link to book in 60 seconds: readyrentalcleaning.com
 
 Drop a comment or DM me if you have questions. Happy to answer anything.`,
     },
@@ -220,7 +220,7 @@ Drop a comment or DM me if you have questions. Happy to answer anything.`,
       label: 'Social Proof Post',
       content: `Just completed our 50th Airbnb turnover in Los Angeles.
 
-Starting to see a pattern with the hosts we work with: the ones who automate their cleaning with SwivelClean consistently have 4.8+ star ratings. The ones doing it themselves or using inconsistent cleaners average 4.2.
+Starting to see a pattern with the hosts we work with: the ones who automate their cleaning with Ready Rental Cleaning consistently have 4.8+ star ratings. The ones doing it themselves or using inconsistent cleaners average 4.2.
 
 It's not magic. It's just reliability.
 
@@ -228,7 +228,7 @@ We show up on time. We clean to hotel standards. We send photos so you can verif
 
 If you're hosting in WeHo, Venice, Silver Lake, Santa Monica, or anywhere in LA — we'd love to earn your business.
 
-Book at swivelclean.com. First clean? We'll make sure it's perfect.`,
+Book at readyrentalcleaning.com. First clean? We'll make sure it's perfect.`,
     },
     {
       label: 'Problem/Solution Post',
@@ -236,13 +236,13 @@ Book at swivelclean.com. First clean? We'll make sure it's perfect.`,
 
 "My cleaner cancelled last minute and I had a guest checking in at 3 PM."
 
-We built SwivelClean specifically to solve that. Same-day availability (book before 10 AM), backup cleaners for every job, and a 100% satisfaction guarantee — if something's off, we come back and re-clean for free.
+We built Ready Rental Cleaning specifically to solve that. Same-day availability (book before 10 AM), backup cleaners for every job, and a 100% satisfaction guarantee — if something's off, we come back and re-clean for free.
 
 $180 for a standard turnover. Linens, bathrooms, kitchen, floors, photos.
 
 Serving West Hollywood, Venice, Santa Monica, Silver Lake, and all of LA.
 
-Book at swivelclean.com`,
+Book at readyrentalcleaning.com`,
     },
     {
       label: 'Value Post (No Sell)',
@@ -264,11 +264,11 @@ Running a short-term rental in LA? Happy to chat — DM me.`,
 
 WeHo has over 2,000 active short-term rental listings and occupancy is about to spike.
 
-SwivelClean is your on-call cleaning team. We specialize in Airbnb turnovers — $180 flat for 1-2BR, same-day available, fully insured, before/after photos every time.
+Ready Rental Cleaning is your on-call cleaning team. We specialize in Airbnb turnovers — $180 flat for 1-2BR, same-day available, fully insured, before/after photos every time.
 
 No contracts. No minimum bookings. Just reliable, professional cleaning whenever you need it.
 
-Book in 60 seconds at swivelclean.com`,
+Book in 60 seconds at readyrentalcleaning.com`,
     },
   ]
 
@@ -312,7 +312,7 @@ Reliable cleaning isn't a cost. It's insurance.`,
 
 $180 flat. Fully insured. Before/after photos. Same-day available.
 
-swivelclean.com`,
+readyrentalcleaning.com`,
     },
     {
       label: 'Single Tweet — Pain Point',
@@ -320,11 +320,11 @@ swivelclean.com`,
 
 Guest checking in at 2 PM. Cleaner texts at noon: "Can't make it today."
 
-We built SwivelClean to end that. Same-day backup cleaners in LA. Always.`,
+We built Ready Rental Cleaning to end that. Same-day backup cleaners in LA. Always.`,
     },
     {
       label: 'Reply to Airbnb Host Complaint',
-      content: `This is exactly why we started SwivelClean. Reliable, insured turnovers with same-day availability in LA. $180 flat, before/after photos, 100% guarantee. swivelclean.com — happy to help.`,
+      content: `This is exactly why we started Ready Rental Cleaning. Reliable, insured turnovers with same-day availability in LA. $180 flat, before/after photos, 100% guarantee. readyrentalcleaning.com — happy to help.`,
     },
   ]
 
@@ -333,21 +333,21 @@ We built SwivelClean to end that. Same-day backup cleaners in LA. Always.`,
       label: 'Neighborhood Introduction',
       content: `Neighbors — just wanted to introduce myself.
 
-I run SwivelClean, a professional Airbnb turnover cleaning service right here in Los Angeles. We work with short-term rental hosts across WeHo, Venice, Silver Lake, Santa Monica, and the greater LA area.
+I run Ready Rental Cleaning, a professional Airbnb turnover cleaning service right here in Los Angeles. We work with short-term rental hosts across WeHo, Venice, Silver Lake, Santa Monica, and the greater LA area.
 
 What we do: professional turnovers between guest checkouts. Linens, bathrooms, kitchen, floors, restocking — $180 flat for 1-2BR units. Same-day available. Fully insured.
 
 If you or anyone you know hosts on Airbnb and wants reliable cleaning they can count on, I'd love to connect.
 
-Feel free to DM me or visit swivelclean.com.`,
+Feel free to DM me or visit readyrentalcleaning.com.`,
     },
     {
       label: 'Recommendation Request Response',
       content: `Hi [Name] — I can help with this!
 
-I run SwivelClean, a professional Airbnb turnover cleaning service in LA. We specialize in short-term rental turnovers — $180 for 1-2BR, $220 for 3BR+. Fully insured, background-checked cleaners, before/after photos with every clean.
+I run Ready Rental Cleaning, a professional Airbnb turnover cleaning service in LA. We specialize in short-term rental turnovers — $180 for 1-2BR, $220 for 3BR+. Fully insured, background-checked cleaners, before/after photos with every clean.
 
-DM me or book directly at swivelclean.com. Happy to answer any questions.`,
+DM me or book directly at readyrentalcleaning.com. Happy to answer any questions.`,
     },
     {
       label: 'Helpful Tip Post',
@@ -357,17 +357,17 @@ One thing that made the biggest difference for my clients' ratings: a laminated 
 
 Guests who feel informed leave better reviews. Simple as that.
 
-If you need reliable cleaning for your short-term rental, that's what SwivelClean does. Happy to help — swivelclean.com`,
+If you need reliable cleaning for your short-term rental, that's what Ready Rental Cleaning does. Happy to help — readyrentalcleaning.com`,
     },
   ]
 
-  const coldEmail = `Subject: Reliable Airbnb cleaning for your [X] properties — SwivelClean LA
+  const coldEmail = `Subject: Reliable Airbnb cleaning for your [X] properties — Ready Rental Cleaning LA
 
 Hi [Property Manager Name],
 
 I noticed you manage several short-term rental properties in [Neighborhood/Area]. I'm reaching out because I think we can help.
 
-SwivelClean is a professional Airbnb turnover cleaning service based in LA. We work with property managers running anywhere from 2 to 20+ units.
+Ready Rental Cleaning is a professional Airbnb turnover cleaning service based in LA. We work with property managers running anywhere from 2 to 20+ units.
 
 What we offer:
 - $180/turnover for 1-2BR (volume discounts available for 5+ units)
@@ -388,12 +388,12 @@ Would 15 minutes this week work to talk?
 
 Best,
 [Your Name]
-SwivelClean LA
-hello@swivelclean.com
+Ready Rental Cleaning LA
+hello@readyrentalcleaning.com
 (323) 555-0100
-swivelclean.com`
+readyrentalcleaning.com`
 
-  const googleProfile = `SwivelClean LA — Professional Airbnb & Short-Term Rental Cleaning Service in Los Angeles
+  const googleProfile = `Ready Rental Cleaning LA — Professional Airbnb & Short-Term Rental Cleaning Service in Los Angeles
 
 We specialize in fast, reliable turnover cleaning for Airbnb and short-term rental hosts across Los Angeles — from West Hollywood to Venice, Silver Lake to Santa Monica.
 
@@ -408,7 +408,7 @@ Background-checked, insured professionals. Same-day availability (book before 10
 
 Serving: West Hollywood, Venice, Santa Monica, Silver Lake, Los Feliz, Downtown LA, Beverly Hills, Hollywood, Koreatown, Echo Park, Mar Vista, Culver City, and surrounding areas.
 
-Book in 60 seconds at swivelclean.com or call (323) 555-0100.`
+Book in 60 seconds at readyrentalcleaning.com or call (323) 555-0100.`
 
   return (
     <div>
@@ -589,7 +589,7 @@ Book in 60 seconds at swivelclean.com or call (323) 555-0100.`
 
               <div className="mt-8">
                 <h3 className="font-bold text-gray-900 mb-4">TurnoverBnB Listing Description</h3>
-                <CopyBox label="TurnoverBnB / Marketplace Profile" content={`SwivelClean LA — Professional Airbnb Turnover Cleaning in Los Angeles
+                <CopyBox label="TurnoverBnB / Marketplace Profile" content={`Ready Rental Cleaning LA — Professional Airbnb Turnover Cleaning in Los Angeles
 
 Serving: West Hollywood, Venice, Santa Monica, Silver Lake, Los Feliz, Downtown LA, Beverly Hills, Hollywood, and all of LA County.
 

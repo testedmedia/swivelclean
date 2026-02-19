@@ -1,63 +1,108 @@
+'use client'
+
+import { useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
+import { ArrowRight, Shield, Zap, Star, Camera, UserCheck, Award, Check } from 'lucide-react'
+import { Section } from '@/components/ui/section'
+import { Badge } from '@/components/ui/badge'
+import { Card } from '@/components/ui/card'
+import { StatCard } from '@/components/ui/stat-card'
+import { ServiceCard } from '@/components/ui/service-card'
+import { ReviewCard } from '@/components/ui/review-card'
+import { TrustBadge } from '@/components/ui/trust-badge'
+import { ShimmerButton } from '@/components/magicui/shimmer-button'
+import { SERVICES, SERVICE_AREAS, TESTIMONIALS } from '@/lib/constants'
+
+const container = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.07, delayChildren: 0.1 } },
+}
+const item = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { type: 'spring' as const, stiffness: 400, damping: 28 } },
+}
+
+function AnimateOnScroll({ children, className }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 32 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
 export default function Home() {
   return (
     <div>
-      {/* Hero Section */}
-      <section className="gradient-hero section-padding-lg relative overflow-hidden">
+      {/* Hero */}
+      <Section variant="hero" padding="lg" className="relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-teal-400 rounded-full blur-3xl" />
+          <div className="absolute top-20 left-10 w-72 h-72 bg-primary rounded-full blur-3xl" />
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-cyan-400 rounded-full blur-3xl" />
         </div>
 
-        <div className="max-w-7xl mx-auto relative">
+        <div className="relative">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="animate-fade-in">
-              <div className="badge-green mb-6">
-                <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
+            >
+              <Badge variant="success" className="mb-6">
+                <Check className="w-3.5 h-3.5" />
                 Trusted by 200+ LA Airbnb Hosts
-              </div>
+              </Badge>
 
-              <h1 className="heading-xl mb-6">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground mb-6">
                 Your Airbnb Ready in{' '}
-                <span className="text-teal-600">3 Hours</span>
+                <span className="text-primary">3 Hours</span>
                 <br />
-                <span className="text-gray-400 text-3xl sm:text-4xl lg:text-5xl font-bold">Every Time. Guaranteed.</span>
+                <span className="text-muted-foreground text-3xl sm:text-4xl lg:text-5xl font-bold">
+                  Every Time. Guaranteed.
+                </span>
               </h1>
 
-              <p className="subtext mb-8 max-w-lg">
+              <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed mb-8 max-w-lg">
                 Professional turnover &amp; deep cleaning for LA short-term rental hosts.
                 West Hollywood to Venice. Book in 60 seconds, pay online, we handle the rest.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <a href="/book" className="btn-primary">
+                <ShimmerButton href="/book">
                   Book a Cleaning
-                  <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-                </a>
-                <a href="/services" className="btn-secondary">
+                  <ArrowRight className="w-5 h-5" />
+                </ShimmerButton>
+                <a
+                  href="/services"
+                  className="inline-flex items-center justify-center h-14 px-8 border-2 border-primary bg-white text-primary rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+                >
                   View Pricing
                 </a>
               </div>
 
-              <div className="flex items-center gap-6 text-sm text-gray-500">
-                <div className="flex items-center gap-1.5">
-                  <svg className="w-4 h-4 text-teal-600" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
-                  Fully Insured
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <svg className="w-4 h-4 text-teal-600" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
-                  Same-Day Available
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <svg className="w-4 h-4 text-teal-600" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
-                  4.9 ★ Rating
-                </div>
+              <div className="flex items-center gap-6">
+                <TrustBadge icon={Shield} label="Fully Insured" />
+                <TrustBadge icon={Zap} label="Same-Day Available" />
+                <TrustBadge icon={Star} label="4.9 ★ Rating" />
               </div>
-            </div>
+            </motion.div>
 
             {/* Hero Image */}
-            <div className="animate-fade-in animate-delay-200 hidden lg:block">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
+              className="hidden lg:block"
+            >
               <div className="relative">
-                <div className="rounded-2xl overflow-hidden shadow-2xl">
+                <div className="rounded-2xl overflow-hidden shadow-depth-4">
                   <img
                     src="https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800&h=600&fit=crop&q=90"
                     alt="Luxury clean apartment interior"
@@ -65,327 +110,287 @@ export default function Home() {
                   />
                 </div>
                 {/* Floating card */}
-                <div className="absolute -bottom-6 -left-6 glass p-4 shadow-xl">
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.6, type: 'spring', stiffness: 300, damping: 25 }}
+                  className="absolute -bottom-6 -left-6 bg-background/80 backdrop-blur-xl border border-border/30 rounded-2xl p-4 shadow-depth-3"
+                >
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center">
-                      <svg className="w-6 h-6 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                    <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center">
+                      <Check className="w-6 h-6 text-primary" />
                     </div>
                     <div>
-                      <div className="font-bold text-gray-900">1,200+</div>
-                      <div className="text-xs text-gray-500">Cleanings Completed</div>
+                      <div className="font-bold text-foreground">1,200+</div>
+                      <div className="text-xs text-muted-foreground">Cleanings Completed</div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
                 {/* Floating rating */}
-                <div className="absolute -top-4 -right-4 glass p-4 shadow-xl">
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.8, type: 'spring', stiffness: 300, damping: 25 }}
+                  className="absolute -top-4 -right-4 bg-background/80 backdrop-blur-xl border border-border/30 rounded-2xl p-4 shadow-depth-3"
+                >
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-teal-600">4.9</div>
-                    <div className="text-yellow-500 text-sm">★★★★★</div>
-                    <div className="text-xs text-gray-500 mt-1">200+ reviews</div>
+                    <div className="text-2xl font-bold text-primary">4.9</div>
+                    <div className="flex gap-0.5 justify-center">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Star key={i} className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
+                      ))}
+                    </div>
+                    <div className="text-xs text-muted-foreground mt-1">200+ reviews</div>
                   </div>
-                </div>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* Stats Bar */}
-      <section className="bg-white border-y border-gray-100">
+      <section className="bg-background border-y border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="stat-number">200+</div>
-              <div className="stat-label">Happy Hosts</div>
-            </div>
-            <div>
-              <div className="stat-number">1,200+</div>
-              <div className="stat-label">Cleanings Done</div>
-            </div>
-            <div>
-              <div className="stat-number">4.9★</div>
-              <div className="stat-label">Average Rating</div>
-            </div>
-            <div>
-              <div className="stat-number">3hr</div>
-              <div className="stat-label">Avg Turnaround</div>
-            </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <StatCard value={200} suffix="+" label="Happy Hosts" />
+            <StatCard value={1200} suffix="+" label="Cleanings Done" />
+            <StatCard value={49} prefix="" suffix="★" label="Average Rating" />
+            <StatCard value={3} suffix="hr" label="Avg Turnaround" />
           </div>
         </div>
       </section>
 
       {/* How It Works */}
-      <section className="section-padding bg-white">
-        <div className="max-w-7xl mx-auto">
+      <Section variant="default" padding="default">
+        <AnimateOnScroll>
           <div className="text-center mb-16">
-            <div className="badge mb-4">Simple Process</div>
-            <h2 className="heading-lg mb-4">Book in 60 Seconds. We Handle Everything.</h2>
-            <p className="subtext max-w-2xl mx-auto">From booking to spotless — here is how it works.</p>
+            <Badge className="mb-4">Simple Process</Badge>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+              Book in 60 Seconds. We Handle Everything.
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              From booking to spotless — here is how it works.
+            </p>
           </div>
+        </AnimateOnScroll>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                step: '01',
-                title: 'Book Online',
-                desc: 'Enter your property address, pick a service, choose a date. Secure payment via Stripe. Done in 60 seconds.',
-                icon: (
-                  <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                ),
-              },
-              {
-                step: '02',
-                title: 'We Clean',
-                desc: 'Our background-checked, insured cleaner arrives on schedule with professional supplies. 3-4 hour turnaround.',
-                icon: (
-                  <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
-                ),
-              },
-              {
-                step: '03',
-                title: 'Guest Ready',
-                desc: 'Get before/after photos, confirmation email, and invoice. Your property is spotless for the next guest.',
-                icon: (
-                  <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 13l4 4L19 7" /></svg>
-                ),
-              },
-            ].map((item, i) => (
-              <div key={i} className="card-elevated p-8 text-center relative">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-teal-600 text-white text-xs font-bold px-3 py-1 rounded-full">
-                  Step {item.step}
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-80px' }}
+          className="grid md:grid-cols-3 gap-8"
+        >
+          {[
+            { step: '01', title: 'Book Online', desc: 'Enter your property address, pick a service, choose a date. Secure payment via Stripe. Done in 60 seconds.', icon: <Zap className="w-7 h-7" /> },
+            { step: '02', title: 'We Clean', desc: 'Our background-checked, insured cleaner arrives on schedule with professional supplies. 3-4 hour turnaround.', icon: <Award className="w-7 h-7" /> },
+            { step: '03', title: 'Guest Ready', desc: 'Get before/after photos, confirmation email, and invoice. Your property is spotless for the next guest.', icon: <Check className="w-7 h-7" /> },
+          ].map((step) => (
+            <motion.div key={step.step} variants={item}>
+              <Card depth={1} hover="lift" className="p-8 text-center relative">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full">
+                  Step {step.step}
                 </div>
-                <div className="w-16 h-16 mx-auto mb-6 bg-teal-50 rounded-2xl flex items-center justify-center text-teal-600">
-                  {item.icon}
+                <div className="w-16 h-16 mx-auto mb-6 bg-muted rounded-2xl flex items-center justify-center text-primary">
+                  {step.icon}
                 </div>
-                <h3 className="heading-md mb-3">{item.title}</h3>
-                <p className="text-gray-500 leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+                <h3 className="text-xl font-bold mb-3">{step.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{step.desc}</p>
+              </Card>
+            </motion.div>
+          ))}
+        </motion.div>
+      </Section>
 
       {/* Services Preview */}
-      <section className="section-padding bg-gray-50">
-        <div className="max-w-7xl mx-auto">
+      <Section variant="muted" padding="default">
+        <AnimateOnScroll>
           <div className="text-center mb-16">
-            <div className="badge mb-4">Our Services</div>
-            <h2 className="heading-lg mb-4">Transparent Pricing. Premium Quality.</h2>
-            <p className="subtext max-w-2xl mx-auto">Every cleaning includes supplies, insurance, and before/after photos.</p>
+            <Badge className="mb-4">Our Services</Badge>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+              Transparent Pricing. Premium Quality.
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Every cleaning includes supplies, insurance, and before/after photos.
+            </p>
           </div>
+        </AnimateOnScroll>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                title: 'Standard Turnover',
-                price: '$180',
-                time: '3–4 hours',
-                popular: false,
-                image: 'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=400&h=250&fit=crop',
-                features: ['Change all linens', 'Bathrooms deep clean', 'Kitchen wipe-down', 'Vacuum & mop floors', 'Trash & restock'],
-              },
-              {
-                title: 'Premium Turnover',
-                price: '$220',
-                time: '4–5 hours',
-                popular: true,
-                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&h=250&fit=crop',
-                features: ['All standard services', 'Extra bedrooms/baths', 'Dust all surfaces', 'Windows & baseboards', 'Pre-guest quality check'],
-              },
-              {
-                title: 'Deep Clean',
-                price: '$350',
-                time: '5–6 hours',
-                popular: false,
-                image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&h=250&fit=crop',
-                features: ['Full property deep clean', 'Appliance detailing', 'Wall & ceiling clean', 'Vent & blinds', 'Baseboards scrubbed'],
-              },
-            ].map((service, i) => (
-              <div key={i} className={`card-elevated overflow-hidden ${service.popular ? 'ring-2 ring-teal-500 relative' : ''}`}>
-                {service.popular && (
-                  <div className="absolute top-4 right-4 z-10 bg-teal-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                    MOST POPULAR
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-80px' }}
+          className="grid md:grid-cols-3 gap-8"
+        >
+          {SERVICES.map((service) => (
+            <motion.div key={service.value} variants={item}>
+              <ServiceCard
+                title={service.title}
+                price={service.priceLabel}
+                time={service.time}
+                image={service.image}
+                features={service.features.slice(0, 5)}
+                popular={service.popular}
+              />
+            </motion.div>
+          ))}
+        </motion.div>
+      </Section>
+
+      {/* Why Ready Rental Cleaning */}
+      <Section variant="default" padding="default">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <AnimateOnScroll>
+            <Badge className="mb-4">Why Ready Rental Cleaning</Badge>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-6">
+              Built for Airbnb Hosts Who Demand the Best
+            </h2>
+            <p className="text-muted-foreground mb-8 leading-relaxed">
+              Every guest checkout is a revenue event. A missed or bad cleaning means lost bookings,
+              bad reviews, and frustrated guests. We eliminate that risk completely.
+            </p>
+
+            <div className="space-y-6">
+              {[
+                { title: 'Fully Insured & Bonded', desc: '$2M general liability coverage. Your property is protected against any incident.', icon: Shield },
+                { title: 'Background-Checked Cleaners', desc: 'Every cleaner passes thorough background verification before joining our team.', icon: UserCheck },
+                { title: '100% Satisfaction Guarantee', desc: 'Not happy with the clean? We come back and re-clean for free. No questions asked.', icon: Star },
+                { title: 'Photo Documentation', desc: 'Before/after photos with every cleaning so you can verify remotely.', icon: Camera },
+              ].map((feature) => (
+                <div key={feature.title} className="flex gap-4">
+                  <div className="w-12 h-12 bg-muted rounded-xl flex items-center justify-center flex-shrink-0">
+                    <feature.icon className="w-6 h-6 text-primary" />
                   </div>
-                )}
-                <img src={service.image} alt={service.title} className="w-full h-48 object-cover" />
-                <div className="p-8">
-                  <h3 className="text-xl font-bold mb-1">{service.title}</h3>
-                  <p className="text-sm text-gray-500 mb-4">{service.time}</p>
-                  <div className="text-4xl font-extrabold text-teal-600 mb-6">{service.price}</div>
-                  <ul className="space-y-2.5 mb-8">
-                    {service.features.map((f, j) => (
-                      <li key={j} className="flex items-start gap-2.5 text-sm text-gray-600">
-                        <svg className="w-4 h-4 text-teal-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                  <a href="/book" className={service.popular ? 'btn-primary w-full !text-center' : 'btn-secondary w-full !text-center'}>
-                    Book Now
-                  </a>
+                  <div>
+                    <h3 className="font-bold text-foreground mb-1">{feature.title}</h3>
+                    <p className="text-sm text-muted-foreground">{feature.desc}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why SwivelClean */}
-      <section className="section-padding bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <div className="badge mb-4">Why SwivelClean</div>
-              <h2 className="heading-lg mb-6">Built for Airbnb Hosts Who Demand the Best</h2>
-              <p className="text-gray-500 mb-8 leading-relaxed">
-                Every guest checkout is a revenue event. A missed or bad cleaning means lost bookings, bad reviews, and frustrated guests. We eliminate that risk completely.
-              </p>
-
-              <div className="space-y-6">
-                {[
-                  {
-                    title: 'Fully Insured & Bonded',
-                    desc: '$2M general liability coverage. Your property is protected against any incident.',
-                    icon: <svg className="w-6 h-6 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>,
-                  },
-                  {
-                    title: 'Background-Checked Cleaners',
-                    desc: 'Every cleaner passes thorough background verification before joining our team.',
-                    icon: <svg className="w-6 h-6 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>,
-                  },
-                  {
-                    title: '100% Satisfaction Guarantee',
-                    desc: 'Not happy with the clean? We come back and re-clean for free. No questions asked.',
-                    icon: <svg className="w-6 h-6 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" /></svg>,
-                  },
-                  {
-                    title: 'Photo Documentation',
-                    desc: 'Before/after photos with every cleaning so you can verify remotely.',
-                    icon: <svg className="w-6 h-6 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>,
-                  },
-                ].map((item, i) => (
-                  <div key={i} className="flex gap-4">
-                    <div className="w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                      {item.icon}
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-gray-900 mb-1">{item.title}</h3>
-                      <p className="text-sm text-gray-500">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              ))}
             </div>
+          </AnimateOnScroll>
 
+          <AnimateOnScroll>
             <div className="relative">
               <img
                 src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&h=700&fit=crop"
                 alt="Clean modern apartment interior"
-                className="rounded-2xl shadow-xl w-full h-[500px] object-cover"
+                className="rounded-2xl shadow-depth-3 w-full h-[500px] object-cover"
               />
-              <div className="absolute bottom-6 left-6 right-6 glass p-6">
+              <div className="absolute bottom-6 left-6 right-6 bg-background/80 backdrop-blur-xl border border-border/30 rounded-2xl p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="text-sm font-medium text-gray-500">Average Host Rating</div>
-                    <div className="text-2xl font-bold text-gray-900">4.9 out of 5.0</div>
+                    <div className="text-sm font-medium text-muted-foreground">Average Host Rating</div>
+                    <div className="text-2xl font-bold text-foreground">4.9 out of 5.0</div>
                   </div>
-                  <div className="text-yellow-500 text-2xl">★★★★★</div>
+                  <div className="flex gap-0.5">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </AnimateOnScroll>
         </div>
-      </section>
+      </Section>
 
       {/* Testimonials */}
-      <section className="section-padding bg-gray-50">
-        <div className="max-w-7xl mx-auto">
+      <Section variant="muted" padding="default">
+        <AnimateOnScroll>
           <div className="text-center mb-16">
-            <div className="badge mb-4">Reviews</div>
-            <h2 className="heading-lg mb-4">What LA Hosts Are Saying</h2>
+            <Badge className="mb-4">Reviews</Badge>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+              What LA Hosts Are Saying
+            </h2>
           </div>
+        </AnimateOnScroll>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { name: 'Sarah M.', area: 'West Hollywood', text: 'Absolute lifesaver. Had a same-day turnover and SwivelClean had the property guest-ready in under 3 hours. My reviews went from 4.2 to 4.8 since I started using them.', rating: 5 },
-              { name: 'David K.', area: 'Venice', text: 'I manage 5 properties and SwivelClean handles all of them. Professional, reliable, and their photo documentation gives me peace of mind when I can\'t be there in person.', rating: 5 },
-              { name: 'Maria L.', area: 'Silver Lake', text: 'The best cleaning service for Airbnb turnovers. Fast, thorough, and their booking system is so easy. I just click, pay, and forget about it. Worth every penny.', rating: 5 },
-            ].map((review, i) => (
-              <div key={i} className="card p-8">
-                <div className="text-yellow-500 mb-4">★★★★★</div>
-                <p className="text-gray-600 leading-relaxed mb-6 italic">&ldquo;{review.text}&rdquo;</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center text-teal-700 font-bold text-sm">
-                    {review.name[0]}
-                  </div>
-                  <div>
-                    <div className="font-semibold text-gray-900 text-sm">{review.name}</div>
-                    <div className="text-xs text-gray-500">{review.area}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-80px' }}
+          className="grid md:grid-cols-3 gap-8"
+        >
+          {TESTIMONIALS.slice(0, 3).map((review) => (
+            <motion.div key={review.name} variants={item}>
+              <ReviewCard {...review} />
+            </motion.div>
+          ))}
+        </motion.div>
 
-          <div className="text-center mt-10">
-            <a href="/reviews" className="text-teal-600 font-semibold text-sm hover:text-teal-700 transition-colors">
-              Read all reviews →
-            </a>
-          </div>
+        <div className="text-center mt-10">
+          <a href="/reviews" className="text-primary font-semibold text-sm hover:text-primary/80 transition-colors">
+            Read all reviews &rarr;
+          </a>
         </div>
-      </section>
+      </Section>
 
       {/* Service Areas */}
-      <section className="section-padding bg-white">
-        <div className="max-w-7xl mx-auto">
+      <Section variant="default" padding="default">
+        <AnimateOnScroll>
           <div className="text-center mb-16">
-            <div className="badge mb-4">Coverage</div>
-            <h2 className="heading-lg mb-4">Serving All of Los Angeles</h2>
-            <p className="subtext max-w-2xl mx-auto">We cover the top Airbnb neighborhoods in LA with same-day availability.</p>
+            <Badge className="mb-4">Coverage</Badge>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+              Serving All of Los Angeles
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              We cover the top Airbnb neighborhoods in LA with same-day availability.
+            </p>
           </div>
+        </AnimateOnScroll>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { area: 'West Hollywood', listings: '2,000+ listings' },
-              { area: 'Venice', listings: '1,500+ listings' },
-              { area: 'Santa Monica', listings: '1,800+ listings' },
-              { area: 'Silver Lake', listings: '1,200+ listings' },
-              { area: 'Downtown LA', listings: '1,500+ listings' },
-              { area: 'Los Feliz', listings: '800+ listings' },
-              { area: 'Beverly Hills', listings: '900+ listings' },
-              { area: 'Hollywood', listings: '1,100+ listings' },
-            ].map((item, i) => (
-              <div key={i} className="card p-5 text-center">
-                <div className="font-bold text-gray-900 mb-1">{item.area}</div>
-                <div className="text-xs text-gray-500">{item.listings}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-80px' }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-4"
+        >
+          {SERVICE_AREAS.slice(0, 8).map((area) => (
+            <motion.div key={area.area} variants={item}>
+              <Card depth={1} className="p-5 text-center">
+                <div className="font-bold text-foreground mb-1">{area.area}</div>
+                <div className="text-xs text-muted-foreground">{area.listings}</div>
+              </Card>
+            </motion.div>
+          ))}
+        </motion.div>
+      </Section>
 
       {/* CTA */}
-      <section className="section-padding gradient-cta text-white relative overflow-hidden">
+      <Section variant="cta" padding="default" className="relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-10 right-10 w-64 h-64 bg-white rounded-full blur-3xl" />
           <div className="absolute bottom-10 left-10 w-80 h-80 bg-white rounded-full blur-3xl" />
         </div>
         <div className="max-w-3xl mx-auto text-center relative">
-          <h2 className="text-4xl sm:text-5xl font-extrabold mb-6">Ready to Never Worry About Cleanings Again?</h2>
-          <p className="text-lg text-teal-100 mb-8 max-w-xl mx-auto">
+          <h2 className="text-4xl sm:text-5xl font-extrabold mb-6">
+            Ready to Never Worry About Cleanings Again?
+          </h2>
+          <p className="text-lg text-primary-foreground/80 mb-8 max-w-xl mx-auto">
             Book your first cleaning now. 60 seconds to book, 3 hours to spotless, 100% guaranteed.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/book" className="btn-white">
+            <a
+              href="/book"
+              className="inline-flex items-center justify-center gap-2 h-14 px-8 bg-white text-primary rounded-xl font-semibold shadow-depth-2 hover:shadow-depth-3 transition-all"
+            >
               Book Your First Cleaning
-              <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+              <ArrowRight className="w-5 h-5" />
             </a>
-            <a href="/contact" className="inline-flex items-center justify-center px-8 py-4 border-2 border-white/30 text-white rounded-xl font-semibold hover:bg-white/10 transition-all">
+            <a
+              href="/contact"
+              className="inline-flex items-center justify-center h-14 px-8 border-2 border-white/30 text-white rounded-xl font-semibold hover:bg-white/10 transition-all"
+            >
               Contact Us
             </a>
           </div>
         </div>
-      </section>
+      </Section>
     </div>
   )
 }

@@ -42,10 +42,10 @@ function EmailPreview({ subject, preview, tag, children }: { subject: string; pr
     <div className="mb-4 rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
       <button onClick={() => setOpen(!open)} className="w-full text-left hover:bg-gray-50 transition-colors">
         <div className="flex items-center gap-4 px-5 py-4 bg-white">
-          <div className="w-10 h-10 rounded-full bg-teal-600 flex items-center justify-center text-white font-extrabold text-sm flex-shrink-0">S</div>
+          <div className="w-10 h-10 rounded-full bg-teal-600 flex items-center justify-center text-white font-extrabold text-sm flex-shrink-0">R</div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center justify-between mb-0.5">
-              <span className="text-sm font-bold text-gray-900">SwivelClean</span>
+              <span className="text-sm font-bold text-gray-900">Ready Rental Cleaning</span>
               <div className="flex items-center gap-2">
                 <span className="text-xs bg-teal-50 text-teal-700 border border-teal-200 px-2 py-0.5 rounded-full font-semibold">{tag}</span>
                 <span className="text-xs text-gray-400">auto-sends</span>
@@ -60,13 +60,13 @@ function EmailPreview({ subject, preview, tag, children }: { subject: string; pr
       {open && (
         <div className="border-t border-gray-100">
           <div className="bg-teal-600 px-8 py-5 text-center">
-            <p className="text-white font-extrabold text-xl tracking-widest">SWIVELCLEAN</p>
+            <p className="text-white font-extrabold text-xl tracking-widest">READY RENTAL CLEANING</p>
             <p className="text-teal-200 text-xs mt-0.5">Airbnb Turnover Specialists · Los Angeles, CA</p>
           </div>
           <div className="bg-white px-8 py-7">{children}</div>
           <div className="bg-gray-50 px-6 py-4 text-center border-t border-gray-100">
-            <p className="text-xs text-gray-500 font-medium">SwivelClean LA · hello@swivelclean.com · (323) 555-0100</p>
-            <p className="text-xs text-gray-400 mt-1">You&apos;re receiving this because you booked at swivelclean.com · Unsubscribe</p>
+            <p className="text-xs text-gray-500 font-medium">Ready Rental Cleaning · hello@readyrentalcleaning.com · (323) 555-0100</p>
+            <p className="text-xs text-gray-400 mt-1">You&apos;re receiving this because you booked at readyrentalcleaning.com · Unsubscribe</p>
           </div>
         </div>
       )}
@@ -113,7 +113,7 @@ export default function BusinessPlan() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="badge mb-6">Business Plan</div>
           <h1 className="heading-xl mb-6">
-            The SwivelClean LA{' '}
+            The Ready Rental Cleaning{' '}
             <span className="text-teal-600">Business Plan</span>
           </h1>
           <p className="subtext max-w-2xl mx-auto mb-10">
@@ -203,7 +203,7 @@ export default function BusinessPlan() {
               </div>
 
               <div>
-                <h3 className="heading-md mb-6">Why SwivelClean Wins</h3>
+                <h3 className="heading-md mb-6">Why Ready Rental Cleaning Wins</h3>
                 <div className="grid md:grid-cols-3 gap-6">
                   {[
                     { title: 'Pain Point is Real', desc: 'Every Airbnb host in LA has a cleaning horror story — no-shows, bad quality, last-minute cancellations. We solve this completely.', icon: icons.pain },
@@ -401,7 +401,7 @@ export default function BusinessPlan() {
                         { name: 'Rocket Maids LA', price: '$110–220', booking: 'Yes', photos: 'No', edge: 'Hourly billing, unpredictable cost' },
                         { name: 'Turno Marketplace', price: '$100–180', booking: 'Yes', photos: 'Sometimes', edge: 'Marketplace, not a dedicated service' },
                         { name: 'Local / Craigslist', price: '$80–140', booking: 'No', photos: 'No', edge: 'Uninsured, unreliable, no system' },
-                        { name: 'SwivelClean', price: '$180–295', booking: 'Yes 60s', photos: 'Every clean', edge: 'Premium — justified by quality + guarantee' },
+                        { name: 'Ready Rental Cleaning', price: '$180–295', booking: 'Yes 60s', photos: 'Every clean', edge: 'Premium — justified by quality + guarantee' },
                       ].map((row, i) => (
                         <tr key={i} className={i === 5 ? 'bg-teal-50 font-bold' : 'hover:bg-gray-50'}>
                           <td className="px-6 py-4 font-medium text-gray-900">{i === 5 ? `✦ ${row.name}` : row.name}</td>
@@ -428,7 +428,7 @@ export default function BusinessPlan() {
                 <div className="space-y-4 mb-10">
                   {[
                     { role: 'Operations Manager (Founder)', type: 'Sweat equity', pay: '$0', desc: 'Handles bookings, client communication, scheduling, cleaner coordination, admin dashboard' },
-                    { role: 'Cleaner #1', type: 'Independent contractor (1099)', pay: '$18–22/hr (~$160/day)', desc: 'Full-time cleaner. Trained on SwivelClean standards. Background checked. Assigned to primary service area.' },
+                    { role: 'Cleaner #1', type: 'Independent contractor (1099)', pay: '$18–22/hr (~$160/day)', desc: 'Full-time cleaner. Trained on Ready Rental Cleaning standards. Background checked. Assigned to primary service area.' },
                     { role: 'Cleaner #2', type: 'Add in Month 2', pay: '$18–22/hr (~$160/day)', desc: 'Added when volume exceeds 12–15 jobs/week. Enables double-booking and larger service radius.' },
                   ].map((member, i) => (
                     <div key={i} className="card p-6 flex flex-col sm:flex-row justify-between gap-4">
@@ -447,9 +447,9 @@ export default function BusinessPlan() {
                 <h3 className="heading-md mb-6">Booking to Completion Workflow</h3>
                 <div className="space-y-4 mb-12">
                   {[
-                    { phase: 'Booking — 60 seconds', color: 'teal', steps: ['Host visits swivelclean.com', 'Enters address, selects service, picks date/time', 'Pays securely via Stripe', 'Instant confirmation email + calendar invite sent', 'Booking visible in admin dashboard'] },
+                    { phase: 'Booking — 60 seconds', color: 'teal', steps: ['Host visits readyrentalcleaning.com', 'Enters address, selects service, picks date/time', 'Pays securely via Stripe', 'Instant confirmation email + calendar invite sent', 'Booking visible in admin dashboard'] },
                     { phase: '24 Hours Before', color: 'blue', steps: ['Cleaner receives text + email: address, access code, job checklist', 'Cleaner confirms availability', 'Host receives reminder: cleaner name, arrival time, contact number', 'Any last-minute notes from host captured'] },
-                    { phase: 'Day of Cleaning', color: 'green', steps: ['Cleaner arrives on time (10 min early)', 'Uses standard SwivelClean checklist throughout', 'Photos taken before and after cleaning', 'Any issues (damage, missing supplies) reported immediately'] },
+                    { phase: 'Day of Cleaning', color: 'green', steps: ['Cleaner arrives on time (10 min early)', 'Uses standard Ready Rental Cleaning checklist throughout', 'Photos taken before and after cleaning', 'Any issues (damage, missing supplies) reported immediately'] },
                     { phase: 'Post-Cleaning — Within 2 Hours', color: 'purple', steps: ['Before/after photos uploaded', 'Job marked complete in dashboard', 'Host receives completion email + photo report', 'Invoice generated automatically', 'Review request sent (Google link)', 'Cleaner paid via ACH next business day'] },
                   ].map((phase, i) => (
                     <div key={i} className={`rounded-2xl p-6 border-l-4 ${
@@ -497,7 +497,7 @@ export default function BusinessPlan() {
                 <CopyBox label="Job Post — Copy & Paste to Indeed / Facebook / Craigslist" content={`TITLE: Airbnb Turnover Cleaner — $18-22/hr, Flexible Hours, West Hollywood / LA
 
 About the role:
-SwivelClean is a professional Airbnb turnover cleaning service in Los Angeles. We handle deep cleaning between guest checkouts for short-term rental hosts.
+Ready Rental Cleaning is a professional Airbnb turnover cleaning service in Los Angeles. We handle deep cleaning between guest checkouts for short-term rental hosts.
 
 This is a 1099 independent contractor position. Set your own schedule. Work as many or as few jobs as you want.
 
@@ -715,9 +715,9 @@ Questions? Text (323) 555-0100`} />
                   </div>
                 </div>
 
-                <CopyBox label="Cleaner Onboarding Script — Read this to every new hire on day 1" content={`SWIVELCLEAN CLEANER STANDARDS — READ BEFORE YOUR FIRST JOB
+                <CopyBox label="Cleaner Onboarding Script — Read this to every new hire on day 1" content={`READY RENTAL CLEANING CLEANER STANDARDS — READ BEFORE YOUR FIRST JOB
 
-Welcome to SwivelClean. Here's what I need you to know:
+Welcome to Ready Rental Cleaning. Here's what I need you to know:
 
 1. PHOTOS ARE MANDATORY
 Before you touch anything in the property, take photos of every room.
@@ -738,7 +738,7 @@ Text me when done: "Done at [address] at [time]"
 If anything is wrong — damage, missing supplies, weird situation — text me IMMEDIATELY.
 
 5. NEVER GIVE CLIENTS YOUR PERSONAL NUMBER
-All communication goes through me. If a client asks for your number, say "everything goes through SwivelClean."
+All communication goes through me. If a client asks for your number, say "everything goes through Ready Rental Cleaning."
 
 6. YOU REPRESENT THIS BUSINESS
 How you clean directly determines if we get a 5-star review or a complaint.
@@ -765,7 +765,7 @@ Any questions?`} />
                     'Open Mercury business bank account — free, no minimum, 1 day',
                     'Get general liability insurance via Thimble.com ($50/month, same-day)',
                     'Set up Stripe for payment processing',
-                    'Launch swivelclean.com website',
+                    'Launch readyrentalcleaning.com website',
                     'Sign 1099 contractor agreement with first cleaner',
                   ],
                 },
@@ -913,7 +913,7 @@ Any questions?`} />
 
                 <CopyBox label="Post #1 — Launch Post (Week 1)" note="Best for first post in any group. Add a photo of a beautifully cleaned apartment." content={`Hey [West Hollywood / LA] Airbnb hosts —
 
-Just launched SwivelClean, a professional Airbnb turnover service right here in LA.
+Just launched Ready Rental Cleaning, a professional Airbnb turnover service right here in LA.
 
 What we do: Handle everything between guest checkouts — change all linens, deep clean bathrooms, wipe down kitchen, mop floors, restock, and send you before/after photos so you can verify from your phone.
 
@@ -922,7 +922,7 @@ Price: $180 for 1-2 bedroom units. Fully insured. Same-day available.
 
 Offering our first 2 cleanings free to earn our first 5-star reviews.
 
-Book in 60 seconds at swivelclean.com or drop a comment/DM and I'll take care of you.`} />
+Book in 60 seconds at readyrentalcleaning.com or drop a comment/DM and I'll take care of you.`} />
 
                 <CopyBox label="Post #2 — Problem/Solution (Week 2)" note="Best performing post type. Hits the exact pain Airbnb hosts have." content={`The worst feeling as an Airbnb host:
 
@@ -930,13 +930,13 @@ Guest checking in at 2 PM. Cleaner texts at noon: "Can't make it today."
 
 That lost you a 5-star review. Maybe the booking too.
 
-I built SwivelClean specifically to solve this. We have backup coverage for every job, same-day emergency availability (book by 10 AM), and a 100% satisfaction guarantee.
+I built Ready Rental Cleaning specifically to solve this. We have backup coverage for every job, same-day emergency availability (book by 10 AM), and a 100% satisfaction guarantee.
 
 $180 for a standard turnover. Linens, bathrooms, kitchen, floors, photos.
 
 If you're hosting in WeHo, Venice, Silver Lake, Santa Monica — we've got you covered.
 
-Book at swivelclean.com. First clean? We make sure it's perfect.`} />
+Book at readyrentalcleaning.com. First clean? We make sure it's perfect.`} />
 
                 <CopyBox label="Post #3 — Social Proof (Week 3)" note="Use after you've done your first 5 cleanings. Replace the number with real data." content={`Just completed our 20th Airbnb turnover in Los Angeles.
 
@@ -944,11 +944,11 @@ Pattern I'm seeing: hosts who use a consistent, professional cleaner get 4.8–5
 
 It's not the property. It's the consistency.
 
-SwivelClean shows up every time, cleans to hotel standards, sends before/after photos so you can check from anywhere.
+Ready Rental Cleaning shows up every time, cleans to hotel standards, sends before/after photos so you can check from anywhere.
 
 If you're hosting in WeHo, Venice, Santa Monica, or anywhere in LA — try us once. I think you'll stop looking.
 
-swivelclean.com`} />
+readyrentalcleaning.com`} />
 
                 <CopyBox label="Post #4 — Value Post (No Hard Sell)" note="Post this when you want to give value and build trust, not push services." content={`For LA Airbnb hosts — 5 things most cleaners miss that cost you 5-star reviews:
 
@@ -960,17 +960,17 @@ swivelclean.com`} />
 
 These are on our 47-point checklist for every clean.
 
-Hosting in LA? Happy to help — swivelclean.com`} />
+Hosting in LA? Happy to help — readyrentalcleaning.com`} />
 
                 <CopyBox label="Post #5 — Seasonal / Urgency (Summer / Peak Season)" note="Use this in April–May before summer peak. Very effective." content={`West Hollywood Airbnb hosts — summer bookings are about to spike.
 
 If your cleaning situation isn't locked down, now is the time to fix it.
 
-SwivelClean handles Airbnb turnovers in LA — $180 flat rate, same-day available, $2M insured, before/after photos every time.
+Ready Rental Cleaning handles Airbnb turnovers in LA — $180 flat rate, same-day available, $2M insured, before/after photos every time.
 
 No contracts. No minimums. Just show up when you need us.
 
-Book in 60 seconds at swivelclean.com — or DM me and I'll handle it personally.`} />
+Book in 60 seconds at readyrentalcleaning.com — or DM me and I'll handle it personally.`} />
               </div>
 
               {/* X / TWITTER */}
@@ -994,7 +994,7 @@ A bad clean tanks your rating instantly. Guests are ruthless. One hair in the dr
 
 4.9-star hosts check before/after photos remotely. They know what guests walk into before guests get there.
 
-We send before/after photos with every SwivelClean job. It's not optional — it's standard.
+We send before/after photos with every Ready Rental Cleaning job. It's not optional — it's standard.
 
 ---
 
@@ -1008,7 +1008,7 @@ We have coverage for same-day emergencies. No excuses.
 
 5/ None of this is complicated. It's just execution.
 
-If you're hosting in LA and want someone who shows up every time: swivelclean.com
+If you're hosting in LA and want someone who shows up every time: readyrentalcleaning.com
 
 $180 turnovers. Fully insured. Before/after photos. 100% guarantee.`} />
 
@@ -1016,7 +1016,7 @@ $180 turnovers. Fully insured. Before/after photos. 100% guarantee.`} />
 
 $180 flat. Fully insured. Before/after photos. Same-day available.
 
-swivelclean.com
+readyrentalcleaning.com
 
 #Airbnb #AirbnbHost #LosAngeles`} />
 
@@ -1026,9 +1026,9 @@ swivelclean.com
 
 ...at noon, with check-in at 3 PM.
 
-Built SwivelClean to end this. Same-day backup cleaners in LA. Always.
+Built Ready Rental Cleaning to end this. Same-day backup cleaners in LA. Always.
 
-swivelclean.com`} />
+readyrentalcleaning.com`} />
               </div>
 
               {/* NEXTDOOR */}
@@ -1038,7 +1038,7 @@ swivelclean.com`} />
 
                 <CopyBox label="Nextdoor Post #1 — Neighborhood Introduction" content={`Neighbors — introducing myself!
 
-I recently launched SwivelClean, a professional cleaning service for Airbnb and short-term rental hosts right here in Los Angeles.
+I recently launched Ready Rental Cleaning, a professional cleaning service for Airbnb and short-term rental hosts right here in Los Angeles.
 
 We handle everything between guest checkouts: linens, bathrooms, kitchen, floors, restocking, and before/after photos. $180 for standard units, same-day available.
 
@@ -1046,23 +1046,23 @@ Fully insured ($2M general liability), background-checked cleaners only.
 
 If you or anyone you know hosts on Airbnb and needs reliable cleaning they can count on — I'd love to help.
 
-Visit swivelclean.com or feel free to message me directly.`} />
+Visit readyrentalcleaning.com or feel free to message me directly.`} />
 
-                <CopyBox label="Nextdoor Post #2 — Reply to Cleaning Recommendation Requests" note="Search Nextdoor for 'cleaning' or 'cleaner' — reply to anyone asking for recommendations." content={`Hi [Name] — I can help with this! I run SwivelClean, a professional Airbnb turnover service in LA. We specialize in short-term rental turnovers — $180 for 1-2BR, fully insured, before/after photos with every clean.
+                <CopyBox label="Nextdoor Post #2 — Reply to Cleaning Recommendation Requests" note="Search Nextdoor for 'cleaning' or 'cleaner' — reply to anyone asking for recommendations." content={`Hi [Name] — I can help with this! I run Ready Rental Cleaning, a professional Airbnb turnover service in LA. We specialize in short-term rental turnovers — $180 for 1-2BR, fully insured, before/after photos with every clean.
 
-Happy to book you in — swivelclean.com or feel free to message me directly.`} />
+Happy to book you in — readyrentalcleaning.com or feel free to message me directly.`} />
               </div>
 
               {/* EMAIL TEMPLATES */}
               <div>
                 <h3 className="heading-md mb-3">Company Emails — All 5 Live & Auto-Sending</h3>
-                <p className="text-sm text-gray-500 mb-2">These are your real emails. They send automatically from <strong>hello@swivelclean.com</strong> the moment each event happens. Click any email to preview the full design.</p>
+                <p className="text-sm text-gray-500 mb-2">These are your real emails. They send automatically from <strong>hello@readyrentalcleaning.com</strong> the moment each event happens. Click any email to preview the full design.</p>
                 <div className="bg-teal-50 border border-teal-200 rounded-xl p-4 text-sm text-teal-800 mb-6">
                   <strong>Already wired:</strong> Booking confirmation fires instantly on booking. 24h reminder fires the day before. Completion email fires when you mark a job done in your admin dashboard. All powered by Resend.
                 </div>
 
                 {/* Email 1 — Booking Confirmation */}
-                <EmailPreview tag="Sends on booking" subject="Your SwivelClean booking is confirmed — [Address], [Date]" preview="Great news — your cleaning is confirmed. Here are the details...">
+                <EmailPreview tag="Sends on booking" subject="Your Ready Rental Cleaning booking is confirmed — [Address], [Date]" preview="Great news — your cleaning is confirmed. Here are the details...">
                   <p className="text-gray-800 text-sm mb-5">Hi <strong>[Name]</strong>,</p>
                   <p className="text-gray-700 text-sm mb-5">Great news — your cleaning is confirmed. Here are your details:</p>
                   <div className="bg-gray-50 rounded-xl p-5 mb-5 space-y-2">
@@ -1079,7 +1079,7 @@ Happy to book you in — swivelclean.com or feel free to message me directly.`} 
                   </div>
                   <p className="text-gray-500 text-xs">Questions? Reply to this email or text <strong>(323) 555-0100</strong> anytime.</p>
                 </EmailPreview>
-                <CopyBox label="Email 1 — plain text to copy" content={`Subject: Your SwivelClean booking is confirmed — [Property Address], [Date]
+                <CopyBox label="Email 1 — plain text to copy" content={`Subject: Your Ready Rental Cleaning booking is confirmed — [Property Address], [Date]
 
 Hi [Name],
 
@@ -1097,13 +1097,13 @@ After the cleaning, we'll send you before/after photos and your invoice.
 
 Questions? Reply to this email or text us at (323) 555-0100.
 
-– The SwivelClean Team
-hello@swivelclean.com | swivelclean.com`} />
+– The Ready Rental Cleaning Team
+hello@readyrentalcleaning.com | readyrentalcleaning.com`} />
 
                 {/* Email 2 — 24h Reminder */}
-                <EmailPreview tag="Sends day before" subject="Reminder: Your SwivelClean cleaning is tomorrow at [Time]" preview="Just a reminder — your cleaning is tomorrow. Cleaner name and contact inside...">
+                <EmailPreview tag="Sends day before" subject="Reminder: Your Ready Rental Cleaning cleaning is tomorrow at [Time]" preview="Just a reminder — your cleaning is tomorrow. Cleaner name and contact inside...">
                   <p className="text-gray-800 text-sm mb-5">Hi <strong>[Name]</strong>,</p>
-                  <p className="text-gray-700 text-sm mb-5">Just a quick reminder — your SwivelClean cleaning is <strong>tomorrow</strong>.</p>
+                  <p className="text-gray-700 text-sm mb-5">Just a quick reminder — your Ready Rental Cleaning cleaning is <strong>tomorrow</strong>.</p>
                   <div className="bg-gray-50 rounded-xl p-5 mb-5 space-y-2">
                     {[['Date', '[Date]'], ['Time', '[Time]'], ['Address', '[Address]'], ['Your Cleaner', '[Cleaner Name]'], ['Cleaner Cell', '(323) 555-0101']].map(([k, v]) => (
                       <div key={k} className="flex justify-between text-sm">
@@ -1119,7 +1119,7 @@ hello@swivelclean.com | swivelclean.com`} />
                   <p className="text-gray-600 text-sm mb-1">Your cleaner will text you when they arrive. Need to make changes?</p>
                   <p className="text-gray-500 text-xs">Reply to this email or call <strong>(323) 555-0100</strong> immediately.</p>
                 </EmailPreview>
-                <CopyBox label="Email 2 — plain text to copy" content={`Subject: Reminder: Your SwivelClean cleaning is tomorrow at [Time]
+                <CopyBox label="Email 2 — plain text to copy" content={`Subject: Reminder: Your Ready Rental Cleaning cleaning is tomorrow at [Time]
 
 Hi [Name],
 
@@ -1136,7 +1136,7 @@ Your cleaner will text you when they arrive. If anything changes, please reply t
 
 See you tomorrow!
 
-– SwivelClean`} />
+– Ready Rental Cleaning`} />
 
                 {/* Email 3 — Job Complete */}
                 <EmailPreview tag="Sends after job done" subject="[Address] is clean and guest-ready — photos inside" preview="Your property is spotless. Before/after photos attached. Invoice enclosed...">
@@ -1164,7 +1164,7 @@ See you tomorrow!
                   <div className="text-center mb-5">
                     <span className="inline-block bg-teal-600 text-white text-sm font-bold px-8 py-3 rounded-xl">View Invoice — $[Amount]</span>
                   </div>
-                  <p className="text-gray-500 text-xs text-center">Thank you for trusting SwivelClean. See you next time.</p>
+                  <p className="text-gray-500 text-xs text-center">Thank you for trusting Ready Rental Cleaning. See you next time.</p>
                 </EmailPreview>
                 <CopyBox label="Email 3 — plain text to copy" content={`Subject: [Address] is clean and guest-ready — photos inside
 
@@ -1183,14 +1183,14 @@ What we cleaned:
 Before/after photos: [Link]
 Invoice: [Link] — $[Amount]
 
-Thank you for trusting SwivelClean. We'll see you next time.
+Thank you for trusting Ready Rental Cleaning. We'll see you next time.
 
-– The SwivelClean Team`} />
+– The Ready Rental Cleaning Team`} />
 
                 {/* Email 4 — Review Request */}
                 <EmailPreview tag="Sends 2h after completion" subject="How was your cleaning? Quick favor to ask" preview="Would you take 30 seconds to leave us a Google review? It means the world...">
                   <p className="text-gray-800 text-sm mb-4">Hi <strong>[Name]</strong>,</p>
-                  <p className="text-gray-700 text-sm mb-4">Your SwivelClean cleaning at <strong>[Address]</strong> was completed a couple hours ago. We hope your property looks perfect for your next guest!</p>
+                  <p className="text-gray-700 text-sm mb-4">Your Ready Rental Cleaning cleaning at <strong>[Address]</strong> was completed a couple hours ago. We hope your property looks perfect for your next guest!</p>
                   <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-5 text-center">
                     <div className="flex justify-center gap-1 mb-2">
                       {[1,2,3,4,5].map(s => <svg key={s} className="w-6 h-6 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}
@@ -1205,7 +1205,7 @@ Thank you for trusting SwivelClean. We'll see you next time.
 
 Hi [Name],
 
-Your SwivelClean cleaning was completed a couple hours ago. We hope [Address] looks perfect for your next guest!
+Your Ready Rental Cleaning cleaning was completed a couple hours ago. We hope [Address] looks perfect for your next guest!
 
 Would you take 30 seconds to leave us a Google review?
 
@@ -1217,7 +1217,7 @@ If anything wasn't right, please reply here — we'll make it right, guaranteed.
 
 Thank you!
 
-– [Cleaner Name] & The SwivelClean Team`} />
+– [Cleaner Name] & The Ready Rental Cleaning Team`} />
 
                 {/* Email 5 — Cleaner Assignment */}
                 <EmailPreview tag="Sends to cleaner on assignment" subject="New job assigned — [Property Address], [Date] at [Time]" preview="You have a new job. Details, access instructions, and pay amount inside...">
@@ -1269,7 +1269,7 @@ What to bring:
 - Linen set if service includes linen change
 
 See you there!
-– SwivelClean Operations`} />
+– Ready Rental Cleaning Operations`} />
               </div>
 
               {/* BEFORE / AFTER GALLERY */}

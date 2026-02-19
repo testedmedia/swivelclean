@@ -4,7 +4,7 @@ const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
   : null
 
-const FROM = 'SwivelClean <hello@swivelclean.com>'
+const FROM = 'Ready Rental Cleaning <hello@readyrentalcleaning.com>'
 
 const emailBase = (content: string) => `
 <!DOCTYPE html>
@@ -40,15 +40,15 @@ const emailBase = (content: string) => `
 <body>
 <div class="wrapper">
   <div class="header">
-    <div class="logo">Swivel<span>Clean</span></div>
+    <div class="logo">Ready<span>Rental</span></div>
     <p style="color: rgba(255,255,255,0.8); font-size: 13px; margin-top: 4px;">Premium Airbnb Turnover Cleaning · Los Angeles</p>
   </div>
   <div class="body">
     ${content}
   </div>
   <div class="footer">
-    <p>SwivelClean · Los Angeles, CA · <a href="https://swivelclean.com" style="color: #0d9488;">swivelclean.com</a></p>
-    <p style="margin-top: 6px;">Questions? Email <a href="mailto:hello@swivelclean.com" style="color: #0d9488;">hello@swivelclean.com</a> or call (323) 555-0180</p>
+    <p>Ready Rental Cleaning · Los Angeles, CA · <a href="https://readyrentalcleaning.com" style="color: #0d9488;">readyrentalcleaning.com</a></p>
+    <p style="margin-top: 6px;">Questions? Email <a href="mailto:hello@readyrentalcleaning.com" style="color: #0d9488;">hello@readyrentalcleaning.com</a> or call (323) 555-0180</p>
   </div>
 </div>
 </body>
@@ -81,7 +81,7 @@ export async function sendBookingConfirmation({
     <div class="step"><div class="step-num">3</div><div class="step-text"><h4>Before/After Photos</h4><p>Photos sent to you after every cleaning for remote verification.</p></div></div>
 
     <hr class="divider" />
-    <p style="font-size:13px;color:#6b7280;">Need to reschedule? Contact us at least 24 hours before: <a href="mailto:hello@swivelclean.com" style="color:#0d9488;">hello@swivelclean.com</a> or (323) 555-0180</p>
+    <p style="font-size:13px;color:#6b7280;">Need to reschedule? Contact us at least 24 hours before: <a href="mailto:hello@readyrentalcleaning.com" style="color:#0d9488;">hello@readyrentalcleaning.com</a> or (323) 555-0180</p>
   `)
 
   try {
@@ -99,7 +99,7 @@ export async function sendReminderEmail({
   const html = emailBase(`
     <h1>⏰ Reminder: Cleaning Tomorrow</h1>
     <p>Hi ${name},</p>
-    <p>Just a friendly reminder that your SwivelClean is scheduled for <strong>tomorrow</strong>.</p>
+    <p>Just a friendly reminder that your Ready Rental Cleaning is scheduled for <strong>tomorrow</strong>.</p>
 
     <div class="highlight">
       <div class="highlight-row"><span class="label">Address</span><span class="value">${address}</span></div>
@@ -110,11 +110,11 @@ export async function sendReminderEmail({
     </div>
 
     <p>Please make sure your property is accessible at the scheduled time. If you need to make any changes, contact us right away.</p>
-    <p style="font-size:13px;color:#6b7280;">Call or text: (323) 555-0180 · <a href="mailto:hello@swivelclean.com" style="color:#0d9488;">hello@swivelclean.com</a></p>
+    <p style="font-size:13px;color:#6b7280;">Call or text: (323) 555-0180 · <a href="mailto:hello@readyrentalcleaning.com" style="color:#0d9488;">hello@readyrentalcleaning.com</a></p>
   `)
 
   try {
-    return await resend.emails.send({ from: FROM, to: email, subject: `⏰ Tomorrow: Your SwivelClean at ${address}`, html })
+    return await resend.emails.send({ from: FROM, to: email, subject: `⏰ Tomorrow: Your Ready Rental Cleaning at ${address}`, html })
   } catch (err) { console.error('Email error:', err); throw err }
 }
 
@@ -145,7 +145,7 @@ export async function sendCompletionEmail({
     </div>
 
     <p>Your property is guest-ready. Enjoy 5-star reviews!</p>
-    <a href="https://swivelclean.com/book" class="btn">Book Next Cleaning</a>
+    <a href="https://readyrentalcleaning.com/book" class="btn">Book Next Cleaning</a>
   `)
 
   try {
@@ -170,11 +170,11 @@ export async function sendReviewRequest({
 
     <hr class="divider" />
     <p style="font-size:13px;color:#6b7280;">Not satisfied with your cleaning? Reply to this email and we will make it right — 100% guaranteed.</p>
-    <p style="font-size:13px;color:#6b7280;">Ready to book your next cleaning? <a href="https://swivelclean.com/book" style="color:#0d9488;">Book online in 60 seconds</a>.</p>
+    <p style="font-size:13px;color:#6b7280;">Ready to book your next cleaning? <a href="https://readyrentalcleaning.com/book" style="color:#0d9488;">Book online in 60 seconds</a>.</p>
   `)
 
   try {
-    return await resend.emails.send({ from: FROM, to: email, subject: `How was your SwivelClean? ⭐`, html })
+    return await resend.emails.send({ from: FROM, to: email, subject: `How was your Ready Rental Cleaning? ⭐`, html })
   } catch (err) { console.error('Email error:', err); throw err }
 }
 

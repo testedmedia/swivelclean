@@ -1,9 +1,9 @@
-# SwivelClean LA — Project Brain
+# Ready Rental Cleaning — Project Brain
 
-**Project Name:** SwivelClean LA (formerly SwivelClean LA)
-**Version:** v1.0
-**Live URL:** https://swivelclean.la (pending domain setup)
-**Repo:** ~/swivelclean/
+**Project Name:** Ready Rental Cleaning (formerly Ready Rental Cleaning)
+**Version:** v2.0
+**Live URL:** https://readyrentalcleaning.com (pending domain setup)
+**Repo:** ~/readyrentalcleaning/
 
 ## Project Goals
 
@@ -44,7 +44,7 @@
 ## Architecture
 
 ```
-swivelclean-la/
+readyrentalcleaning-la/
   app/
     layout.tsx              # Root layout (nav + footer)
     page.tsx                # Home (hero, social proof, CTA)
@@ -132,6 +132,10 @@ All emails configured in `/lib/email.ts`. Resend webhook will auto-send.
 | `STRIPE_WEBHOOK_SECRET` | Stripe webhook signing secret | Yes (for webhooks) |
 | `NEXT_PUBLIC_APP_URL` | Public app URL (localhost or domain) | Yes |
 | `PRODUCTION_URL` | Production URL (for redirects) | Yes |
+| `TWILIO_ACCOUNT_SID` | Twilio account SID for SMS | No |
+| `TWILIO_AUTH_TOKEN` | Twilio auth token for SMS | No |
+| `TWILIO_PHONE_NUMBER` | Twilio sender phone number | No |
+| `CRON_SECRET` | Bearer token for cron endpoint auth | Yes (for cron) |
 | `ADMIN_PASSWORD` | Simple password for /admin access (temp) | No |
 
 ## Key Features (MVP)
@@ -170,31 +174,29 @@ bash scripts/deploy.sh 1.0 MAJOR "Initial MVP" "Full booking + email + admin"
 bash scripts/deploy.sh <version> <tag> "<title>" "<changes>"
 
 # Example:
-bash scripts/deploy.sh 1.0 MAJOR "SwivelClean LA MVP Launch" "Full-stack booking app with email automation and admin dashboard"
+bash scripts/deploy.sh 1.0 MAJOR "Ready Rental Cleaning MVP Launch" "Full-stack booking app with email automation and admin dashboard"
 ```
 
 ## Production URLs
 
-- **App:** https://swivelclean.la
-- **API:** https://swivelclean.la/api
-- **Admin:** https://swivelclean.la/admin
-- **Health:** https://swivelclean.la/api/health
+- **App:** https://readyrentalcleaning.com
+- **API:** https://readyrentalcleaning.com/api
+- **Admin:** https://readyrentalcleaning.com/admin
+- **Health:** https://readyrentalcleaning.com/api/health
 
 ## Known Issues / Tech Debt
 
-- **Stripe payment integration** — Currently form only, no actual payment processing (TODO: wire Stripe.js in checkout)
-- **Admin auth** — Using simple password in env var (should upgrade to JWT/session in future)
-- **Cleaner assignment** — Manual (TODO: add cleaner roster + scheduler UI)
-- **Photo uploads** — Not yet implemented (TODO: add S3 or Supabase storage)
-- **SMS notifications** — Not yet implemented (TODO: integrate Twilio for cleaner texts)
-- **Calendar UI** — Not yet implemented (TODO: add ical integration)
+- **Admin auth** — Using Supabase auth (should add role-based access for multi-admin in future)
+- **Cleaner assignment** — Manual (TODO: add cleaner roster + automated scheduler)
+- **Calendar UI** — Basic sync exists (TODO: add full ical/Google Calendar integration)
 - **Mobile app** — Not planned (web-first, mobile responsive)
+- **Dark mode** — CSS vars are set up for it but dark theme not yet implemented
 
 ## Launch Checklist
 
 Before deploying v1.0:
 
-- [ ] Domain registered (swivelclean.la)
+- [ ] Domain registered (readyrentalcleaning.com)
 - [ ] Supabase project created + DATABASE_URL in .env
 - [ ] Resend account setup + RESEND_API_KEY in .env
 - [ ] Stripe test account setup + keys in .env

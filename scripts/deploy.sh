@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # ═══════════════════════════════════════════
-# Deploy Script — SwivelClean LA
+# Deploy Script — Ready Rental Cleaning
 # Usage: bash scripts/deploy.sh <version> <tag> "<title>" "<changes>"
 # Example: bash scripts/deploy.sh 1.0 MAJOR "MVP Launch" "Full booking + email + admin"
 # ═══════════════════════════════════════════

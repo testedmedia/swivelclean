@@ -25,6 +25,8 @@ model Booking {
   id              String   @id @default(cuid())
   clientId        String
   client          Client   @relation(fields: [clientId], references: [id])
+  cleanerId       String?
+  cleaner         Cleaner? @relation(fields: [cleanerId], references: [id])
   service         String
   address         String
   scheduledDate   DateTime
@@ -54,4 +56,24 @@ model Review {
   text      String
   source    String
   createdAt DateTime @default(now())
+}
+
+model Cleaner {
+  id         String    @id @default(cuid())
+  name       String
+  phone      String
+  email      String    @unique
+  hourlyRate Float     @default(18)
+  active     Boolean   @default(true)
+  notes      String?
+  createdAt  DateTime  @default(now())
+  bookings   Booking[]
+}
+
+model AdminSettings {
+  id                 String    @id @default("singleton")
+  googleAccessToken  String?
+  googleRefreshToken String?
+  googleTokenExpiry  DateTime?
+  updatedAt          DateTime  @updatedAt
 }
