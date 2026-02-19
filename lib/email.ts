@@ -178,6 +178,143 @@ export async function sendReviewRequest({
   } catch (err) { console.error('Email error:', err); throw err }
 }
 
+export async function sendReferrerWelcome({
+  email, name, code,
+}: {
+  email: string; name: string; code: string
+}) {
+  if (!resend) { return { success: true, skipped: true } }
+
+  const referralLink = `${process.env.NEXT_PUBLIC_APP_URL || 'https://readyrentalcleaning.com'}/referral/track?code=${code}`
+  const html = emailBase(`
+    <h1>Welcome to the Referral Program</h1>
+    <p>Hi ${name},</p>
+    <p>You are officially a Ready Rental referral partner. Here is your unique referral link:</p>
+
+    <div class="highlight">
+      <div class="highlight-row"><span class="label">Your Code</span><span class="value">${code}</span></div>
+      <div class="highlight-row"><span class="label">Your Link</span><span class="value" style="word-break:break-all;font-size:12px;">${referralLink}</span></div>
+    </div>
+
+    <p><strong>How it works:</strong></p>
+    <div class="step"><div class="step-num">1</div><div class="step-text"><h4>Share your link</h4><p>Send it to Airbnb hosts, property managers, or anyone who needs cleaning in LA.</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-text"><h4>They book a cleaning</h4><p>When someone books through your link, you earn a commission.</p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-text"><h4>Get paid every Friday</h4><p>Once your balance hits $50, request a payout via your dashboard.</p></div></div>
+
+    <hr class="divider" />
+    <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://readyrentalcleaning.com'}/referrer/dashboard" class="btn">Go to Your Dashboard</a>
+  `)
+
+  try {
+    return await resend.emails.send({ from: FROM, to: email, subject: `Welcome to the Ready Rental Referral Program — Your Code: ${code}`, html })
+  } catch (err) { console.error('Email error:', err); throw err }
+}
+
+export async function sendReferralOTP({
+  email, name, otp,
+}: {
+  email: string; name: string; otp: string
+}) {
+  if (!resend) { return { success: true, skipped: true } }
+
+  const html = emailBase(`
+    <h1>Your Login Code</h1>
+    <p>Hi ${name},</p>
+    <p>Use this code to log in to your referral dashboard:</p>
+
+    <div class="highlight" style="text-align:center;">
+      <p style="font-size:36px;font-weight:800;letter-spacing:8px;color:#0d9488;margin:16px 0;">${otp}</p>
+      <p style="font-size:13px;color:#6b7280;margin:0;">This code expires in 10 minutes.</p>
+    </div>
+
+    <p style="font-size:13px;color:#6b7280;">If you did not request this code, ignore this email.</p>
+  `)
+
+  try {
+    return await resend.emails.send({ from: FROM, to: email, subject: `Your Ready Rental login code: ${otp}`, html })
+  } catch (err) { console.error('Email error:', err); throw err }
+}
+
+export async function sendReferralCommission({
+  email, name, service, amount, newBalance,
+}: {
+  email: string; name: string; service: string; amount: number; newBalance: number
+}) {
+  if (!resend) { return { success: true, skipped: true } }
+
+  const html = emailBase(`
+    <h1>Commission Earned</h1>
+    <p>Hi ${name},</p>
+    <p>Great news — one of your referrals just booked a cleaning. You earned a commission.</p>
+
+    <div class="highlight">
+      <div class="highlight-row"><span class="label">Service</span><span class="value">${service}</span></div>
+      <div class="highlight-row"><span class="label">Commission</span><span class="value" style="color:#0d9488;font-size:20px;">+$${amount}</span></div>
+      <div class="highlight-row"><span class="label">New Balance</span><span class="value">$${newBalance.toFixed(2)}</span></div>
+    </div>
+
+    ${newBalance >= 50 ? '<p><strong>Your balance is above $50 — you can request a payout from your dashboard.</strong></p>' : '<p>Keep sharing your link to reach the $50 payout threshold.</p>'}
+
+    <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://readyrentalcleaning.com'}/referrer/dashboard" class="btn">View Dashboard</a>
+  `)
+
+  try {
+    return await resend.emails.send({ from: FROM, to: email, subject: `You earned $${amount} — Referral Commission`, html })
+  } catch (err) { console.error('Email error:', err); throw err }
+}
+
+export async function sendPayoutRequest({
+  email, name, amount, method,
+}: {
+  email: string; name: string; amount: number; method: string
+}) {
+  if (!resend) { return { success: true, skipped: true } }
+
+  const html = emailBase(`
+    <h1>Payout Requested</h1>
+    <p>Hi ${name},</p>
+    <p>Your payout request has been submitted. We process payouts every Friday.</p>
+
+    <div class="highlight">
+      <div class="highlight-row"><span class="label">Amount</span><span class="value" style="color:#0d9488;">$${amount.toFixed(2)}</span></div>
+      <div class="highlight-row"><span class="label">Method</span><span class="value">${method}</span></div>
+      <div class="highlight-row"><span class="label">Status</span><span class="value">Pending</span></div>
+    </div>
+
+    <p style="font-size:13px;color:#6b7280;">You will receive a confirmation once the payout is processed.</p>
+  `)
+
+  try {
+    return await resend.emails.send({ from: FROM, to: email, subject: `Payout Request: $${amount.toFixed(2)} via ${method}`, html })
+  } catch (err) { console.error('Email error:', err); throw err }
+}
+
+export async function sendAdminPayoutNotification({
+  referrerName, referrerEmail, amount, method, payoutHandle,
+}: {
+  referrerName: string; referrerEmail: string; amount: number; method: string; payoutHandle: string
+}) {
+  if (!resend) { return { success: true, skipped: true } }
+
+  const html = emailBase(`
+    <h1>New Payout Request</h1>
+    <p>A referrer has requested a payout.</p>
+
+    <div class="highlight">
+      <div class="highlight-row"><span class="label">Referrer</span><span class="value">${referrerName} (${referrerEmail})</span></div>
+      <div class="highlight-row"><span class="label">Amount</span><span class="value" style="color:#0d9488;">$${amount.toFixed(2)}</span></div>
+      <div class="highlight-row"><span class="label">Method</span><span class="value">${method}</span></div>
+      <div class="highlight-row"><span class="label">Handle</span><span class="value">${payoutHandle}</span></div>
+    </div>
+
+    <p>Log in to the admin dashboard to approve or reject this payout.</p>
+  `)
+
+  try {
+    return await resend.emails.send({ from: FROM, to: 'hello@readyrentalcleaning.com', subject: `Payout Request: $${amount.toFixed(2)} from ${referrerName}`, html })
+  } catch (err) { console.error('Email error:', err); throw err }
+}
+
 export async function sendCleanerAssignment({
   cleanerEmail, address, date, time, service, accessNotes,
 }: {

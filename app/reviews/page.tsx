@@ -55,13 +55,13 @@ export default function Reviews() {
           <div className="grid grid-cols-4 gap-8 text-center">
             {[
               { value: 98, suffix: '%', label: 'Would Recommend' },
-              { value: 49, suffix: '★', label: 'Average Rating' },
+              { value: 4.9, suffix: '★', label: 'Average Rating', decimals: 1 },
               { value: 87, suffix: '%', label: 'Repeat Clients' },
               { value: 200, suffix: '+', label: 'Verified Reviews' },
             ].map((stat) => (
               <div key={stat.label}>
                 <div className="text-3xl font-extrabold text-primary">
-                  <NumberTicker value={stat.value} suffix={stat.suffix} />
+                  <NumberTicker value={stat.value} suffix={stat.suffix} decimals={'decimals' in stat ? stat.decimals : 0} />
                 </div>
                 <div className="text-xs text-muted-foreground mt-1">{stat.label}</div>
               </div>

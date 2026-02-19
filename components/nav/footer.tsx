@@ -4,11 +4,11 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
           <div className="col-span-2 md:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">RR</span>
+            <div className="flex items-center gap-2.5 mb-4">
+              <div className="w-9 h-9 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                <span className="text-sm font-extrabold text-primary-foreground tracking-tight">RR</span>
               </div>
-              <span className="text-lg font-bold">Ready Rental Cleaning</span>
+              <span className="text-lg font-extrabold tracking-tight">Ready Rental Cleaning</span>
             </div>
             <p className="text-background/60 text-sm leading-relaxed">
               Premium Airbnb turnover cleaning for Los Angeles hosts. Fast, reliable, guaranteed spotless.
@@ -36,6 +36,7 @@ export function Footer() {
               <li><a href="/faq" className="hover:text-background transition-colors">FAQ</a></li>
               <li><a href="/contact" className="hover:text-background transition-colors">Contact</a></li>
               <li><a href="/compare/diy-vs-professional" className="hover:text-background transition-colors">DIY vs Professional</a></li>
+              <li><a href="/referral" className="hover:text-background transition-colors">Earn $25 — Refer a Host</a></li>
             </ul>
           </div>
           <div>

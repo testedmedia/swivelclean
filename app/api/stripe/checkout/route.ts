@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
+import { REF_COOKIE_NAME } from '@/lib/referral'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2023-10-16',
@@ -45,6 +46,9 @@ export async function POST(req: NextRequest) {
     const { label: serviceLabel, price } = serviceInfo
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
 
+    // Check for referral cookie
+    const refCode = req.cookies.get(REF_COOKIE_NAME)?.value || ''
+
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items: [
@@ -71,6 +75,7 @@ export async function POST(req: NextRequest) {
         unit: unit || '',
         accessNotes: accessNotes || '',
         specialRequests: specialRequests || '',
+        refCode,
       },
       customer_email: email,
       success_url: `${appUrl}/thank-you?session_id={CHECKOUT_SESSION_ID}`,

@@ -46,6 +46,32 @@ export default function About() {
         </div>
       </Section>
 
+      {/* Property Photo Mosaic */}
+      <section className="bg-background py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {[
+              { src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=400&h=400&fit=crop', span: '' },
+              { src: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=400&h=400&fit=crop', span: '' },
+              { src: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=400&fit=crop', span: 'md:col-span-2 md:row-span-2' },
+              { src: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=400&h=400&fit=crop', span: '' },
+              { src: 'https://images.unsplash.com/photo-1620626011761-996317b8d101?w=400&h=400&fit=crop', span: '' },
+            ].map((photo, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08, duration: 0.4 }}
+                className={`overflow-hidden rounded-xl ${photo.span}`}
+              >
+                <img src={photo.src} alt="Cleaned property" className="w-full h-full min-h-[180px] object-cover hover:scale-105 transition-transform duration-500" />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <Section variant="default" padding="default">
         <AnimateOnScroll className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-6">Our Mission</h2>
@@ -58,10 +84,10 @@ export default function About() {
           {[
             { value: 200, suffix: '+', label: 'LA Hosts Trust Us', desc: 'From individual owners to property managers with 20+ units' },
             { value: 1200, suffix: '+', label: 'Cleanings Completed', desc: 'Turnover, deep cleans, move-in/out — we handle it all' },
-            { value: 49, suffix: '★', label: 'Average Rating', desc: 'Consistently rated 5 stars by hosts across LA' },
+            { value: 4.9, suffix: '★', label: 'Average Rating', decimals: 1, desc: 'Consistently rated 5 stars by hosts across LA' },
           ].map((stat) => (
             <Card key={stat.label} depth={1} className="p-8 text-center">
-              <StatCard value={stat.value} suffix={stat.suffix} label={stat.label} />
+              <StatCard value={stat.value} suffix={stat.suffix} label={stat.label} decimals={'decimals' in stat ? stat.decimals : 0} />
               <p className="text-sm text-muted-foreground mt-2">{stat.desc}</p>
             </Card>
           ))}

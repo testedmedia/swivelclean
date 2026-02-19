@@ -15,6 +15,8 @@ const inter = Inter({
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const isAdmin = pathname?.startsWith('/admin')
+  const isReferrer = pathname?.startsWith('/referrer')
+  const hideChrome = isAdmin || isReferrer
 
   return (
     <html lang="en" className={inter.variable}>
@@ -34,9 +36,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body className="font-sans antialiased">
-        {!isAdmin && <Navbar />}
-        <main className={isAdmin ? '' : 'pt-16'}>{children}</main>
-        {!isAdmin && <Footer />}
+        {!hideChrome && <Navbar />}
+        <main className={hideChrome ? '' : 'pt-16'}>{children}</main>
+        {!hideChrome && <Footer />}
         <Toaster
           position="bottom-right"
           toastOptions={{

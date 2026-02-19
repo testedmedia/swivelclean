@@ -77,3 +77,42 @@ model AdminSettings {
   googleTokenExpiry  DateTime?
   updatedAt          DateTime  @updatedAt
 }
+
+model Referrer {
+  id           String               @id @default(cuid())
+  email        String               @unique
+  name         String
+  code         String               @unique
+  balance      Float                @default(0)
+  totalEarned  Float                @default(0)
+  payoutMethod String               @default("venmo")
+  payoutHandle String               @default("")
+  otpHash      String?
+  otpExpiresAt DateTime?
+  status       String               @default("active")
+  createdAt    DateTime             @default(now())
+  conversions  ReferralConversion[]
+  payouts      Payout[]
+}
+
+model ReferralConversion {
+  id               String   @id @default(cuid())
+  referrerId       String
+  referrer         Referrer @relation(fields: [referrerId], references: [id])
+  bookingId        String?
+  service          String
+  commissionAmount Float
+  status           String   @default("pending")
+  createdAt        DateTime @default(now())
+}
+
+model Payout {
+  id          String    @id @default(cuid())
+  referrerId  String
+  referrer    Referrer  @relation(fields: [referrerId], references: [id])
+  amount      Float
+  method      String
+  status      String    @default("pending")
+  requestedAt DateTime  @default(now())
+  paidAt      DateTime?
+}

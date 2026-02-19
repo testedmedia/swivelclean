@@ -3,8 +3,9 @@ export const runtime = 'nodejs'
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { prisma } from '@/lib/prisma'
-import { sendBookingConfirmation } from '@/lib/email'
+import { sendBookingConfirmation, sendReferralCommission } from '@/lib/email'
 import { sendBookingConfirmationSMS } from '@/lib/sms'
+import { COMMISSIONS } from '@/lib/referral'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2023-10-16',
@@ -123,6 +124,50 @@ export async function POST(req: NextRequest) {
         }
       } catch (smsErr) {
         console.error('Webhook: SMS confirmation failed:', smsErr)
+      }
+
+      // Credit referrer if ref code present
+      const refCode = meta.refCode
+      if (refCode) {
+        try {
+          const referrer = await prisma.referrer.findUnique({ where: { code: refCode } })
+          if (referrer && referrer.status === 'active') {
+            const commission = COMMISSIONS[service] || 25
+            const newBalance = referrer.balance + commission
+            const newTotal = referrer.totalEarned + commission
+
+            await prisma.$transaction([
+              prisma.referralConversion.create({
+                data: {
+                  referrerId: referrer.id,
+                  bookingId: session.id,
+                  service,
+                  commissionAmount: commission,
+                  status: 'credited',
+                },
+              }),
+              prisma.referrer.update({
+                where: { id: referrer.id },
+                data: { balance: newBalance, totalEarned: newTotal },
+              }),
+            ])
+
+            // Notify referrer (non-blocking)
+            try {
+              await sendReferralCommission({
+                email: referrer.email,
+                name: referrer.name,
+                service: serviceInfo.label,
+                amount: commission,
+                newBalance,
+              })
+            } catch (emailErr) {
+              console.error('Webhook: referral commission email failed:', emailErr)
+            }
+          }
+        } catch (refErr) {
+          console.error('Webhook: referral credit error:', refErr)
+        }
       }
     } catch (dbErr) {
       console.error('Webhook: database error:', dbErr)

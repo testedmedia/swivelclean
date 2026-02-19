@@ -121,6 +121,37 @@ export default function Services() {
           </div>
         </AnimateOnScroll>
 
+        {/* Property Showcase */}
+        <AnimateOnScroll className="mb-20">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4 text-center">
+            Properties We've Cleaned Across LA
+          </h2>
+          <p className="text-muted-foreground text-center mb-8 max-w-2xl mx-auto">
+            From studio apartments to luxury hillside homes — we handle every property type with the same attention to detail.
+          </p>
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+            {[
+              'https://images.unsplash.com/photo-1600210492493-0946911123ea?w=300&h=300&fit=crop',
+              'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=300&h=300&fit=crop',
+              'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=300&h=300&fit=crop',
+              'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=300&h=300&fit=crop',
+              'https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=300&h=300&fit=crop',
+              'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=300&h=300&fit=crop',
+            ].map((src, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.06, duration: 0.3 }}
+                className="overflow-hidden rounded-xl aspect-square group"
+              >
+                <img src={src} alt="Cleaned LA property" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+              </motion.div>
+            ))}
+          </div>
+        </AnimateOnScroll>
+
         {/* FAQ */}
         <AnimateOnScroll>
           <div className="max-w-3xl mx-auto">

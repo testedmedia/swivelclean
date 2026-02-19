@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { ArrowRight, Shield, Zap, Star, Camera, UserCheck, Award, Check, MapPin, ChevronRight, Calculator, X, Clock, DollarSign, TrendingUp, AlertTriangle, Phone } from 'lucide-react'
+import { ArrowRight, Shield, Zap, Star, Camera, UserCheck, Award, Check, ChevronRight, Calculator, X, Clock, DollarSign, TrendingUp, AlertTriangle, Phone } from 'lucide-react'
 import { Section } from '@/components/ui/section'
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
@@ -12,7 +12,6 @@ import { ReviewCard } from '@/components/ui/review-card'
 import { TrustBadge } from '@/components/ui/trust-badge'
 import { ShimmerButton } from '@/components/magicui/shimmer-button'
 import { SERVICES, TESTIMONIALS } from '@/lib/constants'
-import { NEIGHBORHOODS } from '@/lib/seo-data'
 
 const container = {
   hidden: { opacity: 0 },
@@ -162,6 +161,42 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Photo Gallery Strip */}
+      <section className="overflow-hidden py-8 bg-background">
+        <motion.div
+          initial={{ x: 0 }}
+          animate={{ x: '-50%' }}
+          transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+          className="flex gap-4 w-max"
+        >
+          {[
+            'https://images.unsplash.com/photo-1600210492493-0946911123ea?w=400&h=280&fit=crop',
+            'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&h=280&fit=crop',
+            'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&h=280&fit=crop',
+            'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=280&fit=crop',
+            'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&h=280&fit=crop',
+            'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=400&h=280&fit=crop',
+            'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=400&h=280&fit=crop',
+            'https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=400&h=280&fit=crop',
+            'https://images.unsplash.com/photo-1600210492493-0946911123ea?w=400&h=280&fit=crop',
+            'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&h=280&fit=crop',
+            'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&h=280&fit=crop',
+            'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=280&fit=crop',
+            'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&h=280&fit=crop',
+            'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=400&h=280&fit=crop',
+            'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=400&h=280&fit=crop',
+            'https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=400&h=280&fit=crop',
+          ].map((src, i) => (
+            <img
+              key={i}
+              src={src}
+              alt="Clean LA property"
+              className="w-72 h-48 object-cover rounded-xl flex-shrink-0"
+            />
+          ))}
+        </motion.div>
+      </section>
+
       {/* How It Works */}
       <Section variant="default" padding="default">
         <AnimateOnScroll>
@@ -184,27 +219,30 @@ export default function Home() {
           className="grid md:grid-cols-3 gap-8"
         >
           {[
-            { step: '01', title: 'Book Online', desc: 'Enter your property address, pick a service, choose a date. Secure payment via Stripe. Done in 60 seconds.', icon: <Zap className="w-7 h-7" /> },
-            { step: '02', title: 'We Clean', desc: 'Our background-checked, insured cleaner arrives on schedule with professional supplies. 3-4 hour turnaround.', icon: <Award className="w-7 h-7" /> },
-            { step: '03', title: 'Guest Ready', desc: 'Get before/after photos, confirmation email, and invoice. Your property is spotless for the next guest.', icon: <Check className="w-7 h-7" /> },
+            { step: '01', title: 'Book Online', desc: 'Enter your property address, pick a service, choose a date. Secure payment via Stripe. Done in 60 seconds.', icon: <Zap className="w-7 h-7" />, image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&h=200&fit=crop' },
+            { step: '02', title: 'We Clean', desc: 'Our background-checked, insured cleaner arrives on schedule with professional supplies. 3-4 hour turnaround.', icon: <Award className="w-7 h-7" />, image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=500&h=200&fit=crop' },
+            { step: '03', title: 'Guest Ready', desc: 'Get before/after photos, confirmation email, and invoice. Your property is spotless for the next guest.', icon: <Check className="w-7 h-7" />, image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=500&h=200&fit=crop' },
           ].map((step) => (
             <motion.div key={step.step} variants={item}>
-              <Card depth={1} hover="lift" className="p-8 text-center relative">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full">
+              <Card depth={1} hover="lift" className="overflow-hidden relative">
+                <img src={step.image} alt={step.title} className="w-full h-40 object-cover" />
+                <div className="absolute top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full shadow-depth-2">
                   Step {step.step}
                 </div>
-                <div className="w-16 h-16 mx-auto mb-6 bg-muted rounded-2xl flex items-center justify-center text-primary">
-                  {step.icon}
+                <div className="p-8 text-center">
+                  <div className="w-14 h-14 mx-auto mb-4 bg-muted rounded-2xl flex items-center justify-center text-primary">
+                    {step.icon}
+                  </div>
+                  <h3 className="text-xl font-bold mb-3">{step.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{step.desc}</p>
                 </div>
-                <h3 className="text-xl font-bold mb-3">{step.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{step.desc}</p>
               </Card>
             </motion.div>
           ))}
         </motion.div>
       </Section>
 
-      {/* ═══ THE COMPARISON — Us vs Without Us ═══ */}
+      {/* ═══ 3-WAY COMPARISON — DIY vs Maid vs Ready Rental ═══ */}
       <Section variant="muted" padding="default">
         <AnimateOnScroll>
           <div className="text-center mb-16">
@@ -213,81 +251,147 @@ export default function Home() {
               The Numbers Don't Lie
             </Badge>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-              What Happens When You Switch to Us
+              Compare Your Options Side-by-Side
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Real numbers from real LA hosts. Professional cleaning isn't an expense — it's your highest-ROI investment.
+              Real numbers from real LA hosts. See exactly what you're paying — in money, time, and revenue — for each approach.
             </p>
           </div>
         </AnimateOnScroll>
 
-        <div className="max-w-5xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-8 mb-10">
-            {/* WITHOUT US */}
+        <div className="max-w-6xl mx-auto">
+          {/* Column Headers (Desktop) */}
+          <div className="hidden md:grid md:grid-cols-4 gap-0 mb-0">
+            <div />
             <AnimateOnScroll>
-              <Card depth={1} className="p-8 border-red-200 bg-red-50/40 h-full">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
-                    <X className="w-5 h-5 text-red-600" />
-                  </div>
-                  <h3 className="text-lg font-bold text-red-700">Without Ready Rental Cleaning</h3>
+              <div className="bg-red-50 border border-red-200 border-b-0 rounded-t-2xl p-5 text-center">
+                <div className="w-10 h-10 mx-auto mb-2 bg-red-100 rounded-full flex items-center justify-center">
+                  <X className="w-5 h-5 text-red-600" />
                 </div>
-                <div className="space-y-4">
-                  {[
-                    { label: 'Average rating', value: '4.0–4.3★', icon: Star, note: 'Inconsistent cleaning = inconsistent reviews' },
-                    { label: 'Bookings per month', value: '12–15', icon: TrendingUp, note: 'Lower rating buries your listing' },
-                    { label: 'Revenue per month', value: '~$2,340', icon: DollarSign, note: 'At $180/night avg × 13 bookings' },
-                    { label: 'Missed cleans per year', value: '6–10', icon: AlertTriangle, note: 'Cancellations, no-shows, sick days' },
-                    { label: 'Your time spent', value: '20+ hrs/mo', icon: Clock, note: 'Managing cleaners, backup plans, QA' },
-                    { label: 'Insurance coverage', value: '$0', icon: Shield, note: 'You\'re personally liable for damage' },
-                  ].map((row) => (
-                    <div key={row.label} className="flex items-start justify-between py-2 border-b border-red-100 last:border-0">
-                      <div className="flex items-start gap-2">
-                        <row.icon className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
-                        <div>
-                          <span className="text-sm font-medium text-foreground">{row.label}</span>
-                          <p className="text-xs text-red-500">{row.note}</p>
-                        </div>
-                      </div>
-                      <span className="text-sm font-bold text-red-700 whitespace-nowrap ml-4">{row.value}</span>
-                    </div>
-                  ))}
-                </div>
-              </Card>
+                <h3 className="text-sm font-bold text-red-700">DIY Cleaning</h3>
+                <p className="text-xs text-red-500 mt-1">You do it yourself</p>
+              </div>
             </AnimateOnScroll>
+            <AnimateOnScroll>
+              <div className="bg-amber-50 border border-amber-200 border-b-0 rounded-t-2xl p-5 text-center">
+                <div className="w-10 h-10 mx-auto mb-2 bg-amber-100 rounded-full flex items-center justify-center">
+                  <AlertTriangle className="w-5 h-5 text-amber-600" />
+                </div>
+                <h3 className="text-sm font-bold text-amber-700">Maid / Marketplace</h3>
+                <p className="text-xs text-amber-500 mt-1">Thumbtack, TaskRabbit, etc.</p>
+              </div>
+            </AnimateOnScroll>
+            <AnimateOnScroll>
+              <div className="bg-primary/5 border-2 border-primary/30 border-b-0 rounded-t-2xl p-5 text-center relative">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                  <Badge>Recommended</Badge>
+                </div>
+                <div className="w-10 h-10 mx-auto mb-2 bg-primary/10 rounded-full flex items-center justify-center">
+                  <Check className="w-5 h-5 text-primary" />
+                </div>
+                <h3 className="text-sm font-bold text-primary">Ready Rental Cleaning</h3>
+                <p className="text-xs text-primary/70 mt-1">Purpose-built for Airbnb</p>
+              </div>
+            </AnimateOnScroll>
+          </div>
 
-            {/* WITH US */}
-            <AnimateOnScroll>
-              <Card depth={2} className="p-8 border-primary/30 bg-primary/5 h-full">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
-                    <Check className="w-5 h-5 text-primary" />
-                  </div>
-                  <h3 className="text-lg font-bold text-primary">With Ready Rental Cleaning</h3>
+          {/* Comparison Rows */}
+          {[
+            {
+              label: 'Time per turnover',
+              diy: { value: '4–6 hours', note: 'Your time cleaning instead of earning' },
+              maid: { value: '3–5 hours', note: 'Inconsistent, no Airbnb training' },
+              us: { value: '3 hours', note: '47-point checklist, trained for turnovers' },
+            },
+            {
+              label: 'Cost per clean',
+              diy: { value: '$0 (your labor)', note: 'But your time is worth $50–100/hr' },
+              maid: { value: '$120–200', note: 'Variable pricing, plus booking fees' },
+              us: { value: '$180 flat', note: 'All-inclusive — supplies, insurance, photos' },
+            },
+            {
+              label: 'Hourly value of your time',
+              diy: { value: '-$150+', note: 'Cleaning instead of managing your business' },
+              maid: { value: '-$40/hr', note: 'Time spent vetting, managing, QA-ing' },
+              us: { value: '$0', note: 'You book online. We handle everything.' },
+            },
+            {
+              label: 'Quality consistency',
+              diy: { value: 'Depends on you', note: 'Burnout = corners cut over time' },
+              maid: { value: 'Hit or miss', note: 'Different person every time' },
+              us: { value: 'Guaranteed', note: 'Same team, 47-point checklist, photos' },
+            },
+            {
+              label: 'Photo documentation',
+              diy: { value: 'None', note: 'No proof if guest claims damage' },
+              maid: { value: 'Rarely', note: 'Most don\'t offer it' },
+              us: { value: 'Every time', note: 'Before/after photos within 30 min' },
+            },
+            {
+              label: 'Same-day emergency',
+              diy: { value: 'Only you', note: 'Drop everything or lose the booking' },
+              maid: { value: 'Unlikely', note: '24–72hr booking lead time' },
+              us: { value: 'Yes — $230', note: 'Book by 10 AM, done by 2 PM' },
+            },
+            {
+              label: 'Insurance coverage',
+              diy: { value: '$0', note: 'You\'re personally liable' },
+              maid: { value: '$0–$1M', note: 'Most marketplace cleaners uninsured' },
+              us: { value: '$2M', note: 'Full general liability, every job' },
+            },
+            {
+              label: 'No-shows per year',
+              diy: { value: '0', note: 'But you can\'t call in sick either' },
+              maid: { value: '6–10', note: 'No backup — you scramble' },
+              us: { value: '0', note: 'Full team backup, guaranteed' },
+            },
+            {
+              label: 'Expected Airbnb rating',
+              diy: { value: '4.3–4.5★', note: 'Good enough but not competitive' },
+              maid: { value: '4.0–4.4★', note: 'Inconsistency hurts long-term' },
+              us: { value: '4.8–5.0★', note: 'Top 10% listing performance' },
+            },
+            {
+              label: 'Monthly cost (8 turnovers)',
+              diy: { value: '$0 cash', note: 'But ~32–48 hrs of your time' },
+              maid: { value: '$960–1,600', note: 'Plus your time managing them' },
+              us: { value: '$1,440', note: 'Predictable. Zero time investment.' },
+            },
+          ].map((row, i) => (
+            <AnimateOnScroll key={row.label}>
+              <div className={`grid grid-cols-1 md:grid-cols-4 gap-0 ${i % 2 === 0 ? '' : ''}`}>
+                {/* Row Label */}
+                <div className="flex items-center p-4 bg-muted/50 border border-border/40 font-semibold text-sm text-foreground md:border-r-0">
+                  {row.label}
                 </div>
-                <div className="space-y-4">
-                  {[
-                    { label: 'Average rating', value: '4.8–5.0★', icon: Star, note: '47-point checklist, every single time' },
-                    { label: 'Bookings per month', value: '18–22', icon: TrendingUp, note: 'Higher rating = 30%+ more bookings' },
-                    { label: 'Revenue per month', value: '~$3,600', icon: DollarSign, note: 'At $180/night avg × 20 bookings' },
-                    { label: 'Missed cleans per year', value: '0', icon: AlertTriangle, note: 'Full team backup — zero gaps, guaranteed' },
-                    { label: 'Your time spent', value: '0 hrs/mo', icon: Clock, note: 'You book online. We handle everything.' },
-                    { label: 'Insurance coverage', value: '$2M', icon: Shield, note: 'Full general liability on every job' },
-                  ].map((row) => (
-                    <div key={row.label} className="flex items-start justify-between py-2 border-b border-primary/10 last:border-0">
-                      <div className="flex items-start gap-2">
-                        <row.icon className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                        <div>
-                          <span className="text-sm font-medium text-foreground">{row.label}</span>
-                          <p className="text-xs text-primary">{row.note}</p>
-                        </div>
-                      </div>
-                      <span className="text-sm font-bold text-primary whitespace-nowrap ml-4">{row.value}</span>
-                    </div>
-                  ))}
+                {/* DIY */}
+                <div className="p-4 bg-red-50/60 border border-red-200/60 md:border-r-0 md:border-l-0">
+                  <div className="md:hidden text-xs font-bold text-red-600 mb-1 uppercase tracking-wider">DIY</div>
+                  <div className="text-sm font-bold text-red-700">{row.diy.value}</div>
+                  <p className="text-xs text-red-500/80 mt-0.5">{row.diy.note}</p>
                 </div>
-              </Card>
+                {/* Maid / Marketplace */}
+                <div className="p-4 bg-amber-50/60 border border-amber-200/60 md:border-r-0 md:border-l-0">
+                  <div className="md:hidden text-xs font-bold text-amber-600 mb-1 uppercase tracking-wider">Maid / Marketplace</div>
+                  <div className="text-sm font-bold text-amber-700">{row.maid.value}</div>
+                  <p className="text-xs text-amber-500/80 mt-0.5">{row.maid.note}</p>
+                </div>
+                {/* Ready Rental Cleaning */}
+                <div className="p-4 bg-primary/5 border-2 border-primary/20 md:border-l-0">
+                  <div className="md:hidden text-xs font-bold text-primary mb-1 uppercase tracking-wider">Ready Rental Cleaning</div>
+                  <div className="text-sm font-bold text-primary">{row.us.value}</div>
+                  <p className="text-xs text-primary/70 mt-0.5">{row.us.note}</p>
+                </div>
+              </div>
             </AnimateOnScroll>
+          ))}
+
+          {/* Bottom rounded corners */}
+          <div className="hidden md:grid md:grid-cols-4 gap-0">
+            <div />
+            <div className="h-3 bg-red-50 border border-red-200 border-t-0 rounded-b-2xl" />
+            <div className="h-3 bg-amber-50 border border-amber-200 border-t-0 rounded-b-2xl" />
+            <div className="h-3 bg-primary/5 border-2 border-primary/20 border-t-0 rounded-b-2xl" />
           </div>
 
           {/* Bottom Line */}
@@ -296,14 +400,14 @@ export default function Home() {
               initial={{ scale: 0.97 }}
               whileInView={{ scale: 1 }}
               viewport={{ once: true }}
-              className="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-8 text-center"
+              className="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-8 text-center mt-10"
             >
               <p className="text-sm font-bold text-emerald-700 uppercase tracking-wider mb-2">The Bottom Line</p>
               <p className="text-3xl sm:text-4xl font-extrabold text-emerald-700 mb-3">
                 +$1,260/month in your pocket
               </p>
               <p className="text-sm text-emerald-600 max-w-lg mx-auto mb-6">
-                $3,600 revenue with us minus $2,340 without us = $1,260 more per month. After cleaning costs ($1,440), the higher rating and zero missed bookings still nets you more revenue. Plus you get 20+ hours of your life back.
+                DIY "saves" money but costs 40+ hours. Marketplace cleaners are unreliable and uninsured. Ready Rental Cleaning costs $1,440/mo for 8 turnovers — but higher ratings drive 30%+ more bookings, putting $1,260+ more revenue in your pocket. Plus you get your life back.
               </p>
               <a href="/airbnb-cleaning-cost-calculator" className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:text-emerald-800 transition-colors">
                 <Calculator className="w-4 h-4" />
@@ -364,8 +468,8 @@ export default function Home() {
               <p className="text-4xl font-extrabold mb-3">$900+ per incident</p>
               <p className="text-background/70 text-sm mb-6">vs. $180 for a guaranteed professional turnover</p>
               <a href="/book" className="inline-flex items-center gap-2 h-12 px-8 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-all">
-                Protect Your Revenue
-                <Shield className="w-4 h-4" />
+                Book a Cleaning Now
+                <ArrowRight className="w-4 h-4" />
               </a>
             </div>
           </AnimateOnScroll>
@@ -465,6 +569,57 @@ export default function Home() {
         </motion.div>
       </Section>
 
+      {/* ═══ PHOTO SHOWCASE — Real Results ═══ */}
+      <section className="bg-background py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimateOnScroll>
+            <div className="text-center mb-12">
+              <Badge className="mb-4">
+                <Camera className="w-3 h-3 mr-1" />
+                Real Results
+              </Badge>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+                See the Difference
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Real before and after photos from actual Ready Rental Cleaning jobs across Los Angeles.
+              </p>
+            </div>
+          </AnimateOnScroll>
+
+          <motion.div
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-80px' }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-4"
+          >
+            {[
+              { src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=500&h=500&fit=crop', label: 'Living Room — Silver Lake' },
+              { src: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=500&h=500&fit=crop', label: 'Kitchen — West Hollywood' },
+              { src: 'https://images.unsplash.com/photo-1620626011761-996317b8d101?w=500&h=500&fit=crop', label: 'Bathroom — Venice' },
+              { src: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=500&h=500&fit=crop', label: 'Bedroom — Santa Monica' },
+              { src: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=500&h=500&fit=crop', label: 'Patio — Marina del Rey' },
+              { src: 'https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=500&h=500&fit=crop', label: 'Entryway — DTLA' },
+              { src: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=500&h=500&fit=crop', label: 'Studio — Hollywood' },
+              { src: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=500&h=500&fit=crop', label: 'Suite — Beverly Hills' },
+            ].map((photo) => (
+              <motion.div key={photo.label} variants={item} className="group relative overflow-hidden rounded-xl">
+                <img
+                  src={photo.src}
+                  alt={photo.label}
+                  className="w-full aspect-square object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-3 text-white text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {photo.label}
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
       {/* ═══ HIRING STANDARDS — Trust & Safety ═══ */}
       <Section variant="muted" padding="default">
         <AnimateOnScroll>
@@ -553,8 +708,8 @@ export default function Home() {
 
       {/* ═══ MID-PAGE CTA — Conversion Point ═══ */}
       <Section variant="cta" padding="default">
-        <div className="max-w-4xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-10 items-center">
             <div>
               <h2 className="text-3xl sm:text-4xl font-extrabold mb-4">
                 Stop Losing Revenue to Bad Cleans
@@ -562,7 +717,7 @@ export default function Home() {
               <p className="text-primary-foreground/80 mb-6">
                 Every day without professional cleaning is money left on the table. Higher ratings, more bookings, zero headaches — starting with your first turnover.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-col sm:flex-row gap-3 mb-8">
                 <a href="/book" className="inline-flex items-center justify-center gap-2 h-12 px-8 bg-white text-primary rounded-xl font-semibold shadow-depth-2 hover:shadow-depth-3 transition-all">
                   Book Now — $180
                   <ArrowRight className="w-4 h-4" />
@@ -572,123 +727,38 @@ export default function Home() {
                   Call Us
                 </a>
               </div>
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  { stat: '$180', label: 'Flat rate, no surprises' },
+                  { stat: '3 hrs', label: 'Average turnaround' },
+                  { stat: '0', label: 'No-shows ever' },
+                  { stat: '100%', label: 'Satisfaction guarantee' },
+                ].map((s) => (
+                  <div key={s.label} className="bg-white/10 backdrop-blur-sm rounded-xl p-3 text-center">
+                    <div className="text-xl font-extrabold text-white">{s.stat}</div>
+                    <div className="text-xs text-primary-foreground/70">{s.label}</div>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { stat: '$180', label: 'Flat rate, no surprises' },
-                { stat: '3 hrs', label: 'Average turnaround' },
-                { stat: '0', label: 'No-shows ever' },
-                { stat: '100%', label: 'Satisfaction guarantee' },
-              ].map((s) => (
-                <div key={s.label} className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
-                  <div className="text-2xl font-extrabold text-white">{s.stat}</div>
-                  <div className="text-xs text-primary-foreground/70">{s.label}</div>
-                </div>
-              ))}
-            </div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+              className="hidden md:block"
+            >
+              <div className="grid grid-cols-2 gap-3">
+                <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=400&h=300&fit=crop" alt="Clean living room" className="rounded-xl w-full h-40 object-cover" />
+                <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop" alt="Spotless kitchen" className="rounded-xl w-full h-40 object-cover mt-6" />
+                <img src="https://images.unsplash.com/photo-1620626011761-996317b8d101?w=400&h=300&fit=crop" alt="Pristine bathroom" className="rounded-xl w-full h-40 object-cover -mt-6" />
+                <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=400&h=300&fit=crop" alt="Fresh bedroom" className="rounded-xl w-full h-40 object-cover" />
+              </div>
+            </motion.div>
           </div>
         </div>
       </Section>
 
-      {/* Service Areas */}
-      <Section variant="default" padding="default">
-        <AnimateOnScroll>
-          <div className="text-center mb-16">
-            <Badge className="mb-4">
-              <MapPin className="w-3 h-3 mr-1" />
-              Coverage
-            </Badge>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-              Serving All of Los Angeles
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Professional Airbnb turnover cleaning across 22 neighborhoods and cities. Click any area for local market stats and pricing.
-            </p>
-          </div>
-        </AnimateOnScroll>
-
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: '-80px' }}
-          className="flex flex-wrap gap-3 justify-center mb-10"
-        >
-          {NEIGHBORHOODS.map((n) => (
-            <motion.a
-              key={n.slug}
-              variants={item}
-              href={`/airbnb-cleaning/${n.slug}`}
-              className="inline-flex items-center gap-1.5 px-5 py-2.5 bg-secondary text-primary rounded-full text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors"
-            >
-              <MapPin className="w-3 h-3" />
-              {n.name}
-            </motion.a>
-          ))}
-        </motion.div>
-
-        {/* Quick Links — Services & Tools */}
-        <AnimateOnScroll>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
-            <a href="/airbnb-turnover-cleaning-los-angeles" className="group flex items-center gap-3 bg-secondary rounded-xl p-4 hover:bg-primary/10 transition-colors">
-              <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                <Star className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <div className="text-sm font-bold text-foreground">Turnover Cleaning</div>
-                <div className="text-xs text-muted-foreground">From $180</div>
-              </div>
-              <ChevronRight className="w-4 h-4 text-muted-foreground ml-auto" />
-            </a>
-            <a href="/same-day-airbnb-cleaning" className="group flex items-center gap-3 bg-secondary rounded-xl p-4 hover:bg-primary/10 transition-colors">
-              <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                <Zap className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <div className="text-sm font-bold text-foreground">Same-Day Cleaning</div>
-                <div className="text-xs text-muted-foreground">Book by 10 AM</div>
-              </div>
-              <ChevronRight className="w-4 h-4 text-muted-foreground ml-auto" />
-            </a>
-            <a href="/vacation-rental-deep-clean" className="group flex items-center gap-3 bg-secondary rounded-xl p-4 hover:bg-primary/10 transition-colors">
-              <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                <Award className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <div className="text-sm font-bold text-foreground">Deep Clean</div>
-                <div className="text-xs text-muted-foreground">$350 flat rate</div>
-              </div>
-              <ChevronRight className="w-4 h-4 text-muted-foreground ml-auto" />
-            </a>
-            <a href="/airbnb-cleaning-cost-calculator" className="group flex items-center gap-3 bg-secondary rounded-xl p-4 hover:bg-primary/10 transition-colors">
-              <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                <Calculator className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <div className="text-sm font-bold text-foreground">Cost Calculator</div>
-                <div className="text-xs text-muted-foreground">See your ROI</div>
-              </div>
-              <ChevronRight className="w-4 h-4 text-muted-foreground ml-auto" />
-            </a>
-          </div>
-        </AnimateOnScroll>
-
-        {/* Comparison Links */}
-        <AnimateOnScroll>
-          <div className="flex flex-wrap gap-3 justify-center mt-8">
-            {[
-              { slug: 'diy-vs-professional', label: 'DIY vs Professional' },
-              { slug: 'vs-thumbtack-cleaners', label: 'vs Thumbtack' },
-              { slug: 'vs-independent-cleaners', label: 'vs Independent Cleaners' },
-              { slug: 'vs-turnoverbnb', label: 'vs TurnoverBnB' },
-            ].map((c) => (
-              <a key={c.slug} href={`/compare/${c.slug}`} className="text-xs font-medium text-muted-foreground hover:text-primary transition-colors underline underline-offset-2">
-                {c.label}
-              </a>
-            ))}
-          </div>
-        </AnimateOnScroll>
-      </Section>
 
       {/* CTA */}
       <Section variant="cta" padding="default" className="relative overflow-hidden">

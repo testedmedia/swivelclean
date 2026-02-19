@@ -3,6 +3,19 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname
+
+  // ── Referrer dashboard auth (JWT-based, separate from admin) ──
+  if (pathname.startsWith('/referrer') && pathname !== '/referrer/login') {
+    const sessionCookie = request.cookies.get('referrer_session')?.value
+    if (!sessionCookie) {
+      return NextResponse.redirect(new URL('/referrer/login', request.url))
+    }
+    // JWT verification happens in the API routes — middleware just checks cookie existence
+    return NextResponse.next()
+  }
+
+  // ── Admin auth (Supabase) ──
   let supabaseResponse = NextResponse.next({ request })
 
   const supabase = createServerClient(
@@ -28,7 +41,6 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  const pathname = request.nextUrl.pathname
   const isLoginPage = pathname === '/admin/login'
 
   if (!user && !isLoginPage) {
@@ -45,5 +57,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*'],
+  matcher: ['/admin/:path*', '/referrer/:path*'],
 }

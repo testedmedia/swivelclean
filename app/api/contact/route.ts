@@ -72,13 +72,14 @@ export async function POST(req: NextRequest) {
 </html>`
 
     // Send admin notification email
-    await resend.emails.send({
+    const adminResult = await resend.emails.send({
       from: 'Ready Rental Cleaning <hello@readyrentalcleaning.com>',
-      to: 'hello@readyrentalcleaning.com',
+      to: ['hello@readyrentalcleaning.com', 'jarvis@tested.media'],
       subject: `New Contact: ${firstName} ${lastName}`,
       html: adminHtml,
       reply_to: email,
     })
+    console.log('Admin email result:', JSON.stringify(adminResult))
 
     // Send auto-reply to the sender
     const autoReplyHtml = `
@@ -115,18 +116,20 @@ export async function POST(req: NextRequest) {
 </body>
 </html>`
 
-    await resend.emails.send({
+    const replyResult = await resend.emails.send({
       from: 'Ready Rental Cleaning <hello@readyrentalcleaning.com>',
       to: email,
       subject: 'We received your message - Ready Rental Cleaning',
       html: autoReplyHtml,
     })
+    console.log('Auto-reply result:', JSON.stringify(replyResult))
 
-    return NextResponse.json({ success: true })
-  } catch (error) {
-    console.error('Contact form error:', error)
+    return NextResponse.json({ success: true, adminId: adminResult?.data?.id, replyId: replyResult?.data?.id })
+  } catch (error: unknown) {
+    const errMsg = error instanceof Error ? error.message : String(error)
+    console.error('Contact form error:', errMsg, error)
     return NextResponse.json(
-      { error: 'Failed to process contact form' },
+      { error: 'Failed to process contact form', details: errMsg },
       { status: 500 }
     )
   }

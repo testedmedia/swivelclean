@@ -8,10 +8,11 @@ interface NumberTickerProps {
   value: number
   suffix?: string
   prefix?: string
+  decimals?: number
   className?: string
 }
 
-export function NumberTicker({ value, suffix = '', prefix = '', className }: NumberTickerProps) {
+export function NumberTicker({ value, suffix = '', prefix = '', decimals = 0, className }: NumberTickerProps) {
   const ref = useRef<HTMLSpanElement>(null)
   const innerRef = useRef<HTMLSpanElement>(null)
   const isInView = useInView(ref, { once: true, margin: '-80px' })
@@ -25,15 +26,14 @@ export function NumberTicker({ value, suffix = '', prefix = '', className }: Num
   useEffect(() => {
     const unsubscribe = spring.on('change', (v) => {
       if (innerRef.current) {
-        const rounded = Math.round(v)
-        innerRef.current.textContent =
-          prefix +
-          (rounded >= 1000 ? rounded.toLocaleString() : String(rounded)) +
-          suffix
+        const formatted = decimals > 0
+          ? v.toFixed(decimals)
+          : (Math.round(v) >= 1000 ? Math.round(v).toLocaleString() : String(Math.round(v)))
+        innerRef.current.textContent = prefix + formatted + suffix
       }
     })
     return unsubscribe
-  }, [spring, prefix, suffix])
+  }, [spring, prefix, suffix, decimals])
 
   return (
     <span ref={ref} className={cn('tabular-nums', className)}>
