@@ -4,13 +4,14 @@ import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import {
   DollarSign, Share2, Banknote, Gift, Clock, TrendingUp, ArrowRight, Check, Star,
-  Home, Sparkles, Building2, CalendarCheck, MessageSquare, Copy, Mail, User, Wallet,
-  Loader2, Link2, ExternalLink,
+  Home, Sparkles, Building2, CalendarCheck, MessageSquare, Copy, Mail, Wallet,
+  Loader2, Link2, ExternalLink, Lock, CheckCircle2,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { Section } from '@/components/ui/section'
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
+import { SIGNUP_BONUS, PAYOUT_THRESHOLD } from '@/lib/referral-constants'
 
 // ── Helpers ──
 
@@ -65,9 +66,9 @@ const container = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { st
 const item = { hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { type: 'spring' as const, stiffness: 400, damping: 28 } } }
 
 const STEPS = [
-  { Icon: Link2, title: 'Get Your Link', description: 'One click. No signup. No email. Your link is ready instantly — plus $25 free in your account.', highlight: '$25 Free' },
+  { Icon: Link2, title: 'Get Your Link + $25', description: 'One click. Instant link. $25 free bonus credited to your account immediately.', highlight: '$25 Free' },
   { Icon: Share2, title: 'Share & Earn', description: 'Share with Airbnb hosts, property managers, or anyone who needs cleaning.', highlight: '$25 per referral' },
-  { Icon: Banknote, title: 'Get Paid', description: 'Earn $25-$100 for every new client who books. No cap on earnings.', highlight: 'Unlimited' },
+  { Icon: Banknote, title: 'Cash Out at $50', description: 'Hit $50 and withdraw via Venmo, Zelle, or direct deposit. Paid every Friday.', highlight: 'Every Friday' },
 ]
 
 const EARNINGS = [
@@ -100,7 +101,7 @@ const STATS = [
   { value: 'Every Friday', label: 'Payouts', Icon: Banknote },
 ]
 
-// ── Inline Dashboard (shown after one-click generation) ──
+// ── Inline Dashboard (blindbox-style) ──
 
 function ReferralDashboard({ code, url }: { code: string; url: string }) {
   const [copied, setCopied] = useState(false)
@@ -108,9 +109,35 @@ function ReferralDashboard({ code, url }: { code: string; url: string }) {
   const [claimed, setClaimed] = useState(false)
   const [claimError, setClaimError] = useState('')
   const [email, setEmail] = useState('')
-  const [name, setName] = useState('')
-  const [payoutMethod, setPayoutMethod] = useState('venmo')
-  const [payoutHandle, setPayoutHandle] = useState('')
+  const [timeLeft, setTimeLeft] = useState({ h: 23, m: 59, s: 59 })
+
+  const totalBalance = SIGNUP_BONUS
+  const earnedCommission = 0
+  const progressPercent = Math.min(100, (totalBalance / PAYOUT_THRESHOLD) * 100)
+  const canWithdraw = totalBalance >= PAYOUT_THRESHOLD
+  const amountNeeded = Math.max(0, PAYOUT_THRESHOLD - totalBalance).toFixed(2)
+
+  // Check if already claimed
+  useEffect(() => {
+    if (localStorage.getItem('rr_claimed') === 'true') setClaimed(true)
+  }, [])
+
+  // 24h countdown from account creation
+  useEffect(() => {
+    const created = localStorage.getItem('rr_ref_created')
+    if (!created) return
+    const createdMs = new Date(created).getTime()
+    const tick = () => {
+      const remaining = Math.max(0, createdMs + 24 * 60 * 60 * 1000 - Date.now())
+      const h = Math.floor(remaining / 3600000)
+      const m = Math.floor((remaining % 3600000) / 60000)
+      const s = Math.floor((remaining % 60000) / 1000)
+      setTimeLeft({ h, m, s })
+    }
+    tick()
+    const interval = setInterval(tick, 1000)
+    return () => clearInterval(interval)
+  }, [])
 
   function copyLink() {
     navigator.clipboard.writeText(url)
@@ -126,7 +153,7 @@ function ReferralDashboard({ code, url }: { code: string; url: string }) {
       const res = await fetch('/api/referral/claim', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code, email, name, payoutMethod, payoutHandle }),
+        body: JSON.stringify({ code, email }),
       })
       const data = await res.json()
       if (!res.ok) {
@@ -142,22 +169,120 @@ function ReferralDashboard({ code, url }: { code: string; url: string }) {
     }
   }
 
-  const inputClass = 'w-full h-10 px-3 bg-muted/50 border border-input/60 rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/30 transition-colors text-sm'
-
   return (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="max-w-2xl mx-auto space-y-6">
-      {/* Link card */}
-      <Card className="p-6 border border-primary/20 bg-primary/5 rounded-2xl shadow-depth-2">
-        <div className="flex items-center gap-2 mb-4">
-          <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-            <Link2 className="w-4 h-4 text-primary" />
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="max-w-lg mx-auto space-y-5 text-left">
+
+      {/* ═══ Account Balance Card ═══ */}
+      <div className="bg-background rounded-2xl border-2 border-primary/30 p-6 shadow-depth-2">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <Wallet className="w-5 h-5 text-primary" />
+            <p className="font-bold text-sm text-foreground">Account Balance</p>
           </div>
-          <h3 className="font-bold text-foreground">Your Referral Link</h3>
-          <Badge variant="outline" className="text-xs ml-auto">Code: {code}</Badge>
+          {canWithdraw ? (
+            <span className="bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+              <CheckCircle2 className="w-3 h-3" /> Ready to withdraw
+            </span>
+          ) : (
+            <span className="bg-amber-100 text-amber-700 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+              <Lock className="w-3 h-3" /> ${amountNeeded} more to withdraw
+            </span>
+          )}
+        </div>
+
+        {/* Big balance number */}
+        <div className="text-center py-4">
+          <p className="text-5xl sm:text-6xl font-extrabold text-primary">
+            ${totalBalance.toFixed(2)}
+          </p>
+          <div className="flex items-center justify-center gap-4 mt-2 text-xs text-muted-foreground">
+            <span className="flex items-center gap-1">
+              <Sparkles className="w-3 h-3 text-primary" />
+              ${SIGNUP_BONUS.toFixed(2)} signup bonus
+            </span>
+            <span>+</span>
+            <span className="flex items-center gap-1">
+              <TrendingUp className="w-3 h-3 text-primary" />
+              ${earnedCommission.toFixed(2)} earned
+            </span>
+          </div>
+        </div>
+
+        {/* 24h countdown timer */}
+        {!claimed && (
+          <div className="bg-red-50 border border-red-200 rounded-xl p-4 mt-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="bg-red-100 p-1.5 rounded-lg shrink-0">
+                  <Clock className="w-4 h-4 text-red-600 animate-pulse" />
+                </div>
+                <p className="text-xs text-red-700 font-bold">
+                  ${SIGNUP_BONUS} bonus expires in:
+                </p>
+              </div>
+              <div className="flex items-center gap-1 font-mono">
+                <span className="bg-red-600 text-white text-sm font-extrabold px-2 py-1 rounded-lg min-w-[2rem] text-center">
+                  {String(timeLeft.h).padStart(2, '0')}
+                </span>
+                <span className="text-red-600 font-bold">:</span>
+                <span className="bg-red-600 text-white text-sm font-extrabold px-2 py-1 rounded-lg min-w-[2rem] text-center">
+                  {String(timeLeft.m).padStart(2, '0')}
+                </span>
+                <span className="text-red-600 font-bold">:</span>
+                <span className="bg-red-600 text-white text-sm font-extrabold px-2 py-1 rounded-lg min-w-[2rem] text-center">
+                  {String(timeLeft.s).padStart(2, '0')}
+                </span>
+              </div>
+            </div>
+            <p className="text-[10px] text-red-600 mt-2">
+              Claim your account below to keep your ${SIGNUP_BONUS} forever. No account = bonus gone.
+            </p>
+          </div>
+        )}
+
+        {/* Progress bar to withdrawal */}
+        <div className="mt-4">
+          <div className="flex items-center justify-between text-xs mb-2">
+            <span className="text-muted-foreground">Progress to withdrawal</span>
+            <span className="font-bold text-foreground">${totalBalance.toFixed(2)} / ${PAYOUT_THRESHOLD.toFixed(2)}</span>
+          </div>
+          <div className="w-full bg-muted rounded-full h-3 overflow-hidden">
+            <motion.div
+              className={`h-full rounded-full ${canWithdraw ? 'bg-primary' : 'bg-gradient-to-r from-primary/60 to-primary'}`}
+              initial={{ width: 0 }}
+              animate={{ width: `${progressPercent}%` }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
+            />
+          </div>
+          <div className="flex items-center justify-between text-[10px] mt-1 text-muted-foreground">
+            <span>$0</span>
+            <span className="font-bold text-primary">${PAYOUT_THRESHOLD} to withdraw</span>
+          </div>
+        </div>
+
+        {/* Withdraw button / locked state */}
+        {canWithdraw ? (
+          <a href="/referrer/dashboard" className="mt-4 w-full block text-center bg-primary text-primary-foreground py-3 rounded-xl font-bold text-sm hover:bg-primary/90 transition-colors">
+            Withdraw ${totalBalance.toFixed(2)}
+          </a>
+        ) : (
+          <div className="mt-4 w-full text-center bg-muted text-muted-foreground py-3 rounded-xl font-bold text-sm cursor-not-allowed flex items-center justify-center gap-2">
+            <Lock className="w-4 h-4" />
+            Earn ${amountNeeded} more to unlock withdrawal
+          </div>
+        )}
+      </div>
+
+      {/* ═══ Your Referral Link ═══ */}
+      <div className="bg-background rounded-2xl border border-border p-5 shadow-depth-1">
+        <div className="flex items-center gap-2 mb-3">
+          <Link2 className="w-4 h-4 text-primary" />
+          <h3 className="font-bold text-foreground text-sm">Your Referral Link</h3>
+          <Badge variant="outline" className="text-xs ml-auto">{code}</Badge>
         </div>
 
         <div className="flex items-center gap-2 mb-4">
-          <div className="flex-1 bg-background border border-border rounded-lg px-4 py-2.5 text-sm font-mono text-muted-foreground truncate">
+          <div className="flex-1 bg-muted/50 border border-input/40 rounded-lg px-4 py-2.5 text-sm font-mono text-muted-foreground truncate">
             {url}
           </div>
           <motion.button
@@ -166,12 +291,12 @@ function ReferralDashboard({ code, url }: { code: string; url: string }) {
             whileTap={{ scale: 0.95 }}
           >
             {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-            {copied ? 'Copied!' : 'Copy Link'}
+            {copied ? 'Copied!' : 'Copy'}
           </motion.button>
         </div>
 
-        {/* Social share */}
-        <div className="flex items-center gap-2">
+        {/* Share buttons */}
+        <div className="flex items-center gap-2 flex-wrap">
           <span className="text-xs text-muted-foreground">Share:</span>
           {[
             { label: 'Twitter', href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(`Know an Airbnb host in LA? They'll save $25 on their first cleaning and I earn a bonus. Win-win! ${url}`)}` },
@@ -179,89 +304,64 @@ function ReferralDashboard({ code, url }: { code: string; url: string }) {
             { label: 'WhatsApp', href: `https://wa.me/?text=${encodeURIComponent(`Hey! If you need Airbnb turnover cleaning in LA, check this out. You get $25 off: ${url}`)}` },
             { label: 'Email', href: `mailto:?subject=${encodeURIComponent('$25 off Airbnb cleaning in LA')}&body=${encodeURIComponent(`I use Ready Rental Cleaning for my Airbnb turnovers. Use my link to get $25 off your first booking: ${url}`)}` },
           ].map((s) => (
-            <a
-              key={s.label}
-              href={s.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-xs text-primary hover:text-primary/80 bg-primary/10 hover:bg-primary/20 rounded-full px-3 py-1.5 transition-colors"
-            >
+            <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs text-primary hover:text-primary/80 bg-primary/10 hover:bg-primary/20 rounded-full px-3 py-1.5 transition-colors">
               <ExternalLink className="w-3 h-3" /> {s.label}
             </a>
           ))}
         </div>
-      </Card>
+      </div>
 
-      {/* Claim account card */}
+      {/* ═══ Claim Account — email only ═══ */}
       <AnimatePresence mode="wait">
-        {!claimed && !localStorage.getItem('rr_claimed') ? (
+        {!claimed ? (
           <motion.div key="claim" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}>
-            <Card className="p-6 border border-border bg-background rounded-2xl shadow-depth-1">
-              <div className="flex items-center gap-2 mb-1">
-                <Mail className="w-4 h-4 text-primary" />
-                <h3 className="font-bold text-foreground text-sm">Claim Your Account</h3>
-              </div>
-              <p className="text-xs text-muted-foreground mb-4">Add your email to get paid when referrals convert. No password needed.</p>
+            <div className="bg-background rounded-2xl border-2 border-primary/30 p-6 text-center shadow-depth-1">
+              <Lock className="w-8 h-8 mx-auto mb-3 text-primary" />
+              <h3 className="font-extrabold text-lg text-foreground mb-2">Claim Your Account</h3>
+              <p className="text-sm text-muted-foreground mb-1 max-w-sm mx-auto">
+                Enter your email to <strong>lock in your ${SIGNUP_BONUS} bonus forever</strong>.
+              </p>
+              <p className="text-xs text-red-600 font-bold mb-4">
+                Without an account, your ${SIGNUP_BONUS} bonus disappears in 24 hours.
+              </p>
 
-              {claimError && (
-                <p className="text-xs text-destructive mb-3">{claimError}</p>
-              )}
+              {claimError && <p className="text-xs text-destructive mb-3">{claimError}</p>}
 
-              <form onSubmit={handleClaim} className="space-y-3">
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="text-xs font-medium text-foreground mb-1 block">Name</label>
-                    <div className="relative">
-                      <User className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
-                      <input type="text" required value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" className={`${inputClass} pl-8`} />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="text-xs font-medium text-foreground mb-1 block">Email</label>
-                    <div className="relative">
-                      <Mail className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
-                      <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@email.com" className={`${inputClass} pl-8`} />
-                    </div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="text-xs font-medium text-foreground mb-1 block">Payout Method</label>
-                    <select value={payoutMethod} onChange={(e) => setPayoutMethod(e.target.value)} className={inputClass}>
-                      <option value="venmo">Venmo</option>
-                      <option value="zelle">Zelle</option>
-                      <option value="direct">Direct Deposit</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="text-xs font-medium text-foreground mb-1 block">
-                      {payoutMethod === 'venmo' ? 'Venmo Handle' : payoutMethod === 'zelle' ? 'Zelle Email/Phone' : 'Bank Details'}
-                    </label>
-                    <div className="relative">
-                      <Wallet className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
-                      <input type="text" value={payoutHandle} onChange={(e) => setPayoutHandle(e.target.value)} placeholder={payoutMethod === 'venmo' ? '@handle' : 'you@email.com'} className={`${inputClass} pl-8`} />
-                    </div>
-                  </div>
+              <form onSubmit={handleClaim} className="flex gap-2 max-w-sm mx-auto">
+                <div className="relative flex-1">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="your@email.com"
+                    className="w-full h-11 pl-10 pr-4 bg-muted/50 border border-input/60 rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/30 transition-colors text-sm"
+                  />
                 </div>
                 <button
                   type="submit"
                   disabled={claiming}
-                  className="w-full h-10 bg-primary text-primary-foreground rounded-lg font-semibold text-sm hover:bg-primary/90 active:scale-[0.97] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="h-11 px-6 bg-primary text-primary-foreground rounded-xl font-bold text-sm hover:bg-primary/90 transition-colors shrink-0 flex items-center gap-2"
                 >
-                  {claiming ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
-                  {claiming ? 'Claiming...' : 'Claim Account & Get Paid'}
+                  {claiming ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
+                  Claim
                 </button>
               </form>
-            </Card>
+              <p className="text-[10px] text-muted-foreground mt-2">
+                No password needed. We will email you a login link when you are ready to withdraw.
+              </p>
+            </div>
           </motion.div>
         ) : (
           <motion.div key="claimed" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}>
-            <Card className="p-4 border border-primary/20 bg-primary/5 rounded-2xl text-center">
-              <div className="flex items-center justify-center gap-2 text-primary font-semibold text-sm">
-                <Check className="w-4 h-4" /> Account claimed — you will be notified when referrals convert
+            <div className="bg-primary/5 border-2 border-primary/20 rounded-2xl p-5 text-center">
+              <div className="flex items-center justify-center gap-2 text-primary font-semibold text-sm mb-1">
+                <CheckCircle2 className="w-5 h-5" /> Account claimed — your ${SIGNUP_BONUS} bonus is locked in!
               </div>
-              <a href="/referrer/dashboard" className="text-xs text-primary hover:underline mt-1 block">Go to full dashboard</a>
-            </Card>
+              <p className="text-xs text-muted-foreground">Share your link to earn more. You will be notified when referrals convert.</p>
+              <a href="/referrer/dashboard" className="inline-flex items-center gap-1 text-xs text-primary hover:underline mt-2">Go to full dashboard <ArrowRight className="w-3 h-3" /></a>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -319,12 +419,23 @@ export default function ReferralPage() {
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-3">
             Know an Airbnb host? Share your link. When they book, you earn cash. They get $25 off. Everyone wins.
           </p>
-          <p className="text-sm font-semibold text-primary mb-2">
-            Sign up now and get $25 free in your account
-          </p>
-          <p className="text-sm text-muted-foreground mb-8">
-            One click &middot; No signup &middot; No email required &middot; Paid every Friday
-          </p>
+
+          {!affCode && (
+            <>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2, type: 'spring', stiffness: 400, damping: 25 }}
+                className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-5 py-2 mb-6"
+              >
+                <Sparkles className="w-4 h-4 text-primary" />
+                <span className="text-sm font-bold text-primary">${SIGNUP_BONUS} FREE — credited instantly to your account</span>
+              </motion.div>
+              <p className="text-sm text-muted-foreground mb-8">
+                One click &middot; No signup required &middot; Paid every Friday
+              </p>
+            </>
+          )}
 
           {/* One-click CTA or Dashboard */}
           <AnimatePresence mode="wait">
@@ -335,19 +446,19 @@ export default function ReferralPage() {
                 <motion.button
                   onClick={generateLink}
                   disabled={generating}
-                  className="inline-flex items-center justify-center gap-2 h-12 px-8 bg-primary text-primary-foreground rounded-xl font-semibold text-base shadow-depth-1 hover:bg-primary/90 hover:shadow-depth-2 transition-all disabled:opacity-60"
+                  className="inline-flex items-center justify-center gap-2 h-14 px-10 bg-primary text-primary-foreground rounded-xl font-bold text-lg shadow-depth-2 hover:bg-primary/90 hover:shadow-depth-3 transition-all disabled:opacity-60"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.97 }}
                 >
                   {generating ? (
                     <><Loader2 className="w-5 h-5 animate-spin" /> Generating...</>
                   ) : (
-                    <>Get My Referral Link <ArrowRight className="w-5 h-5" /></>
+                    <>Get My Link + ${SIGNUP_BONUS} Free <ArrowRight className="w-5 h-5" /></>
                   )}
                 </motion.button>
                 <motion.a
                   href="#how-it-works"
-                  className="inline-flex items-center justify-center gap-2 h-12 px-8 border border-border rounded-xl font-semibold text-base text-foreground hover:bg-muted transition-all"
+                  className="inline-flex items-center justify-center gap-2 h-14 px-8 border border-border rounded-xl font-semibold text-base text-foreground hover:bg-muted transition-all"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.97 }}
                 >
@@ -452,9 +563,9 @@ export default function ReferralPage() {
               <div>
                 <h3 className="font-bold text-foreground mb-1">Quick Math</h3>
                 <p className="text-sm text-muted-foreground">
-                  Refer <span className="font-semibold text-foreground">5 hosts</span> who each book a standard turnover ={' '}
-                  <span className="font-bold text-primary">$125 in your pocket</span>. Refer a property manager with 10+ units ={' '}
-                  <span className="font-bold text-primary">$100 bonus</span>. Most active referrers earn $250-$500+/month.
+                  ${SIGNUP_BONUS} bonus + refer <span className="font-semibold text-foreground">1 host</span> who books a standard turnover ={' '}
+                  <span className="font-bold text-primary">${SIGNUP_BONUS + 25} — enough to cash out</span>. Refer 5 hosts ={' '}
+                  <span className="font-bold text-primary">${SIGNUP_BONUS + 125} in your pocket</span>.
                 </p>
               </div>
             </div>
@@ -493,7 +604,7 @@ export default function ReferralPage() {
             90-Day Tracking
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
-            Your referral link tracks visitors for <span className="font-semibold text-foreground">90 days</span>. Even if they don&apos;t book right away, you still earn your full commission when they come back and book. Share it once and let it work for you.
+            Your referral link tracks visitors for <span className="font-semibold text-foreground">90 days</span>. Even if they don&apos;t book right away, you still earn your full commission when they come back and book.
           </p>
           <div className="inline-flex flex-wrap justify-center gap-4">
             {['Share on Instagram', 'Text a host friend', 'Post in FB groups', 'Email your network'].map((tip, i) => (
@@ -592,25 +703,23 @@ export default function ReferralPage() {
           <p className="text-lg text-muted-foreground mb-8">
             {affCode
               ? 'Your link is live. Every host who books through it puts money in your pocket.'
-              : 'One click. No signup. Get your referral link and start sharing with hosts in LA.'}
+              : `One click. Get your link + $${SIGNUP_BONUS} free. Start sharing with hosts in LA.`}
           </p>
           {!affCode && (
             <motion.button
               onClick={generateLink}
               disabled={generating}
-              className="inline-flex items-center justify-center gap-2 h-12 px-8 bg-primary text-primary-foreground rounded-xl font-semibold text-base shadow-depth-1 hover:bg-primary/90 hover:shadow-depth-2 transition-all disabled:opacity-60"
+              className="inline-flex items-center justify-center gap-2 h-14 px-10 bg-primary text-primary-foreground rounded-xl font-bold text-lg shadow-depth-2 hover:bg-primary/90 hover:shadow-depth-3 transition-all disabled:opacity-60"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
             >
               {generating ? <Loader2 className="w-5 h-5 animate-spin" /> : <ArrowRight className="w-5 h-5" />}
-              {generating ? 'Generating...' : 'Get My Referral Link'}
+              {generating ? 'Generating...' : `Get My Link + $${SIGNUP_BONUS} Free`}
             </motion.button>
           )}
           {affCode && (
             <motion.button
-              onClick={() => {
-                navigator.clipboard.writeText(affUrl!)
-              }}
+              onClick={() => navigator.clipboard.writeText(affUrl!)}
               className="inline-flex items-center justify-center gap-2 h-12 px-8 bg-primary text-primary-foreground rounded-xl font-semibold text-base shadow-depth-1 hover:bg-primary/90 hover:shadow-depth-2 transition-all"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
