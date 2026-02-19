@@ -9,15 +9,17 @@ interface StatCardProps {
   suffix?: string
   prefix?: string
   label: string
+  decimals?: number
   className?: string
 }
 
-export function StatCard({ value, suffix = '', prefix = '', label, className }: StatCardProps) {
+export function StatCard({ value, suffix = '', prefix = '', label, decimals = 0, className }: StatCardProps) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-80px' })
   const raw = useMotionValue(0)
   const spring = useSpring(raw, { stiffness: 80, damping: 20 })
   const display = useTransform(spring, (v) => {
+    if (decimals > 0) return v.toFixed(decimals)
     const rounded = Math.round(v)
     return rounded >= 1000 ? rounded.toLocaleString() : String(rounded)
   })

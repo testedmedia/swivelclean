@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { ArrowRight, Shield, Zap, Star, Camera, UserCheck, Award, Check, MapPin, ChevronRight, Calculator } from 'lucide-react'
+import { ArrowRight, Shield, Zap, Star, Camera, UserCheck, Award, Check, MapPin, ChevronRight, Calculator, X, Clock, DollarSign, TrendingUp, AlertTriangle, Phone } from 'lucide-react'
 import { Section } from '@/components/ui/section'
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
@@ -156,7 +156,7 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <StatCard value={200} suffix="+" label="Happy Hosts" />
             <StatCard value={1200} suffix="+" label="Cleanings Done" />
-            <StatCard value={49} prefix="" suffix="★" label="Average Rating" />
+            <StatCard value={4.9} decimals={1} suffix="★" label="Average Rating" />
             <StatCard value={3} suffix="hr" label="Avg Turnaround" />
           </div>
         </div>
@@ -204,6 +204,174 @@ export default function Home() {
         </motion.div>
       </Section>
 
+      {/* ═══ THE COMPARISON — Us vs Without Us ═══ */}
+      <Section variant="muted" padding="default">
+        <AnimateOnScroll>
+          <div className="text-center mb-16">
+            <Badge className="mb-4">
+              <TrendingUp className="w-3 h-3 mr-1" />
+              The Numbers Don't Lie
+            </Badge>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+              What Happens When You Switch to Us
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Real numbers from real LA hosts. Professional cleaning isn't an expense — it's your highest-ROI investment.
+            </p>
+          </div>
+        </AnimateOnScroll>
+
+        <div className="max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 mb-10">
+            {/* WITHOUT US */}
+            <AnimateOnScroll>
+              <Card depth={1} className="p-8 border-red-200 bg-red-50/40 h-full">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+                    <X className="w-5 h-5 text-red-600" />
+                  </div>
+                  <h3 className="text-lg font-bold text-red-700">Without Ready Rental Cleaning</h3>
+                </div>
+                <div className="space-y-4">
+                  {[
+                    { label: 'Average rating', value: '4.0–4.3★', icon: Star, note: 'Inconsistent cleaning = inconsistent reviews' },
+                    { label: 'Bookings per month', value: '12–15', icon: TrendingUp, note: 'Lower rating buries your listing' },
+                    { label: 'Revenue per month', value: '~$2,340', icon: DollarSign, note: 'At $180/night avg × 13 bookings' },
+                    { label: 'Missed cleans per year', value: '6–10', icon: AlertTriangle, note: 'Cancellations, no-shows, sick days' },
+                    { label: 'Your time spent', value: '20+ hrs/mo', icon: Clock, note: 'Managing cleaners, backup plans, QA' },
+                    { label: 'Insurance coverage', value: '$0', icon: Shield, note: 'You\'re personally liable for damage' },
+                  ].map((row) => (
+                    <div key={row.label} className="flex items-start justify-between py-2 border-b border-red-100 last:border-0">
+                      <div className="flex items-start gap-2">
+                        <row.icon className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <span className="text-sm font-medium text-foreground">{row.label}</span>
+                          <p className="text-xs text-red-500">{row.note}</p>
+                        </div>
+                      </div>
+                      <span className="text-sm font-bold text-red-700 whitespace-nowrap ml-4">{row.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            </AnimateOnScroll>
+
+            {/* WITH US */}
+            <AnimateOnScroll>
+              <Card depth={2} className="p-8 border-primary/30 bg-primary/5 h-full">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                    <Check className="w-5 h-5 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-bold text-primary">With Ready Rental Cleaning</h3>
+                </div>
+                <div className="space-y-4">
+                  {[
+                    { label: 'Average rating', value: '4.8–5.0★', icon: Star, note: '47-point checklist, every single time' },
+                    { label: 'Bookings per month', value: '18–22', icon: TrendingUp, note: 'Higher rating = 30%+ more bookings' },
+                    { label: 'Revenue per month', value: '~$3,600', icon: DollarSign, note: 'At $180/night avg × 20 bookings' },
+                    { label: 'Missed cleans per year', value: '0', icon: AlertTriangle, note: 'Full team backup — zero gaps, guaranteed' },
+                    { label: 'Your time spent', value: '0 hrs/mo', icon: Clock, note: 'You book online. We handle everything.' },
+                    { label: 'Insurance coverage', value: '$2M', icon: Shield, note: 'Full general liability on every job' },
+                  ].map((row) => (
+                    <div key={row.label} className="flex items-start justify-between py-2 border-b border-primary/10 last:border-0">
+                      <div className="flex items-start gap-2">
+                        <row.icon className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                        <div>
+                          <span className="text-sm font-medium text-foreground">{row.label}</span>
+                          <p className="text-xs text-primary">{row.note}</p>
+                        </div>
+                      </div>
+                      <span className="text-sm font-bold text-primary whitespace-nowrap ml-4">{row.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            </AnimateOnScroll>
+          </div>
+
+          {/* Bottom Line */}
+          <AnimateOnScroll>
+            <motion.div
+              initial={{ scale: 0.97 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true }}
+              className="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-8 text-center"
+            >
+              <p className="text-sm font-bold text-emerald-700 uppercase tracking-wider mb-2">The Bottom Line</p>
+              <p className="text-3xl sm:text-4xl font-extrabold text-emerald-700 mb-3">
+                +$1,260/month in your pocket
+              </p>
+              <p className="text-sm text-emerald-600 max-w-lg mx-auto mb-6">
+                $3,600 revenue with us minus $2,340 without us = $1,260 more per month. After cleaning costs ($1,440), the higher rating and zero missed bookings still nets you more revenue. Plus you get 20+ hours of your life back.
+              </p>
+              <a href="/airbnb-cleaning-cost-calculator" className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:text-emerald-800 transition-colors">
+                <Calculator className="w-4 h-4" />
+                Calculate your exact ROI
+                <ChevronRight className="w-4 h-4" />
+              </a>
+            </motion.div>
+          </AnimateOnScroll>
+        </div>
+      </Section>
+
+      {/* ═══ RISK REVERSAL — What a single bad clean costs ═══ */}
+      <Section variant="default" padding="default">
+        <div className="max-w-4xl mx-auto">
+          <AnimateOnScroll>
+            <div className="text-center mb-12">
+              <Badge className="mb-4">
+                <AlertTriangle className="w-3 h-3 mr-1" />
+                The Real Risk
+              </Badge>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+                One Bad Clean Costs You $900+
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                It's not about the $180 cleaning fee. It's about what a missed or bad cleaning actually costs your business.
+              </p>
+            </div>
+          </AnimateOnScroll>
+
+          <motion.div
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-80px' }}
+            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10"
+          >
+            {[
+              { cost: '$200+', title: 'Lost Booking', desc: 'Guest cancels or you cancel because property isn\'t ready' },
+              { cost: '$150+', title: 'Emergency Scramble', desc: 'Last-minute backup cleaner from TaskRabbit or begging friends' },
+              { cost: '$180', title: 'Refund/Discount', desc: 'Guest complains, you refund a night to save the review' },
+              { cost: '0.2 stars', title: 'Rating Drop', desc: 'One "dirty" review drops your average for months' },
+              { cost: '$600+', title: 'Downstream Loss', desc: 'Lower rating = fewer bookings for the next 90 days' },
+              { cost: '5+ hrs', title: 'Your Time', desc: 'Managing the crisis, apologizing, finding replacements' },
+            ].map((risk) => (
+              <motion.div key={risk.title} variants={item}>
+                <Card depth={1} className="p-6 h-full border-red-100">
+                  <div className="text-2xl font-extrabold text-red-600 mb-2">{risk.cost}</div>
+                  <div className="text-sm font-bold text-foreground mb-1">{risk.title}</div>
+                  <p className="text-xs text-muted-foreground">{risk.desc}</p>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <AnimateOnScroll>
+            <div className="bg-foreground text-background rounded-2xl p-8 text-center">
+              <p className="text-sm font-bold uppercase tracking-wider text-background/60 mb-2">Total Cost of One Bad Clean</p>
+              <p className="text-4xl font-extrabold mb-3">$900+ per incident</p>
+              <p className="text-background/70 text-sm mb-6">vs. $180 for a guaranteed professional turnover</p>
+              <a href="/book" className="inline-flex items-center gap-2 h-12 px-8 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-all">
+                Protect Your Revenue
+                <Shield className="w-4 h-4" />
+              </a>
+            </div>
+          </AnimateOnScroll>
+        </div>
+      </Section>
+
       {/* Services Preview */}
       <Section variant="muted" padding="default">
         <AnimateOnScroll>
@@ -213,7 +381,7 @@ export default function Home() {
               Transparent Pricing. Premium Quality.
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Every cleaning includes supplies, insurance, and before/after photos.
+              Every cleaning includes supplies, insurance, and before/after photos. No hidden fees, ever.
             </p>
           </div>
         </AnimateOnScroll>
@@ -238,68 +406,121 @@ export default function Home() {
             </motion.div>
           ))}
         </motion.div>
+
+        {/* Urgency CTA */}
+        <AnimateOnScroll>
+          <div className="mt-12 text-center">
+            <div className="inline-flex items-center gap-3 bg-amber-50 border-2 border-amber-200 rounded-2xl px-8 py-5 shadow-depth-1">
+              <Zap className="w-6 h-6 text-amber-600" />
+              <div className="text-left">
+                <p className="text-sm font-bold text-amber-700">Need it today? Same-day available.</p>
+                <p className="text-xs text-amber-600">Book before 10 AM and we're at your door by 2 PM — $230 flat rate</p>
+              </div>
+              <a href="/same-day-airbnb-cleaning" className="ml-4 text-sm font-bold text-amber-700 hover:text-amber-800 whitespace-nowrap">
+                Learn more →
+              </a>
+            </div>
+          </div>
+        </AnimateOnScroll>
       </Section>
 
-      {/* Why Ready Rental Cleaning */}
+      {/* Why Ready Rental Cleaning — Feature Grid */}
       <Section variant="default" padding="default">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <AnimateOnScroll>
-            <Badge className="mb-4">Why Ready Rental Cleaning</Badge>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-6">
-              Built for Airbnb Hosts Who Demand the Best
+        <AnimateOnScroll>
+          <div className="text-center mb-16">
+            <Badge className="mb-4">Why Us</Badge>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+              Everything Your Current Cleaner Doesn't Do
             </h2>
-            <p className="text-muted-foreground mb-8 leading-relaxed">
-              Every guest checkout is a revenue event. A missed or bad cleaning means lost bookings,
-              bad reviews, and frustrated guests. We eliminate that risk completely.
-            </p>
+          </div>
+        </AnimateOnScroll>
 
-            <div className="space-y-6">
-              {[
-                { title: 'Fully Insured & Bonded', desc: '$2M general liability coverage. Your property is protected against any incident.', icon: Shield },
-                { title: 'Background-Checked Cleaners', desc: 'Every cleaner passes thorough background verification before joining our team.', icon: UserCheck },
-                { title: '100% Satisfaction Guarantee', desc: 'Not happy with the clean? We come back and re-clean for free. No questions asked.', icon: Star },
-                { title: 'Photo Documentation', desc: 'Before/after photos with every cleaning so you can verify remotely.', icon: Camera },
-              ].map((feature) => (
-                <div key={feature.title} className="flex gap-4">
-                  <div className="w-12 h-12 bg-muted rounded-xl flex items-center justify-center flex-shrink-0">
-                    <feature.icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-foreground mb-1">{feature.title}</h3>
-                    <p className="text-sm text-muted-foreground">{feature.desc}</p>
-                  </div>
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-80px' }}
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto"
+        >
+          {[
+            { title: '$2M Insurance', desc: 'Full general liability coverage. Your property is protected against any incident — period.', icon: Shield },
+            { title: 'Background-Checked', desc: 'Every cleaner passes thorough background verification before setting foot in your property.', icon: UserCheck },
+            { title: 'Before/After Photos', desc: 'Automatic photo documentation sent within 30 minutes of every clean. Verify remotely.', icon: Camera },
+            { title: '100% Guarantee', desc: 'Not perfect? We come back and re-clean for free. No questions, no arguments, no exceptions.', icon: Star },
+            { title: 'Zero No-Shows', desc: 'Full team backup on every booking. If one cleaner is sick, another steps in. You never notice.', icon: Check },
+            { title: '3-Hour Turnaround', desc: 'Guest checking in tonight? Your property is guest-ready in 3 hours, guaranteed.', icon: Clock },
+            { title: '47-Point Checklist', desc: 'Every room, every surface, every detail — checked and verified before we leave.', icon: Award },
+            { title: 'Same-Day Available', desc: 'Book before 10 AM, we\'re at your door by 2 PM. Emergency turnovers are our specialty.', icon: Zap },
+          ].map((feature) => (
+            <motion.div key={feature.title} variants={item}>
+              <Card depth={1} className="p-6 h-full text-center">
+                <div className="w-12 h-12 mx-auto mb-4 bg-primary/10 rounded-xl flex items-center justify-center">
+                  <feature.icon className="w-6 h-6 text-primary" />
                 </div>
-              ))}
-            </div>
-          </AnimateOnScroll>
+                <h3 className="font-bold text-foreground mb-2 text-sm">{feature.title}</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">{feature.desc}</p>
+              </Card>
+            </motion.div>
+          ))}
+        </motion.div>
+      </Section>
 
-          <AnimateOnScroll>
-            <div className="relative">
-              <img
-                src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&h=700&fit=crop"
-                alt="Clean modern apartment interior"
-                className="rounded-2xl shadow-depth-3 w-full h-[500px] object-cover"
-              />
-              <div className="absolute bottom-6 left-6 right-6 bg-background/80 backdrop-blur-xl border border-border/30 rounded-2xl p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="text-sm font-medium text-muted-foreground">Average Host Rating</div>
-                    <div className="text-2xl font-bold text-foreground">4.9 out of 5.0</div>
-                  </div>
-                  <div className="flex gap-0.5">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
+      {/* ═══ HIRING STANDARDS — Trust & Safety ═══ */}
+      <Section variant="muted" padding="default">
+        <AnimateOnScroll>
+          <div className="text-center mb-12">
+            <Badge className="mb-4">
+              <Shield className="w-3 h-3 mr-1" />
+              Your Safety
+            </Badge>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+              Every Cleaner Passes Our 7-Point Hiring Process
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              We don't hire from marketplaces. Every cleaner is vetted, trained, and insured before they ever enter your property.
+            </p>
+          </div>
+        </AnimateOnScroll>
+
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-80px' }}
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto mb-8"
+        >
+          {[
+            { step: '1', title: 'Background Check', desc: 'Full criminal background verification through a certified screening service' },
+            { step: '2', title: 'Reference Check', desc: 'Minimum 2 professional references verified by our hiring team' },
+            { step: '3', title: 'Identity Verification', desc: 'Government-issued ID verified and kept on file' },
+            { step: '4', title: 'In-Person Interview', desc: 'Face-to-face interview assessing professionalism and attention to detail' },
+            { step: '5', title: 'Skills Assessment', desc: 'Hands-on cleaning test at our training property — graded on 47 checklist items' },
+            { step: '6', title: 'Airbnb Protocol Training', desc: 'Turnover-specific training: linen standards, photo documentation, guest-ready checklist' },
+            { step: '7', title: 'Insurance Enrollment', desc: 'Added to our $2M general liability policy before their first assignment' },
+          ].map((s) => (
+            <motion.div key={s.step} variants={item}>
+              <div className="flex items-start gap-3 bg-background rounded-xl p-4 border border-border/60 h-full">
+                <div className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                  {s.step}
+                </div>
+                <div>
+                  <div className="text-sm font-bold text-foreground mb-1">{s.title}</div>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{s.desc}</p>
                 </div>
               </div>
-            </div>
-          </AnimateOnScroll>
-        </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        <AnimateOnScroll>
+          <p className="text-center text-sm text-muted-foreground max-w-2xl mx-auto">
+            <span className="font-semibold text-foreground">Only 1 in 8 applicants make it through.</span> We'd rather have fewer cleaners than lower our standards. Your property deserves professionals, not strangers from a marketplace.
+          </p>
+        </AnimateOnScroll>
       </Section>
 
       {/* Testimonials */}
-      <Section variant="muted" padding="default">
+      <Section variant="default" padding="default">
         <AnimateOnScroll>
           <div className="text-center mb-16">
             <Badge className="mb-4">Reviews</Badge>
@@ -327,6 +548,45 @@ export default function Home() {
           <a href="/reviews" className="text-primary font-semibold text-sm hover:text-primary/80 transition-colors">
             Read all reviews &rarr;
           </a>
+        </div>
+      </Section>
+
+      {/* ═══ MID-PAGE CTA — Conversion Point ═══ */}
+      <Section variant="cta" padding="default">
+        <div className="max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div>
+              <h2 className="text-3xl sm:text-4xl font-extrabold mb-4">
+                Stop Losing Revenue to Bad Cleans
+              </h2>
+              <p className="text-primary-foreground/80 mb-6">
+                Every day without professional cleaning is money left on the table. Higher ratings, more bookings, zero headaches — starting with your first turnover.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <a href="/book" className="inline-flex items-center justify-center gap-2 h-12 px-8 bg-white text-primary rounded-xl font-semibold shadow-depth-2 hover:shadow-depth-3 transition-all">
+                  Book Now — $180
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+                <a href="tel:+13235550180" className="inline-flex items-center justify-center gap-2 h-12 px-8 border-2 border-white/30 text-white rounded-xl font-semibold hover:bg-white/10 transition-all">
+                  <Phone className="w-4 h-4" />
+                  Call Us
+                </a>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { stat: '$180', label: 'Flat rate, no surprises' },
+                { stat: '3 hrs', label: 'Average turnaround' },
+                { stat: '0', label: 'No-shows ever' },
+                { stat: '100%', label: 'Satisfaction guarantee' },
+              ].map((s) => (
+                <div key={s.label} className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
+                  <div className="text-2xl font-extrabold text-white">{s.stat}</div>
+                  <div className="text-xs text-primary-foreground/70">{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </Section>
 
