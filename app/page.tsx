@@ -59,8 +59,8 @@ export default function Home() {
               <div className="relative">
                 <div className="rounded-2xl overflow-hidden shadow-2xl">
                   <img
-                    src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&h=500&fit=crop"
-                    alt="Professional cleaning service"
+                    src="https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800&h=600&fit=crop&q=90"
+                    alt="Luxury clean apartment interior"
                     className="w-full h-[500px] object-cover"
                   />
                 </div>
