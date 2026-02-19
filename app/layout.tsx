@@ -52,8 +52,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <div className="hidden md:flex items-center gap-8">
                 <NavLink href="/">Home</NavLink>
                 <NavLink href="/services">Services</NavLink>
-                <NavLink href="/about">About</NavLink>
                 <NavLink href="/reviews">Reviews</NavLink>
+                <NavLink href="/marketing">Marketing</NavLink>
                 <NavLink href="/contact">Contact</NavLink>
                 <a href="/book" className="btn-primary !py-2.5 !px-6 !text-sm">
                   Book Now
@@ -85,8 +85,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <div className="px-4 py-4 space-y-1">
                 <MobileNavLink href="/" onClick={() => setMobileMenuOpen(false)}>Home</MobileNavLink>
                 <MobileNavLink href="/services" onClick={() => setMobileMenuOpen(false)}>Services</MobileNavLink>
-                <MobileNavLink href="/about" onClick={() => setMobileMenuOpen(false)}>About</MobileNavLink>
                 <MobileNavLink href="/reviews" onClick={() => setMobileMenuOpen(false)}>Reviews</MobileNavLink>
+                <MobileNavLink href="/marketing" onClick={() => setMobileMenuOpen(false)}>Marketing</MobileNavLink>
                 <MobileNavLink href="/contact" onClick={() => setMobileMenuOpen(false)}>Contact</MobileNavLink>
                 <div className="pt-2">
                   <a href="/book" onClick={() => setMobileMenuOpen(false)} className="btn-primary w-full !text-center">
@@ -131,6 +131,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 <ul className="space-y-3 text-sm text-gray-400">
                   <li><a href="/about" className="hover:text-white transition-colors">About Us</a></li>
                   <li><a href="/reviews" className="hover:text-white transition-colors">Reviews</a></li>
+                  <li><a href="/marketing" className="hover:text-white transition-colors">Marketing Kit</a></li>
                   <li><a href="/faq" className="hover:text-white transition-colors">FAQ</a></li>
                   <li><a href="/contact" className="hover:text-white transition-colors">Contact</a></li>
                 </ul>

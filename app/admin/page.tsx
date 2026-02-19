@@ -137,19 +137,32 @@ export default function AdminDashboard() {
           <div className="bg-teal-50 border border-teal-200 rounded-lg p-6">
             <h3 className="font-bold text-teal-700 mb-2">Next Steps</h3>
             <ul className="space-y-2 text-sm text-gray-700">
-              <li>☐ Set up Stripe webhook for real-time updates</li>
-              <li>☐ Connect email service for automated sequences</li>
-              <li>☐ Add team member management</li>
-              <li>☐ Set up calendar view</li>
+              {['Set up Stripe webhook for real-time updates', 'Connect email service for automated sequences', 'Add team member management', 'Set up calendar view'].map((item, i) => (
+                <li key={i} className="flex items-center gap-2">
+                  <div className="w-4 h-4 border border-teal-400 rounded flex-shrink-0" />
+                  {item}
+                </li>
+              ))}
             </ul>
           </div>
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
             <h3 className="font-bold text-blue-700 mb-2">Integrations</h3>
             <ul className="space-y-2 text-sm text-gray-700">
-              <li>✓ Email (Resend)</li>
-              <li>✓ Database (Supabase)</li>
-              <li>○ Stripe Webhooks (pending)</li>
-              <li>○ Calendar Sync (pending)</li>
+              {[
+                { label: 'Email (Resend)', done: true },
+                { label: 'Database (Supabase)', done: true },
+                { label: 'Stripe Webhooks (pending)', done: false },
+                { label: 'Calendar Sync (pending)', done: false },
+              ].map((item, i) => (
+                <li key={i} className="flex items-center gap-2">
+                  {item.done ? (
+                    <svg className="w-4 h-4 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                  ) : (
+                    <div className="w-4 h-4 border border-gray-300 rounded-full flex-shrink-0" />
+                  )}
+                  {item.label}
+                </li>
+              ))}
             </ul>
           </div>
         </div>
