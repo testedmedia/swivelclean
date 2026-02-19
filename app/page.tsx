@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { ArrowRight, Shield, Zap, Star, Camera, UserCheck, Award, Check, ChevronRight, Calculator, X, Clock, DollarSign, TrendingUp, AlertTriangle, Phone } from 'lucide-react'
+import { ArrowRight, Shield, Zap, Star, Camera, UserCheck, Award, Check, ChevronRight, Calculator, X, Clock, DollarSign, TrendingUp, AlertTriangle } from 'lucide-react'
 import { Section } from '@/components/ui/section'
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
@@ -705,60 +705,6 @@ export default function Home() {
           </a>
         </div>
       </Section>
-
-      {/* ═══ MID-PAGE CTA — Conversion Point ═══ */}
-      <Section variant="cta" padding="default">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-10 items-center">
-            <div>
-              <h2 className="text-3xl sm:text-4xl font-extrabold mb-4">
-                Stop Losing Revenue to Bad Cleans
-              </h2>
-              <p className="text-primary-foreground/80 mb-6">
-                Every day without professional cleaning is money left on the table. Higher ratings, more bookings, zero headaches — starting with your first turnover.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 mb-8">
-                <a href="/book" className="inline-flex items-center justify-center gap-2 h-12 px-8 bg-white text-primary rounded-xl font-semibold shadow-depth-2 hover:shadow-depth-3 transition-all">
-                  Book Now — $180
-                  <ArrowRight className="w-4 h-4" />
-                </a>
-                <a href="tel:+13235550180" className="inline-flex items-center justify-center gap-2 h-12 px-8 border-2 border-white/30 text-white rounded-xl font-semibold hover:bg-white/10 transition-all">
-                  <Phone className="w-4 h-4" />
-                  Call Us
-                </a>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                {[
-                  { stat: '$180', label: 'Flat rate, no surprises' },
-                  { stat: '3 hrs', label: 'Average turnaround' },
-                  { stat: '0', label: 'No-shows ever' },
-                  { stat: '100%', label: 'Satisfaction guarantee' },
-                ].map((s) => (
-                  <div key={s.label} className="bg-white/10 backdrop-blur-sm rounded-xl p-3 text-center">
-                    <div className="text-xl font-extrabold text-white">{s.stat}</div>
-                    <div className="text-xs text-primary-foreground/70">{s.label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, ease: 'easeOut' }}
-              className="hidden md:block"
-            >
-              <div className="grid grid-cols-2 gap-3">
-                <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=400&h=300&fit=crop" alt="Clean living room" className="rounded-xl w-full h-40 object-cover" />
-                <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop" alt="Spotless kitchen" className="rounded-xl w-full h-40 object-cover mt-6" />
-                <img src="https://images.unsplash.com/photo-1620626011761-996317b8d101?w=400&h=300&fit=crop" alt="Pristine bathroom" className="rounded-xl w-full h-40 object-cover -mt-6" />
-                <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=400&h=300&fit=crop" alt="Fresh bedroom" className="rounded-xl w-full h-40 object-cover" />
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </Section>
-
 
       {/* CTA */}
       <Section variant="cta" padding="default" className="relative overflow-hidden">
