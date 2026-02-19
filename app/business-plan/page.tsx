@@ -445,7 +445,7 @@ export default function BusinessPlan() {
                 </div>
 
                 <h3 className="heading-md mb-6">Booking to Completion Workflow</h3>
-                <div className="space-y-4">
+                <div className="space-y-4 mb-12">
                   {[
                     { phase: 'Booking — 60 seconds', color: 'teal', steps: ['Host visits swivelclean.com', 'Enters address, selects service, picks date/time', 'Pays securely via Stripe', 'Instant confirmation email + calendar invite sent', 'Booking visible in admin dashboard'] },
                     { phase: '24 Hours Before', color: 'blue', steps: ['Cleaner receives text + email: address, access code, job checklist', 'Cleaner confirms availability', 'Host receives reminder: cleaner name, arrival time, contact number', 'Any last-minute notes from host captured'] },
@@ -470,6 +470,282 @@ export default function BusinessPlan() {
                     </div>
                   ))}
                 </div>
+              </div>
+
+              {/* HIRING CLEANERS */}
+              <div>
+                <h3 className="heading-md mb-2">How to Find & Hire Cleaners</h3>
+                <p className="text-sm text-gray-500 mb-6">Only hire people you can trust in a stranger&apos;s home. Background check every single one — no exceptions.</p>
+
+                <div className="grid md:grid-cols-3 gap-6 mb-8">
+                  {[
+                    { platform: 'Indeed', url: 'https://www.indeed.com/job/post', label: 'Post Free Job', color: 'bg-blue-50 border-blue-200', note: 'Largest reach. Title: "Airbnb Turnover Cleaner — $18-22/hr, Flexible Hours, West Hollywood/LA"' },
+                    { platform: 'Facebook Marketplace', url: 'https://www.facebook.com/marketplace/create/job', label: 'Post Job Listing', color: 'bg-indigo-50 border-indigo-200', note: 'Free. Search local cleaning groups. Post in "Los Angeles Jobs" and "South Bay Jobs".' },
+                    { platform: 'Craigslist', url: 'https://losangeles.craigslist.org/d/domestic-gig-workers-wanted/search/hss', label: 'Post on Craigslist', color: 'bg-purple-50 border-purple-200', note: '$10–25 per ad. Under "Domestic Gig Workers Wanted". Gets applications fast.' },
+                  ].map((site, i) => (
+                    <div key={i} className={`rounded-2xl p-6 border ${site.color}`}>
+                      <h4 className="font-bold text-gray-900 mb-2">{site.platform}</h4>
+                      <p className="text-xs text-gray-500 mb-4 leading-relaxed">{site.note}</p>
+                      <a href={site.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs font-bold bg-white border border-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:shadow-sm transition-all">
+                        {site.label}
+                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                      </a>
+                    </div>
+                  ))}
+                </div>
+
+                <CopyBox label="Job Post — Copy & Paste to Indeed / Facebook / Craigslist" content={`TITLE: Airbnb Turnover Cleaner — $18-22/hr, Flexible Hours, West Hollywood / LA
+
+About the role:
+SwivelClean is a professional Airbnb turnover cleaning service in Los Angeles. We handle deep cleaning between guest checkouts for short-term rental hosts.
+
+This is a 1099 independent contractor position. Set your own schedule. Work as many or as few jobs as you want.
+
+PAY: $18–22/hr (based on experience) — paid weekly via direct deposit
+HOURS: Flexible, mostly 9AM–5PM weekdays + weekends
+LOCATION: West Hollywood, Venice, Santa Monica, Silver Lake, and surrounding LA neighborhoods
+
+What you'll do:
+- Clean and prepare Airbnb/short-term rental apartments between guest stays
+- Change all bed linens and make beds hotel-style
+- Deep clean bathrooms, kitchen, and all surfaces
+- Vacuum, mop, and take out trash
+- Take before/after photos on your phone after every cleaning
+- Restock supplies (soap, toilet paper, etc.)
+
+Requirements:
+- Must have reliable transportation (you'll drive to properties)
+- Must be able to pass a background check
+- Must have a smartphone
+- Prior cleaning or housekeeping experience preferred but not required
+- Must be detail-oriented and take pride in your work
+- Must be comfortable with hotel-style standards
+
+To apply:
+Reply with: your name, neighborhood you live in, and your availability.
+We'll schedule a quick 15-minute phone call and do a paid trial clean before hiring.
+
+We pay weekly. No contracts. Flexible schedule. Serious applicants only.
+Questions? Text (323) 555-0100`} />
+
+                <div className="bg-red-50 border border-red-200 rounded-2xl p-6 mt-6">
+                  <h4 className="font-bold text-red-900 mb-3">Background Check — Mandatory Before First Job</h4>
+                  <div className="grid md:grid-cols-3 gap-4">
+                    {[
+                      { name: 'Checkr', url: 'https://checkr.com', desc: 'Industry standard. $25–35/check. Fast turnaround (24–48h). Used by Uber, Airbnb, DoorDash.' },
+                      { name: 'Sterling', url: 'https://www.sterlingcheck.com', desc: '$30–50/check. More comprehensive. Good for recurring employees.' },
+                      { name: 'GoodHire', url: 'https://www.goodhire.com', desc: '$29.99/check. Simple dashboard. Good for small businesses hiring a few people.' },
+                    ].map((bg, i) => (
+                      <a key={i} href={bg.url} target="_blank" rel="noopener noreferrer" className="block bg-white rounded-xl p-4 border border-red-100 hover:shadow-sm transition-all">
+                        <p className="font-bold text-gray-900 text-sm mb-1">{bg.name}</p>
+                        <p className="text-xs text-gray-500">{bg.desc}</p>
+                      </a>
+                    ))}
+                  </div>
+                  <p className="text-xs text-red-700 mt-4 font-semibold">Never skip the background check. You are sending someone into a stranger&apos;s home. No exceptions.</p>
+                </div>
+              </div>
+
+              {/* CLEANER SOP & CHECKLIST */}
+              <div>
+                <h3 className="heading-md mb-2">Cleaner SOP — Standard Operating Procedure</h3>
+                <p className="text-sm text-gray-500 mb-6">Every cleaner follows this exactly, every time. No improvising. This is what gets you 5-star reviews.</p>
+
+                <div className="grid md:grid-cols-2 gap-6 mb-8">
+                  {[
+                    {
+                      phase: 'Arrival (Before You Start)',
+                      color: 'bg-blue-50 border-blue-200',
+                      headerColor: 'text-blue-800',
+                      steps: [
+                        'Arrive 10 minutes early — never be late',
+                        'Take BEFORE photos of EVERY room before touching anything',
+                        'Check checklist for any special notes from the host',
+                        'Text your manager: "Arrived at [address] at [time]"',
+                        'Start timer on your phone',
+                      ],
+                    },
+                    {
+                      phase: 'Bedroom (Every Bedroom)',
+                      color: 'bg-teal-50 border-teal-200',
+                      headerColor: 'text-teal-800',
+                      steps: [
+                        'Strip all linens — pillowcases, sheets, duvet covers',
+                        'Make bed hotel-style: tight corners, pillows stacked neatly',
+                        'Dust headboard, nightstands, lamps, ceiling fan',
+                        'Wipe down mirrors, windows, baseboards',
+                        'Vacuum all floors including under bed',
+                        'Empty trash, replace liner',
+                        'Check closet — remove any guest items left behind',
+                      ],
+                    },
+                    {
+                      phase: 'Bathroom (Every Bathroom)',
+                      color: 'bg-purple-50 border-purple-200',
+                      headerColor: 'text-purple-800',
+                      steps: [
+                        'Scrub toilet inside, outside, around base with disinfectant',
+                        'Scrub sink, faucet, soap dish',
+                        'Clean mirror — no streaks',
+                        'Scrub shower/tub — no soap scum, no hair',
+                        'Wipe down walls, door, fixtures',
+                        'Mop floor with disinfectant',
+                        'Restock: toilet paper (2 rolls), hand soap, shampoo, body wash',
+                        'Fold towels hotel-style, hang on rack',
+                        'Empty trash, replace liner',
+                      ],
+                    },
+                    {
+                      phase: 'Kitchen',
+                      color: 'bg-green-50 border-green-200',
+                      headerColor: 'text-green-800',
+                      steps: [
+                        'Empty and clean sink — no dishes left',
+                        'Wipe all countertops, backsplash, stovetop',
+                        'Clean microwave inside and outside',
+                        'Wipe all appliance exteriors (fridge, dishwasher, oven)',
+                        'Empty trash, replace liner',
+                        'Sweep and mop floor',
+                        'Check fridge — remove any guest food, wipe shelves',
+                        'Restock: dish soap, sponge, paper towels if low',
+                      ],
+                    },
+                    {
+                      phase: 'Living Areas & Common Spaces',
+                      color: 'bg-amber-50 border-amber-200',
+                      headerColor: 'text-amber-800',
+                      steps: [
+                        'Dust all surfaces, shelves, decor, TV screen',
+                        'Wipe down remote controls with disinfectant wipe',
+                        'Fluff and arrange couch pillows and throws',
+                        'Vacuum couch and under couch cushions',
+                        'Vacuum carpet or mop hard floors',
+                        'Check for guest items left behind — set aside',
+                        'Close all blinds/curtains to guest preference',
+                      ],
+                    },
+                    {
+                      phase: 'Completion (After Every Clean)',
+                      color: 'bg-gray-50 border-gray-200',
+                      headerColor: 'text-gray-800',
+                      steps: [
+                        'Do a final walkthrough — every room, every surface',
+                        'Take AFTER photos of EVERY room',
+                        'Text manager: "Done at [address] at [time]. Photos uploading."',
+                        'Upload all before/after photos immediately',
+                        'Report any damage, missing items, or issues immediately',
+                        'Lock up per host instructions — never leave door unlocked',
+                        'Do NOT take anything from the property — ever',
+                      ],
+                    },
+                  ].map((section, i) => (
+                    <div key={i} className={`rounded-2xl p-6 border ${section.color}`}>
+                      <h4 className={`font-bold mb-4 ${section.headerColor}`}>{section.phase}</h4>
+                      <ul className="space-y-2">
+                        {section.steps.map((step, j) => (
+                          <li key={j} className="flex items-start gap-2.5 text-sm text-gray-700">
+                            <svg className="w-4 h-4 text-teal-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+                            {step}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Anti-Theft */}
+                <div className="bg-gray-900 rounded-2xl p-8 text-white mb-8">
+                  <h4 className="font-bold text-xl mb-2 text-white">Anti-Theft & Security Protocol</h4>
+                  <p className="text-gray-400 text-sm mb-6">This protects you, your clients, and your business. Non-negotiable.</p>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    {[
+                      {
+                        title: 'Before the first job',
+                        items: [
+                          'Signed 1099 contractor agreement on file',
+                          'Photo ID on file (driver\'s license)',
+                          'Background check passed (Checkr or equivalent)',
+                          'Emergency contact on file',
+                          'Verbal walkthrough of theft/damage policy',
+                        ],
+                      },
+                      {
+                        title: 'Every single job',
+                        items: [
+                          'Before photos of entire property before touching anything',
+                          'Manager notified on arrival AND departure',
+                          'Cleaners never access areas not listed in checklist',
+                          'Never let cleaners bring bags inside (backpacks, purses)',
+                          'Any item found must be photographed and reported immediately',
+                        ],
+                      },
+                      {
+                        title: 'If something goes missing',
+                        items: [
+                          'Pull arrival/departure photos immediately',
+                          'Do NOT accuse — ask cleaner to review their before photos',
+                          'Check if guest took it (most "missing" items were guest mistakes)',
+                          'If theft confirmed: terminate immediately, report to Checkr',
+                          'Your $2M insurance covers damage — theft is a cleaner liability issue',
+                        ],
+                      },
+                      {
+                        title: 'Red flags — terminate immediately',
+                        items: [
+                          'Cleaner found in rooms not part of the job',
+                          'Cleaner using/touching client personal items',
+                          'Missing before/after photos (means they didn\'t document)',
+                          'Complaints from 2+ clients about the same cleaner',
+                          'Cleaner giving client their personal number directly',
+                        ],
+                      },
+                    ].map((block, i) => (
+                      <div key={i}>
+                        <p className="text-xs font-bold text-teal-400 uppercase tracking-widest mb-3">{block.title}</p>
+                        <ul className="space-y-2">
+                          {block.items.map((item, j) => (
+                            <li key={j} className="flex items-start gap-2 text-sm text-gray-300">
+                              <span className="text-teal-500 font-bold flex-shrink-0 mt-0.5">—</span>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <CopyBox label="Cleaner Onboarding Script — Read this to every new hire on day 1" content={`SWIVELCLEAN CLEANER STANDARDS — READ BEFORE YOUR FIRST JOB
+
+Welcome to SwivelClean. Here's what I need you to know:
+
+1. PHOTOS ARE MANDATORY
+Before you touch anything in the property, take photos of every room.
+After you finish every room, take photos.
+No photos = no pay. This protects both of us.
+
+2. THE CHECKLIST IS NOT OPTIONAL
+Everything on the checklist gets done, every time.
+If you're not sure how to do something, text me before you skip it.
+
+3. NEVER TAKE ANYTHING
+Even if it looks like trash. Even if it's in the way. Photo it and text me.
+Clients count their items. If it's missing after you were there, you are responsible.
+
+4. COMMUNICATION
+Text me when you arrive: "Arrived at [address] at [time]"
+Text me when done: "Done at [address] at [time]"
+If anything is wrong — damage, missing supplies, weird situation — text me IMMEDIATELY.
+
+5. NEVER GIVE CLIENTS YOUR PERSONAL NUMBER
+All communication goes through me. If a client asks for your number, say "everything goes through SwivelClean."
+
+6. YOU REPRESENT THIS BUSINESS
+How you clean directly determines if we get a 5-star review or a complaint.
+I need hotel-level quality every single time.
+
+If you can do this consistently, you will always have work and I will always pay you on time.
+Any questions?`} />
               </div>
             </div>
           )}
