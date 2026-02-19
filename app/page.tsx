@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { ArrowRight, Shield, Zap, Star, Camera, UserCheck, Award, Check } from 'lucide-react'
+import { ArrowRight, Shield, Zap, Star, Camera, UserCheck, Award, Check, MapPin, ChevronRight, Calculator } from 'lucide-react'
 import { Section } from '@/components/ui/section'
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
@@ -11,7 +11,8 @@ import { ServiceCard } from '@/components/ui/service-card'
 import { ReviewCard } from '@/components/ui/review-card'
 import { TrustBadge } from '@/components/ui/trust-badge'
 import { ShimmerButton } from '@/components/magicui/shimmer-button'
-import { SERVICES, SERVICE_AREAS, TESTIMONIALS } from '@/lib/constants'
+import { SERVICES, TESTIMONIALS } from '@/lib/constants'
+import { NEIGHBORHOODS } from '@/lib/seo-data'
 
 const container = {
   hidden: { opacity: 0 },
@@ -333,12 +334,15 @@ export default function Home() {
       <Section variant="default" padding="default">
         <AnimateOnScroll>
           <div className="text-center mb-16">
-            <Badge className="mb-4">Coverage</Badge>
+            <Badge className="mb-4">
+              <MapPin className="w-3 h-3 mr-1" />
+              Coverage
+            </Badge>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
               Serving All of Los Angeles
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              We cover the top Airbnb neighborhoods in LA with same-day availability.
+              Professional Airbnb turnover cleaning across 22 neighborhoods and cities. Click any area for local market stats and pricing.
             </p>
           </div>
         </AnimateOnScroll>
@@ -348,17 +352,82 @@ export default function Home() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '-80px' }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4"
+          className="flex flex-wrap gap-3 justify-center mb-10"
         >
-          {SERVICE_AREAS.slice(0, 8).map((area) => (
-            <motion.div key={area.area} variants={item}>
-              <Card depth={1} className="p-5 text-center">
-                <div className="font-bold text-foreground mb-1">{area.area}</div>
-                <div className="text-xs text-muted-foreground">{area.listings}</div>
-              </Card>
-            </motion.div>
+          {NEIGHBORHOODS.map((n) => (
+            <motion.a
+              key={n.slug}
+              variants={item}
+              href={`/airbnb-cleaning/${n.slug}`}
+              className="inline-flex items-center gap-1.5 px-5 py-2.5 bg-secondary text-primary rounded-full text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors"
+            >
+              <MapPin className="w-3 h-3" />
+              {n.name}
+            </motion.a>
           ))}
         </motion.div>
+
+        {/* Quick Links — Services & Tools */}
+        <AnimateOnScroll>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+            <a href="/airbnb-turnover-cleaning-los-angeles" className="group flex items-center gap-3 bg-secondary rounded-xl p-4 hover:bg-primary/10 transition-colors">
+              <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                <Star className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <div className="text-sm font-bold text-foreground">Turnover Cleaning</div>
+                <div className="text-xs text-muted-foreground">From $180</div>
+              </div>
+              <ChevronRight className="w-4 h-4 text-muted-foreground ml-auto" />
+            </a>
+            <a href="/same-day-airbnb-cleaning" className="group flex items-center gap-3 bg-secondary rounded-xl p-4 hover:bg-primary/10 transition-colors">
+              <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                <Zap className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <div className="text-sm font-bold text-foreground">Same-Day Cleaning</div>
+                <div className="text-xs text-muted-foreground">Book by 10 AM</div>
+              </div>
+              <ChevronRight className="w-4 h-4 text-muted-foreground ml-auto" />
+            </a>
+            <a href="/vacation-rental-deep-clean" className="group flex items-center gap-3 bg-secondary rounded-xl p-4 hover:bg-primary/10 transition-colors">
+              <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                <Award className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <div className="text-sm font-bold text-foreground">Deep Clean</div>
+                <div className="text-xs text-muted-foreground">$350 flat rate</div>
+              </div>
+              <ChevronRight className="w-4 h-4 text-muted-foreground ml-auto" />
+            </a>
+            <a href="/airbnb-cleaning-cost-calculator" className="group flex items-center gap-3 bg-secondary rounded-xl p-4 hover:bg-primary/10 transition-colors">
+              <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                <Calculator className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <div className="text-sm font-bold text-foreground">Cost Calculator</div>
+                <div className="text-xs text-muted-foreground">See your ROI</div>
+              </div>
+              <ChevronRight className="w-4 h-4 text-muted-foreground ml-auto" />
+            </a>
+          </div>
+        </AnimateOnScroll>
+
+        {/* Comparison Links */}
+        <AnimateOnScroll>
+          <div className="flex flex-wrap gap-3 justify-center mt-8">
+            {[
+              { slug: 'diy-vs-professional', label: 'DIY vs Professional' },
+              { slug: 'vs-thumbtack-cleaners', label: 'vs Thumbtack' },
+              { slug: 'vs-independent-cleaners', label: 'vs Independent Cleaners' },
+              { slug: 'vs-turnoverbnb', label: 'vs TurnoverBnB' },
+            ].map((c) => (
+              <a key={c.slug} href={`/compare/${c.slug}`} className="text-xs font-medium text-muted-foreground hover:text-primary transition-colors underline underline-offset-2">
+                {c.label}
+              </a>
+            ))}
+          </div>
+        </AnimateOnScroll>
       </Section>
 
       {/* CTA */}
