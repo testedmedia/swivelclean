@@ -72,7 +72,7 @@ export default function Services() {
                 ],
               },
             ].map((service, i) => (
-              <div key={i} className={`card-elevated overflow-hidden ${service.popular ? 'ring-2 ring-teal-500 relative scale-105' : ''}`}>
+              <div key={i} className={`card-elevated overflow-hidden ${service.popular ? 'ring-2 ring-teal-500 relative md:scale-105' : ''}`}>
                 {service.popular && (
                   <div className="bg-teal-600 text-white text-center py-2 text-xs font-bold tracking-wider uppercase">
                     Most Popular — Best Value
