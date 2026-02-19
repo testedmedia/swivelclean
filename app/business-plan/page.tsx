@@ -2,6 +2,33 @@
 
 import { useState } from 'react'
 
+function CopyBox({ label, content, note }: { label: string; content: string; note?: string }) {
+  const [copied, setCopied] = useState(false)
+  const copy = () => {
+    navigator.clipboard.writeText(content)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+  return (
+    <div className="mb-6">
+      <div className="flex items-center justify-between mb-2">
+        <h4 className="text-sm font-bold text-gray-700 uppercase tracking-wider">{label}</h4>
+        <button onClick={copy} className="flex items-center gap-1.5 text-xs text-teal-600 hover:text-teal-700 font-semibold bg-teal-50 hover:bg-teal-100 px-3 py-1.5 rounded-lg transition-all">
+          {copied ? (
+            <><svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>Copied!</>
+          ) : (
+            <><svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>Copy</>
+          )}
+        </button>
+      </div>
+      {note && <p className="text-xs text-gray-500 mb-2 italic">{note}</p>}
+      <pre className="bg-gray-950 text-gray-200 rounded-xl p-5 text-sm leading-relaxed whitespace-pre-wrap font-mono border border-gray-800 overflow-x-auto">
+        {content}
+      </pre>
+    </div>
+  )
+}
+
 const icons = {
   chart: <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>,
   dollar: <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
@@ -507,86 +534,369 @@ export default function BusinessPlan() {
 
           {/* MARKETING */}
           {activeTab === 'marketing' && (
-            <div className="space-y-12">
+            <div className="space-y-16">
+
+              {/* POSTING SCHEDULE */}
               <div>
-                <h2 className="heading-lg mb-8">Go-to-Market Strategy</h2>
+                <h2 className="heading-lg mb-2">Full Launch Kit</h2>
+                <p className="text-gray-500 mb-10">Everything ready to copy-paste. Follow this schedule exactly — no guessing.</p>
 
-                <h3 className="heading-md mb-6">Phase 1: Organic — Week 1–3 (Free)</h3>
-                <div className="space-y-6 mb-12">
-                  <div className="card p-8">
-                    <h4 className="font-bold text-gray-900 mb-2">Facebook Group Strategy</h4>
-                    <p className="text-sm text-gray-600 mb-4">Post in these LA Airbnb host groups — each has 3,000–15,000 members:</p>
-                    <ul className="text-sm text-gray-500 space-y-1 mb-6">
-                      {['LA Airbnb Hosts Community', 'Airbnb Hosts — Los Angeles', 'West Hollywood Short Term Rental Owners', 'Venice Beach Airbnb Hosts', 'LA Property Managers & STR Owners'].map((g, i) => (
-                        <li key={i} className="flex gap-2 items-center">
-                          <span className="text-teal-500 flex-shrink-0">{icons.arrow}</span>
-                          &ldquo;{g}&rdquo;
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="bg-gray-900 text-green-400 rounded-xl p-6 text-sm font-mono leading-relaxed">
-                      <div className="text-gray-500 text-xs mb-3"># COPY-PASTE POST (customize neighborhood)</div>
-                      <p>Hey hosts! Just launched SwivelClean — we handle Airbnb turnovers so you don&apos;t have to stress about them.</p>
-                      <br />
-                      <p>What we do: 3-hour turnover, change all linens, deep clean bathrooms, mop floors, restock, before/after photos sent to you.</p>
-                      <br />
-                      <p>Serving: West Hollywood, Venice, Santa Monica, Silver Lake</p>
-                      <p>Price: Starts at $180 (1-2 BR) — fully insured + background checked</p>
-                      <p>Same-day available if you book before 10am</p>
-                      <br />
-                      <p>Offering 2 free cleanings for first-time clients to earn our first reviews.</p>
-                      <br />
-                      <p>Book at swivelclean.com or DM me!</p>
+                <h3 className="heading-md mb-6">Weekly Posting Schedule</h3>
+                <div className="grid md:grid-cols-7 gap-2 mb-4">
+                  {[
+                    { day: 'MON', action: 'Facebook post (Group 1)', color: 'bg-blue-100 text-blue-800' },
+                    { day: 'TUE', action: 'Reply to comments + DMs', color: 'bg-gray-100 text-gray-700' },
+                    { day: 'WED', action: 'Facebook post (Group 2) + 1 X/Twitter tweet', color: 'bg-blue-100 text-blue-800' },
+                    { day: 'THU', action: 'Nextdoor post', color: 'bg-green-100 text-green-800' },
+                    { day: 'FRI', action: 'Facebook post (Group 3)', color: 'bg-blue-100 text-blue-800' },
+                    { day: 'SAT', action: 'Reply to all comments', color: 'bg-gray-100 text-gray-700' },
+                    { day: 'SUN', action: 'Rest — prep for next week', color: 'bg-gray-100 text-gray-700' },
+                  ].map((d, i) => (
+                    <div key={i} className={`rounded-xl p-3 text-center ${d.color}`}>
+                      <div className="font-bold text-xs mb-1">{d.day}</div>
+                      <div className="text-xs leading-tight">{d.action}</div>
                     </div>
-                  </div>
+                  ))}
+                </div>
+                <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800 mb-10">
+                  <strong>Rule:</strong> Post 3x/week on Facebook (different groups each time, rotate posts), 1–2x on X/Twitter, 1x on Nextdoor. Reply to every single comment within 2 hours. Never post the same copy twice in the same group.
+                </div>
+              </div>
 
-                  <div className="card p-8">
-                    <h4 className="font-bold text-gray-900 mb-2">Nextdoor Posts</h4>
-                    <div className="bg-gray-900 text-green-400 rounded-xl p-6 text-sm font-mono leading-relaxed">
-                      <div className="text-gray-500 text-xs mb-3"># NEXTDOOR POST — [NEIGHBORHOOD]</div>
-                      <p>Property managers & Airbnb hosts in [West Hollywood] —</p>
-                      <br />
-                      <p>Tired of unreliable cleaning crews? Last-minute no-shows costing you bookings?</p>
-                      <br />
-                      <p>SwivelClean specializes in fast Airbnb turnovers. Local, insured ($2M), and we send before/after photos after every clean.</p>
-                      <br />
-                      <p>Standard turnover: $180 | Same-week scheduling | 100% satisfaction guarantee</p>
-                      <br />
-                      <p>Book online in 60 seconds: swivelclean.com</p>
+              {/* FACEBOOK */}
+              <div>
+                <h3 className="heading-md mb-3">Facebook Groups to Join Right Now</h3>
+                <p className="text-sm text-gray-500 mb-6">Search these exact names on Facebook and request to join. Takes 5 minutes. Post in each one once per week, rotating posts.</p>
+                <div className="space-y-3 mb-10">
+                  {[
+                    { name: 'Airbnb Hosts Community — Los Angeles', members: '18,000+ members', link: 'https://www.facebook.com/groups/airbnbhostscommunity', tip: 'Most active — post here first' },
+                    { name: 'LA Short Term Rental Hosts', members: '12,000+ members', link: 'https://www.facebook.com/groups/search/results/?q=LA%20short%20term%20rental%20hosts', tip: 'Property managers + hosts' },
+                    { name: 'West Hollywood Airbnb & Short-Term Rental', members: '5,000+ members', link: 'https://www.facebook.com/groups/search/results/?q=west%20hollywood%20airbnb', tip: 'Hyperlocal — your best leads' },
+                    { name: 'Venice Beach / Santa Monica STR Community', members: '4,000+ members', link: 'https://www.facebook.com/groups/search/results/?q=venice%20santa%20monica%20airbnb%20hosts', tip: 'Premium hosts, premium pay' },
+                    { name: 'Airbnb & VRBO Hosts — Southern California', members: '25,000+ members', link: 'https://www.facebook.com/groups/search/results/?q=airbnb%20vrbo%20hosts%20southern%20california', tip: 'Biggest reach' },
+                  ].map((group, i) => (
+                    <div key={i} className="card p-4 flex items-start justify-between gap-4">
+                      <div className="flex-1">
+                        <div className="font-bold text-gray-900 text-sm">{group.name}</div>
+                        <div className="text-xs text-gray-500 mt-0.5">{group.members} · {group.tip}</div>
+                      </div>
+                      <a href={group.link} target="_blank" rel="noopener noreferrer" className="text-xs text-teal-600 font-semibold bg-teal-50 hover:bg-teal-100 px-3 py-2 rounded-lg whitespace-nowrap flex-shrink-0 transition-all">
+                        Search on Facebook →
+                      </a>
                     </div>
-                  </div>
+                  ))}
                 </div>
 
-                <h3 className="heading-md mb-6">Phase 2: Property Manager Cold Email (Month 3)</h3>
-                <div className="card p-8 mb-12">
-                  <div className="bg-gray-900 text-green-400 rounded-xl p-6 text-sm font-mono leading-relaxed">
-                    <p className="text-gray-500 text-xs mb-3"># COLD EMAIL — Subject: &ldquo;Dedicated cleaner for your [X] properties in WeHo&rdquo;</p>
-                    <p>Hi [First Name],</p>
-                    <br />
-                    <p>I saw you manage [X properties] in West Hollywood. Managing turnovers across multiple properties is a logistical nightmare — missed cleanings = bad reviews = lost revenue.</p>
-                    <br />
-                    <p>I run SwivelClean. We specialize in Airbnb turnovers for LA property managers:</p>
-                    <br />
-                    <p>— Dedicated cleaner assigned to your properties (they learn your units)</p>
-                    <p>— Priority scheduling + same-day emergency availability</p>
-                    <p>— Volume pricing: $155/clean at 5+/month</p>
-                    <p>— Before/after photos + digital invoice every time</p>
-                    <p>— $2M insured and bonded</p>
-                    <br />
-                    <p>I&apos;d like to offer you 2 free turnovers so you can see the quality firsthand.</p>
-                    <br />
-                    <p>Worth a 10-minute call this week?</p>
-                    <br />
-                    <p>[Your Name] | SwivelClean | (323) 555-0180 | swivelclean.com</p>
-                  </div>
+                <h3 className="heading-md mb-3">Facebook Posts — Copy-Paste Ready</h3>
+                <p className="text-sm text-gray-500 mb-6">Use one per week, rotating. Never post the same one twice in a row. Always add your personal photo or a before/after clean photo as the image.</p>
+
+                <CopyBox label="Post #1 — Launch Post (Week 1)" note="Best for first post in any group. Add a photo of a beautifully cleaned apartment." content={`Hey [West Hollywood / LA] Airbnb hosts —
+
+Just launched SwivelClean, a professional Airbnb turnover service right here in LA.
+
+What we do: Handle everything between guest checkouts — change all linens, deep clean bathrooms, wipe down kitchen, mop floors, restock, and send you before/after photos so you can verify from your phone.
+
+Service area: West Hollywood, Venice, Santa Monica, Silver Lake, and all of LA
+Price: $180 for 1-2 bedroom units. Fully insured. Same-day available.
+
+Offering our first 2 cleanings free to earn our first 5-star reviews.
+
+Book in 60 seconds at swivelclean.com or drop a comment/DM and I'll take care of you.`} />
+
+                <CopyBox label="Post #2 — Problem/Solution (Week 2)" note="Best performing post type. Hits the exact pain Airbnb hosts have." content={`The worst feeling as an Airbnb host:
+
+Guest checking in at 2 PM. Cleaner texts at noon: "Can't make it today."
+
+That lost you a 5-star review. Maybe the booking too.
+
+I built SwivelClean specifically to solve this. We have backup coverage for every job, same-day emergency availability (book by 10 AM), and a 100% satisfaction guarantee.
+
+$180 for a standard turnover. Linens, bathrooms, kitchen, floors, photos.
+
+If you're hosting in WeHo, Venice, Silver Lake, Santa Monica — we've got you covered.
+
+Book at swivelclean.com. First clean? We make sure it's perfect.`} />
+
+                <CopyBox label="Post #3 — Social Proof (Week 3)" note="Use after you've done your first 5 cleanings. Replace the number with real data." content={`Just completed our 20th Airbnb turnover in Los Angeles.
+
+Pattern I'm seeing: hosts who use a consistent, professional cleaner get 4.8–5.0 star ratings. Hosts who piece it together with random people average 4.1–4.4.
+
+It's not the property. It's the consistency.
+
+SwivelClean shows up every time, cleans to hotel standards, sends before/after photos so you can check from anywhere.
+
+If you're hosting in WeHo, Venice, Santa Monica, or anywhere in LA — try us once. I think you'll stop looking.
+
+swivelclean.com`} />
+
+                <CopyBox label="Post #4 — Value Post (No Hard Sell)" note="Post this when you want to give value and build trust, not push services." content={`For LA Airbnb hosts — 5 things most cleaners miss that cost you 5-star reviews:
+
+1. The smell. Guests notice before they see anything. Musty = bad review no matter how clean it is.
+2. The TV remote. Wipe it down and check the batteries.
+3. Under the bed. Guests look. They always look.
+4. The bathroom drain. Hair in the drain is an automatic 3-star review.
+5. The welcome note / house manual. Fresh guests love knowing where things are.
+
+These are on our 47-point checklist for every clean.
+
+Hosting in LA? Happy to help — swivelclean.com`} />
+
+                <CopyBox label="Post #5 — Seasonal / Urgency (Summer / Peak Season)" note="Use this in April–May before summer peak. Very effective." content={`West Hollywood Airbnb hosts — summer bookings are about to spike.
+
+If your cleaning situation isn't locked down, now is the time to fix it.
+
+SwivelClean handles Airbnb turnovers in LA — $180 flat rate, same-day available, $2M insured, before/after photos every time.
+
+No contracts. No minimums. Just show up when you need us.
+
+Book in 60 seconds at swivelclean.com — or DM me and I'll handle it personally.`} />
+              </div>
+
+              {/* X / TWITTER */}
+              <div>
+                <h3 className="heading-md mb-3">X / Twitter Posts</h3>
+                <p className="text-sm text-gray-500 mb-6">Post 1–2 times per week. Add hashtags: #Airbnb #AirbnbHost #LosAngeles #ShortTermRental</p>
+
+                <CopyBox label="Tweet Thread — Post as a 5-part thread" content={`1/ Running an Airbnb in LA? Here's what separates hosts with 4.2 stars from hosts with 4.9 stars:
+
+(It's not the property. Thread.)
+
+---
+
+2/ The #1 difference: reliability of cleaning.
+
+A bad clean tanks your rating instantly. Guests are ruthless. One hair in the drain, one musty smell = 3 stars. Done.
+
+---
+
+3/ The #2 difference: photo verification.
+
+4.9-star hosts check before/after photos remotely. They know what guests walk into before guests get there.
+
+We send before/after photos with every SwivelClean job. It's not optional — it's standard.
+
+---
+
+4/ The #3 difference: backup plans.
+
+Every 4.9-star host I know has a backup cleaner. Every 4.2-star host has a horror story about a last-minute cancellation before a checkout.
+
+We have coverage for same-day emergencies. No excuses.
+
+---
+
+5/ None of this is complicated. It's just execution.
+
+If you're hosting in LA and want someone who shows up every time: swivelclean.com
+
+$180 turnovers. Fully insured. Before/after photos. 100% guarantee.`} />
+
+                <CopyBox label="Single Tweet — Direct Offer" content={`If you host on Airbnb in Los Angeles, we will make your property guest-ready in 3 hours.
+
+$180 flat. Fully insured. Before/after photos. Same-day available.
+
+swivelclean.com
+
+#Airbnb #AirbnbHost #LosAngeles`} />
+
+                <CopyBox label="Single Tweet — Pain Point" content={`The worst text an Airbnb host can get:
+
+"Hey I can't make it to the cleaning today"
+
+...at noon, with check-in at 3 PM.
+
+Built SwivelClean to end this. Same-day backup cleaners in LA. Always.
+
+swivelclean.com`} />
+              </div>
+
+              {/* NEXTDOOR */}
+              <div>
+                <h3 className="heading-md mb-3">Nextdoor Posts</h3>
+                <p className="text-sm text-gray-500 mb-6">Post once per week in your neighborhood + 2–3 adjacent neighborhoods. Nextdoor works best when it feels like a neighbor talking, not a business. Keep it casual.</p>
+
+                <CopyBox label="Nextdoor Post #1 — Neighborhood Introduction" content={`Neighbors — introducing myself!
+
+I recently launched SwivelClean, a professional cleaning service for Airbnb and short-term rental hosts right here in Los Angeles.
+
+We handle everything between guest checkouts: linens, bathrooms, kitchen, floors, restocking, and before/after photos. $180 for standard units, same-day available.
+
+Fully insured ($2M general liability), background-checked cleaners only.
+
+If you or anyone you know hosts on Airbnb and needs reliable cleaning they can count on — I'd love to help.
+
+Visit swivelclean.com or feel free to message me directly.`} />
+
+                <CopyBox label="Nextdoor Post #2 — Reply to Cleaning Recommendation Requests" note="Search Nextdoor for 'cleaning' or 'cleaner' — reply to anyone asking for recommendations." content={`Hi [Name] — I can help with this! I run SwivelClean, a professional Airbnb turnover service in LA. We specialize in short-term rental turnovers — $180 for 1-2BR, fully insured, before/after photos with every clean.
+
+Happy to book you in — swivelclean.com or feel free to message me directly.`} />
+              </div>
+
+              {/* EMAIL TEMPLATES */}
+              <div>
+                <h3 className="heading-md mb-3">Email Templates — All 5 Automated Emails</h3>
+                <p className="text-sm text-gray-500 mb-2">These fire automatically when someone books through your website. They are already coded into the booking system — you don&apos;t have to do anything manually.</p>
+                <div className="bg-teal-50 border border-teal-200 rounded-xl p-4 text-sm text-teal-800 mb-6">
+                  All emails send from <strong>hello@swivelclean.com</strong> via Resend. They&apos;re already wired — booking email fires instantly, reminder fires 24h before, completion fires when you mark the job done in admin.
                 </div>
 
+                <CopyBox label="Email 1 — Booking Confirmation (fires automatically when someone books)" content={`Subject: Your SwivelClean booking is confirmed — [Property Address], [Date]
+
+Hi [Name],
+
+Great news — your cleaning is confirmed. Here are the details:
+
+Service: [Service Type]
+Property: [Address]
+Date: [Date]
+Time: [Time]
+Cleaner: Will be assigned 24 hours before your cleaning
+
+You'll receive a reminder tomorrow with your cleaner's name and contact info.
+
+After the cleaning, we'll send you before/after photos and your invoice.
+
+Questions? Reply to this email or text us at (323) 555-0100.
+
+– The SwivelClean Team
+hello@swivelclean.com | swivelclean.com`} />
+
+                <CopyBox label="Email 2 — 24h Reminder (fires automatically day before)" content={`Subject: Reminder: Your SwivelClean cleaning is tomorrow at [Time]
+
+Hi [Name],
+
+Just a reminder — your cleaning is tomorrow.
+
+Date: [Date]
+Time: [Time]
+Address: [Address]
+Cleaner: [Cleaner Name] — (323) 555-0101
+
+Access Notes: [Notes from booking]
+
+Your cleaner will text you when they arrive. If anything changes, please reply to this email or call (323) 555-0100 ASAP.
+
+See you tomorrow!
+
+– SwivelClean`} />
+
+                <CopyBox label="Email 3 — Job Complete with Photos (send from admin after marking complete)" content={`Subject: [Address] is clean and guest-ready — photos inside
+
+Hi [Name],
+
+Your property is spotless and ready for your next guest. Cleaning completed at [Time].
+
+What we cleaned:
+- All linens changed, beds made
+- Bathrooms deep cleaned and restocked
+- Kitchen wiped down, appliances cleaned
+- Floors vacuumed and mopped
+- Trash removed and liners replaced
+- Essentials restocked
+
+Before/after photos: [Link]
+Invoice: [Link] — $[Amount]
+
+Thank you for trusting SwivelClean. We'll see you next time.
+
+– The SwivelClean Team`} />
+
+                <CopyBox label="Email 4 — Review Request (send 2 hours after job is complete)" content={`Subject: How was your cleaning? Quick favor to ask
+
+Hi [Name],
+
+Your SwivelClean cleaning was completed a couple hours ago. We hope [Address] looks perfect for your next guest!
+
+Would you take 30 seconds to leave us a Google review?
+
+→ Leave a Google Review: [Your Google Business Link]
+
+It genuinely helps other LA hosts find us and means the world to our small team.
+
+If anything wasn't right, please reply here — we'll make it right, guaranteed.
+
+Thank you!
+
+– [Cleaner Name] & The SwivelClean Team`} />
+
+                <CopyBox label="Email 5 — Cleaner Assignment (send when you assign a job to a cleaner)" content={`Subject: New job assigned — [Property Address], [Date] at [Time]
+
+Hi [Cleaner Name],
+
+You have a new job assigned. Details below:
+
+Client: [Client Name]
+Property: [Address]
+Service: [Service Type]
+Date: [Date]
+Time: [Time]
+Your Pay: $[Amount]
+
+Access Instructions: [Notes]
+Special requests: [Requests or "None"]
+
+Please confirm by replying "Confirmed" to this message.
+
+If you cannot make it, let us know IMMEDIATELY at (323) 555-0100.
+
+What to bring:
+- All cleaning supplies
+- Camera for before/after photos (or use your phone)
+- Linen set if service includes linen change
+
+See you there!
+– SwivelClean Operations`} />
+              </div>
+
+              {/* GRAPHICS GUIDE */}
+              <div>
+                <h3 className="heading-md mb-3">Photo & Graphics Guide for Posts</h3>
+                <div className="grid md:grid-cols-2 gap-6 mb-6">
+                  {[
+                    {
+                      title: 'Use Real Before/After Photos',
+                      desc: 'The single best image for social posts. Take a photo as you walk in (before) and after you finish (after). Side-by-side before/after gets 3–5x more engagement than any other image type.',
+                      tag: 'Highest Impact',
+                      color: 'bg-teal-50 border-teal-200',
+                    },
+                    {
+                      title: 'Canva — Free Design Tool',
+                      desc: 'Go to canva.com, search "Cleaning Service Facebook Post" — there are hundreds of free templates. Add your logo (SC in teal box), change colors to teal, and swap the text. Takes 10 minutes.',
+                      tag: 'Free',
+                      color: 'bg-blue-50 border-blue-200',
+                    },
+                    {
+                      title: 'Best Free Image Sources',
+                      desc: 'Unsplash.com — search "luxury apartment" or "clean modern bedroom". Download and use for free. Always use images that show the RESULT (beautiful clean room), not the process.',
+                      tag: 'Free Photos',
+                      color: 'bg-purple-50 border-purple-200',
+                    },
+                    {
+                      title: 'Image Size for Facebook',
+                      desc: 'Facebook feed: 1200×630px. Facebook group post: 1200×630px. Square post (Story/Reel): 1080×1080px. Canva has preset templates for all of these.',
+                      tag: 'Specs',
+                      color: 'bg-gray-50 border-gray-200',
+                    },
+                  ].map((item, i) => (
+                    <div key={i} className={`rounded-xl p-6 border ${item.color}`}>
+                      <div className="flex items-center gap-2 mb-3">
+                        <h4 className="font-bold text-gray-900">{item.title}</h4>
+                        <span className="text-xs font-semibold bg-white/60 px-2 py-0.5 rounded-full text-gray-600">{item.tag}</span>
+                      </div>
+                      <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* REVIEW STRATEGY */}
+              <div>
                 <h3 className="heading-md mb-6">Review Generation System</h3>
                 <div className="grid md:grid-cols-3 gap-6">
                   {[
-                    { platform: 'Google', goal: '50+ reviews by Month 2', action: 'Send direct Google review link in every post-cleaning email', impact: '4.8+ rating = first result for "Airbnb cleaning LA"' },
-                    { platform: 'Turno', goal: '100+ reviews by Month 3', action: 'Create premium marketplace listing, respond to all requests within 1 hour', impact: 'Major source of inbound leads from hosts already searching' },
-                    { platform: 'Word of Mouth', goal: '30% of new clients via referral', action: 'Ask every client: "Do you know other hosts in LA?" + $20 referral credit', impact: 'Best quality leads — pre-sold by someone they trust' },
+                    { platform: 'Google', goal: '50+ reviews by Month 2', action: 'Send direct Google review link in every post-cleaning email (Email #4). Ask in person after every clean too.', impact: '4.8+ stars = first result for "Airbnb cleaning LA"' },
+                    { platform: 'Turno / TurnoverBnB', goal: '100+ reviews by Month 3', action: 'Create a free listing at turno.com. Respond to every request within 1 hour. Marketplace sends you leads.', impact: 'Major source of inbound leads — hosts already searching for cleaners' },
+                    { platform: 'Word of Mouth', goal: '30% of clients via referral', action: 'After every clean, ask: "Do you know other hosts in LA?" Offer a $20 referral credit for each new client they send.', impact: 'Best leads — pre-sold by someone they already trust' },
                   ].map((item, i) => (
                     <div key={i} className="card p-6">
                       <h4 className="font-bold text-gray-900 mb-3">{item.platform}</h4>
